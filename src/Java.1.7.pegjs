@@ -459,6 +459,7 @@ ClassDeclaration
     {
       return {
         node:               'TypeDeclaration',
+        location:            location(),
         name:                id,
         superInterfaceTypes: extractOptionalList(impl, 1),
         superclassType:      extractOptional(ext, 1),
@@ -492,6 +493,7 @@ MemberDecl
     { 
       return mergeProps(rest, {
         node:          'MethodDeclaration',
+        location:       location(),
         typeParameters: params
       });
     }
@@ -500,6 +502,7 @@ MemberDecl
     {
       return mergeProps(rest, {
         node:          'MethodDeclaration',
+        location:       location(),
         returnType2:    type,
         name:           id,
         typeParameters: []
@@ -509,6 +512,7 @@ MemberDecl
     {
       return {
         node:     'FieldDeclaration',
+        location:  location(),
         fragments: decls,
         type:      type
       };
@@ -517,6 +521,7 @@ MemberDecl
     {
       return mergeProps(rest, {
         node:       'MethodDeclaration',
+        location:    location(),
         returnType2: makePrimitive('void'),
         name:        id,
         constructor: false
@@ -526,6 +531,7 @@ MemberDecl
     { 
       return mergeProps(rest, {
         node:           'MethodDeclaration',
+        location:        location(),
         name:            id,
         typeParameters:  []
       });
@@ -600,6 +606,7 @@ InterfaceDeclaration
     {
       return {
           node:               'TypeDeclaration',
+          location:            location(),
           name:                id,
           superInterfaceTypes: extractOptionalList(ext, 1),
           superclassType:      null,
@@ -646,7 +653,7 @@ InterfaceMethodOrFieldDecl
 
 InterfaceMethodOrFieldRest
     = rest:ConstantDeclaratorsRest SEMI
-    { return { node: 'FieldDeclaration', fragments: rest }; }
+    { return { node: 'FieldDeclaration', location:  location(), fragments: rest }; }
     / InterfaceMethodDeclaratorRest
 
 InterfaceMethodDeclaratorRest
@@ -654,6 +661,7 @@ InterfaceMethodDeclaratorRest
     {
       return {
         node:            'MethodDeclaration',
+        location:         location(),
         parameters:       params,
         thrownExceptions: extractThrowsClassType(extractOptionalList(throws, 1)),
         extraDimensions:  dims.length,
@@ -677,6 +685,7 @@ VoidInterfaceMethodDeclaratorRest
     {
       return {
         node:            'MethodDeclaration',
+        location:         location(),
         parameters:       params,
         thrownExceptions: extractThrowsClassType(extractOptionalList(throws, 1)),
         returnType2:      makePrimitive('void'),
@@ -714,6 +723,7 @@ EnumDeclaration
     {
       return mergeProps(eb, {
         node:               'EnumDeclaration',
+        location:            location(),
         name:                name,
         superInterfaceTypes: extractOptionalList(impl, 1)
       });
@@ -737,6 +747,7 @@ EnumConstant
     {
       return {
         node:                     'EnumConstantDeclaration',
+        location:                  location(),
         anonymousClassDeclaration: cls === null ? null : {
           node:             'AnonymousClassDeclaration',
           bodyDeclarations:  cls
@@ -761,6 +772,7 @@ LocalVariableDeclarationStatement
     {
       return {
         node:        'VariableDeclarationStatement',
+        location:     location(),
         fragments:    decls,
         modifiers:    modifiers,
         type:         type
@@ -851,7 +863,8 @@ BlockStatement
     / modifiers:Modifier* decl:( ClassDeclaration / EnumDeclaration )
     { 
       return { 
-        node:       'TypeDeclarationStatement', 
+        node:       'TypeDeclarationStatement',
+        location:    location(),
         declaration: mergeProps(decl,  { modifiers: modifiers }) 
       }; 
     }
@@ -1604,7 +1617,7 @@ AnnotationMethodRest
 
 AnnotationConstantRest
     = fragments:VariableDeclarators
-    { return { node: 'FieldDeclaration', fragments: fragments }; }
+    { return { node: 'FieldDeclaration', location:  location(),  fragments: fragments }; }
 
 DefaultValue
     = DEFAULT val:ElementValue

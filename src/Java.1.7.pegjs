@@ -1027,6 +1027,7 @@ ForInit
     { 
       return [{
         node:     'VariableDeclarationExpression',
+        location:  location(),
         modifiers: modifiers,
         fragments: decls,
         type:      type

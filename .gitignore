@@ -4,3 +4,4 @@ bower_components/
 .coveralls.yml
 .idea/*
 npm/*
+package-lock.json

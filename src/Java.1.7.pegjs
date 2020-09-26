@@ -836,7 +836,8 @@ VariableDeclaratorId
     = id:Identifier dims:Dim*
     { 
       return { 
-        node:           'SingleVariableDeclaration', 
+        node:           'SingleVariableDeclaration',
+        location:        location(),
         name:            id, 
         extraDimensions: dims.length 
       }; 
@@ -883,7 +884,8 @@ Statement
     / IF expr:ParExpression then:Statement alt:(ELSE Statement)?
     { 
       return { 
-        node:         'IfStatement', 
+        node:         'IfStatement',
+        location:      location(),
         elseStatement: extractOptional(alt, 1), 
         thenStatement: then,
         expression:    expr.expression,   
@@ -893,6 +895,7 @@ Statement
     { 
       return {
         node:        'ForStatement',
+        location:     location(),
         initializers: optionalList(init),
         expression:   expr,
         updaters:     optionalList(up),
@@ -903,6 +906,7 @@ Statement
     {       
       return {
         node:      'EnhancedForStatement',
+        location:     location(),
         parameter:  param,
         expression: expr,
         body:       statement
@@ -911,7 +915,8 @@ Statement
     / WHILE expr:ParExpression body:Statement
     { 
       return { 
-        node:      'WhileStatement', 
+        node:      'WhileStatement',
+        location:     location(),
         expression: expr.expression, 
         body:       body 
       };
@@ -929,6 +934,7 @@ Statement
     { 
       return mergeProps(makeCatchFinally(cat, fin), {
         node:        'TryStatement',
+        location:     location(),
         body:         body,
         resources:    buildList(first, rest, 1)
       });
@@ -939,6 +945,7 @@ Statement
     { 
       return mergeProps(rest, {
         node:        'TryStatement',
+        location:     location(),
         body:         body,
         resources:    []
       });
@@ -969,6 +976,7 @@ Resource
       fragment.node = 'VariableDeclarationFragment';
       return {
         node:     'VariableDeclarationExpression',
+        location:     location(),
         modifiers: modifiers,
         type:      type,
         fragments: [fragment]

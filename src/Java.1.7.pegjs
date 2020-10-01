@@ -1276,7 +1276,8 @@ QualifiedIdentifierSuffix
     / qual:QualifiedIdentifier args:Arguments
     { 
       return mergeProps(popQualified(qual), { 
-        node:         'MethodInvocation', 
+        node:         'MethodInvocation',
+        location:      location(),
         arguments:     args, 
         typeArguments: [] 
       }); 
@@ -1332,7 +1333,7 @@ ExplicitGenericInvocationSuffix
     = SUPER suffix:SuperSuffix
     { return suffix; }
     / id:Identifier args:Arguments
-    { return { node: 'MethodInvocation', arguments: args, name: id, typeArguments: [] }; }
+    { return { node: 'MethodInvocation', location: location(), arguments: args, name: id, typeArguments: [] }; }
 
 PrefixOp
     = op:(
@@ -1352,7 +1353,7 @@ PostfixOp
 
 Selector
     = DOT id:Identifier args:Arguments
-    { return { node: 'MethodInvocation', arguments: args, name: id, typeArguments: [] }; }
+    { return { node: 'MethodInvocation', location: location(), arguments: args, name: id, typeArguments: [] }; }
     / DOT id:Identifier
     { return { node: 'FieldAccess', name: id }; }
     / DOT ret:ExplicitGenericInvocation
@@ -1382,7 +1383,8 @@ SuperSuffix
         node: 'SuperFieldAccess',
         name:  id  
       } : { 
-        node:         'SuperMethodInvocation', 
+        node:         'SuperMethodInvocation',
+        location:      location(),
         typeArguments: optionalList(gen),
         name:          id, 
         arguments:     args

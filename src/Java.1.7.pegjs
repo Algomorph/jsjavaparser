@@ -1432,6 +1432,7 @@ Creator
       return mergeProps(rest, {
         node:          'ClassInstanceCreation',
         type:           type,
+        location:       location(),
         typeArguments:  optionalList(args),
         expression:     null
       });
@@ -1449,6 +1450,7 @@ InnerCreator
     { 
       return mergeProps(rest, {
         node: 'ClassInstanceCreation',
+        location: location(),
         type:  buildTypeName(id, args, [])
       });  
     }

@@ -1056,7 +1056,8 @@ StatementExpression
           return expr;
         default:
           return { 
-            node:      'ExpressionStatement', 
+            node:      'ExpressionStatement',
+            location:   location(),
             expression: expr 
           };  
       }
@@ -1295,7 +1296,8 @@ QualifiedIdentifierSuffix
     / qual:QualifiedIdentifier DOT SUPER args:Arguments
     {
       return { 
-        node:         'SuperConstructorInvocation', 
+        node:         'SuperConstructorInvocation',
+        location:      location(),
         arguments:     args, 
         expression:    qual,
         typeArguments: []
@@ -1371,7 +1373,8 @@ SuperSuffix
     = args:Arguments
     { 
       return { 
-        node:         'SuperConstructorInvocation', 
+        node:         'SuperConstructorInvocation',
+        location:      location(),
         arguments:     args, 
         expression:    null,
         typeArguments: []

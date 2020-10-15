@@ -1239,6 +1239,7 @@ Primary
     {
       return args === null ? {
         node:     'ThisExpression',
+        location:     location(),
         qualifier: null
       } : {
         node:         'ConstructorInvocation',
@@ -1303,7 +1304,7 @@ QualifiedIdentifierSuffix
       return ret;
     }
     / qual:QualifiedIdentifier DOT THIS
-    { return { node: 'ThisExpression', qualifier: qual }; }
+    { return { node: 'ThisExpression', location: location(), qualifier: qual }; }
     / qual:QualifiedIdentifier DOT SUPER args:Arguments
     {
       return {

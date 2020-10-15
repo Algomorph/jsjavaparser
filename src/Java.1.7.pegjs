@@ -1433,6 +1433,7 @@ Creator
     {
       return  {
         node:       'ArrayCreation',
+        location:    location(),
         type:        buildArrayTree(type, rest.extraDims),
         initializer: rest.init,
         dimensions:  rest.dimms
@@ -1499,7 +1500,7 @@ ArrayInitializer
         { return buildList(first, rest, 1); }
       )?
       COMMA?  RWING
-    { return { node: 'ArrayInitializer', expressions: optionalList(init) }; }
+    { return { node: 'ArrayInitializer', location: location(), expressions: optionalList(init) }; }
 
 VariableInitializer
     = ArrayInitializer
@@ -1507,7 +1508,7 @@ VariableInitializer
 
 ParExpression
     = LPAR expr:Expression RPAR
-    { return { node: 'ParenthesizedExpression', expression: expr }; }
+    { return { node: 'ParenthesizedExpression', location: location(), expression: expr }; }
 
 QualifiedIdentifier
     = first:Identifier rest:(DOT Identifier)*
@@ -1700,7 +1701,7 @@ ElementValue
 
 ElementValueArrayInitializer
     = LWING values:ElementValues? COMMA? RWING
-    { return { node: 'ArrayInitializer', expressions: optionalList(values)}; }
+    { return { node: 'ArrayInitializer', location: location(), expressions: optionalList(values)}; }
 
 ElementValues
     = first:ElementValue rest:(COMMA ElementValue)*

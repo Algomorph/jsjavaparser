@@ -253,6 +253,7 @@
       function(result, element) {
         return {
           node:     'QualifiedName',
+          location:  location(),
           qualifier: result,
           name:      element[index]
         };
@@ -1192,6 +1193,7 @@ UnaryExpressionNotPlusMinus
     {
       return {
         node:      'CastExpression',
+        location:   location(),
         type:       expr[1],
         expression: expr[3]
       };
@@ -1200,6 +1202,7 @@ UnaryExpressionNotPlusMinus
     {
       return operator.length > 1 ? TODO(/* JLS7? */) : {
         node:    'PostfixExpression',
+        location:   location(),
         operator: operator[0],
         operand:  buildSelectorTree(arg, sel, sels)
       };
@@ -1210,6 +1213,7 @@ UnaryExpressionNotPlusMinus
     {
       return operator.length > 1 ? TODO(/* JLS7? */) : {
         node:    'PostfixExpression',
+        location:   location(),
         operator: operator[0],
         operand:  arg
       };
@@ -1279,7 +1283,7 @@ QualifiedIdentifierSuffix
       };
     }
     / qual:QualifiedIdentifier LBRK expr:Expression RBRK
-    { return { node: 'ArrayAccess', array: qual, index: expr }; }
+    { return { node: 'ArrayAccess',  location: location(), array: qual, index: expr }; }
     / qual:QualifiedIdentifier args:Arguments
     {
       return mergeProps(popQualified(qual), {
@@ -1363,7 +1367,7 @@ Selector
     = DOT id:Identifier args:Arguments
     { return { node: 'MethodInvocation', location: location(), arguments: args, name: id, typeArguments: [] }; }
     / DOT id:Identifier
-    { return { node: 'FieldAccess', name: id }; }
+    { return { node: 'FieldAccess', location: location(), name: id }; }
     / DOT ret:ExplicitGenericInvocation
     { return ret; }
     / DOT THIS
@@ -1373,7 +1377,7 @@ Selector
     / DOT NEW args:NonWildcardTypeArguments? ret:InnerCreator
     { return mergeProps(ret, { typeArguments: optionalList(args) }); }
     / expr:DimExpr
-    { return { node: 'ArrayAccess', index: expr }; }
+    { return { node: 'ArrayAccess',  location: location(), index: expr }; }
 
 SuperSuffix
     = args:Arguments
@@ -1390,6 +1394,7 @@ SuperSuffix
     {
       return args === null ? {
         node: 'SuperFieldAccess',
+        location: location(),
         name:  id
       } : {
         node:         'SuperMethodInvocation',
@@ -1733,7 +1738,7 @@ Spacing
 
 Identifier
     = !Keyword first:Letter rest:$LetterOrDigit* Spacing
-    { return { identifier: first + rest, node: 'SimpleName' }; }
+    { return { identifier: first + rest, node: 'SimpleName', location: location() }; }
 
 Letter = [a-z] / [A-Z] / [_$] ;
 

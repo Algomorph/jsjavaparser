@@ -1147,6 +1147,7 @@ RelationalExpression
       return buildTree(first, rest, function(result, element) {
         return element[0][0] === 'instanceof' ? {
           node:        'InstanceofExpression',
+          location:     location(),
           leftOperand:  result,
           rightOperand: element[1]
         } : {

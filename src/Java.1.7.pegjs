@@ -957,21 +957,21 @@ Statement
     / SWITCH expr:ParExpression LWING cases:SwitchBlockStatementGroups RWING
     { return { node: 'SwitchStatement', location: location(), statements: cases, expression: expr.expression }; }
     / SYNCHRONIZED expr:ParExpression body:Block
-    { return { node: 'SynchronizedStatement', expression: expr.expression, body: body } }
+    { return { node: 'SynchronizedStatement', location: location(), expression: expr.expression, body: body } }
     / RETURN expr:Expression? SEMI
-    { return { node: 'ReturnStatement', expression: expr } }
+    { return { node: 'ReturnStatement', location: location(), expression: expr } }
     / THROW expr:Expression SEMI
-    { return { node: 'ThrowStatement', expression: expr }; }
+    { return { node: 'ThrowStatement', location: location(), expression: expr }; }
     / BREAK id:Identifier? SEMI
-    { return { node: 'BreakStatement', label: id }; }
+    { return { node: 'BreakStatement', location: location(), label: id }; }
     / CONTINUE id:Identifier? SEMI
-    { return { node: 'ContinueStatement', label: id }; }
+    { return { node: 'ContinueStatement', location: location(), label: id }; }
     / SEMI
-    { return { node: 'EmptyStatement' }; }
+    { return { node: 'EmptyStatement', location: location() }; }
     / statement:StatementExpression SEMI
     { return statement; }
     / id:Identifier COLON statement:Statement
-    { return { node: 'LabeledStatement', label: id, body: statement }; }
+    { return { node: 'LabeledStatement', location: location(), label: id, body: statement }; }
 
 Resource
     = modifiers:(FINAL { return makeModifier('final'); } / Annotation)* type:Type decl:VariableDeclaratorId EQU expr:Expression
@@ -1016,7 +1016,7 @@ SwitchBlockStatementGroups
 
 SwitchBlockStatementGroup
     = expr:SwitchLabel blocks:BlockStatements
-    { return [{ node: 'SwitchCase', expression: expr }].concat(blocks); }
+    { return [{ node: 'SwitchCase', location: location(), expression: expr }].concat(blocks); }
 
 SwitchLabel
     = CASE expr:ConstantExpression COLON

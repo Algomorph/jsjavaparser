@@ -854,6 +854,7 @@ Block
     {
       return {
         node:      'Block',
+        location:   location(),
         statements: statements
       }
     }

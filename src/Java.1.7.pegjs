@@ -918,7 +918,7 @@ Statement
     {
       return {
         node:      'WhileStatement',
-        location:     location(),
+        location:   location(),
         expression: expr.expression,
         body:       body
       };
@@ -927,6 +927,7 @@ Statement
     {
       return {
         node:      'DoStatement',
+        location:   location(),
         expression: expr.expression,
         body:       statement
       };

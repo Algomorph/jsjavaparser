@@ -954,7 +954,7 @@ Statement
       });
     }
     / SWITCH expr:ParExpression LWING cases:SwitchBlockStatementGroups RWING
-    { return { node: 'SwitchStatement', statements: cases, expression: expr.expression }; }
+    { return { node: 'SwitchStatement', location: location(), statements: cases, expression: expr.expression }; }
     / SYNCHRONIZED expr:ParExpression body:Block
     { return { node: 'SynchronizedStatement', expression: expr.expression, body: body } }
     / RETURN expr:Expression? SEMI

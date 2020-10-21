@@ -1079,6 +1079,7 @@ Expression
     {
       return {
         node:         'Assignment',
+        location:      location(),
         operator:      op[0] /* remove ending spaces */,
         leftHandSide:  left,
         rightHandSide: right

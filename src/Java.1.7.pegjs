@@ -711,6 +711,7 @@ ConstantDeclaratorRest
     {
         return {
           node:           'VariableDeclarationFragment',
+          location:        location(),
           extraDimensions: dims.length,
           initializer:     init
       };
@@ -790,6 +791,7 @@ VariableDeclarator
     {
       return {
         node:           'VariableDeclarationFragment',
+        location:        location(),
         name:            name,
         extraDimensions: dims.length,
         initializer:     extractOptional(init, 1)

@@ -1115,6 +1115,7 @@ ConditionalExpression
     {
       return {
         node:          'ConditionalExpression',
+        location:       location(),
         expression:     expr,
         thenExpression: then,
         elseExpression: alt

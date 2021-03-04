@@ -1,15 +1,15 @@
 {
   "name": "java-parser",
   "version": "0.0.2",
-  "description": "Java1.7 parser",
+  "description": "Java1.15 parser",
   "scripts": {
-    "prepublish": "cp ../lib/javaparser7.js .",
-    "build": "node_modules/pegjs/bin/pegjs < ../src/Java.1.7.pegjs | node_modules/umd/bin/cli.js JavaParser -c > ../lib/javaparser7.js",
-    "build-min": "npm build && node_modules/uglify-js/bin/uglifyjs ../lib/javaparser7.js -o ../lib/javaparser7.min.js"
+    "prepublish": "cp ../lib/javaparser15.js .",
+    "build": "node_modules/pegjs/bin/pegjs < ../src/Java.1.15.pegjs | node_modules/umd/bin/cli.js JavaParser -c > ../lib/javaparser15.js",
+    "build-min": "npm run build && node_modules/uglify-js/bin/uglifyjs ../lib/javaparser15.js -o ../lib/javaparser15.min.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mazko/jsjavaparser.git"
+    "url": "https://github.com/algomorph/jsjavaparser.git"
   },
   "keywords": [
     "java",
@@ -18,9 +18,9 @@
   "author": "Oleg Mazko",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/mazko/jsjavaparser/issues"
+    "url": "https://github.com/algomorph/jsjavaparser/issues"
   },
-  "main": "javaparser7.js",
+  "main": "javaparser15.js",
   "bin": {
     "java-parser": "./cmd.js"
   },
@@ -28,5 +28,8 @@
     "pegjs": "^0.10.0",
     "uglify-js": "^2.7.3",
     "umd": "^3.0.1"
+  },
+  "dependencies": {
+    "cli": "^1.0.1"
   }
 }

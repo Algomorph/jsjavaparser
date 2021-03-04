@@ -28,6 +28,8 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
+
+
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.AST;
@@ -45,7 +47,9 @@ public class App {
 	}
 
 	public static void main(final String[] args) throws Exception {
-		final Options options = new Options().addOption("c", "attach comments").addOption("h", "print this message");
+		final Options options = new Options()
+				.addOption("c", "attach comments")
+				.addOption("h", "print this message");
 		final CommandLine cmd = new DefaultParser().parse(options, args);
 		if (args.length == 0 || cmd.hasOption("h")) {
 			new HelpFormatter().printHelp(App.class.getSimpleName() + "[OPTION]... [FILE]...", options);
@@ -63,8 +67,8 @@ public class App {
 		final String src = readFile(file, StandardCharsets.UTF_8);
 		parser.setSource(src.toCharArray());
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		final Map<?, ?> options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		final Map<String, String> options = JavaCore.getOptions();
+		JavaCore.setComplianceOptions(JavaCore.VERSION_15, options);
 		parser.setCompilerOptions(options);
 		final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
 		for (IProblem problem : cu.getProblems()) {

@@ -1,5 +1,4 @@
-
-    test("ExpressionStatement", function(assert) {
+test("ExpressionStatement", function(assert) {
       var src = multiline(function(){/*
         class Test {
           public static void main(String[] args) {

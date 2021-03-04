@@ -10,4 +10,4 @@
 
 - [Java Tool](tools/EclipseAST/run.sh) with JSON AST output for test purposes
 
-- BUILD: ```bash -c 'cd npm && npm i && npm run build' && minify lib/javaparser7.js > lib/javaparser7.min.js```
+- BUILD: ```bash -c 'cd npm && npm i && npm run build --scripts-prepend-node-path' && minify lib/javaparser15.js > lib/javaparser15.min.js```

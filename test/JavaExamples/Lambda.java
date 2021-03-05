@@ -1,7 +1,7 @@
-import java.lang.*;
+import java.util.*;
 
 class LambdaExample{
-    public static void main(string[] args){
+    public static void main(String[] args){
         // create an ArrayList
         ArrayList<String> languages = new ArrayList<>();
 

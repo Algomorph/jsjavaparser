@@ -62,11 +62,13 @@ public class App {
 
 	private static void ast(final String file, final CommandLine cmd) throws IOException {
 		@SuppressWarnings("deprecation")
-		final ASTParser parser = ASTParser.newParser(AST.JLS4); // JLS4 (aka
-																// JLS7)
+		final ASTParser parser = ASTParser.newParser(AST.JLS15); // JLS4 (aka
+																 // JLS7)
+
 		final String src = readFile(file, StandardCharsets.UTF_8);
 		parser.setSource(src.toCharArray());
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		parser.setResolveBindings(true);
 		final Map<String, String> options = JavaCore.getOptions();
 		JavaCore.setComplianceOptions(JavaCore.VERSION_15, options);
 		parser.setCompilerOptions(options);
@@ -83,6 +85,8 @@ public class App {
 			@Override
 			public boolean visit(final InfixExpression node) {
 				if (node.hasExtendedOperands()) {
+					//var location = node.getLocationInParent();
+					//node.setStructuralProperty("location", );
 					@SuppressWarnings("unchecked")
 					List<Expression> operands = new ArrayList<>(node.extendedOperands());
 					Collections.reverse(operands);
@@ -109,16 +113,17 @@ public class App {
 
 		if (cmd.hasOption("c")) {
 			try (final UglyMathCommentsExtractor cex = new UglyMathCommentsExtractor(cu, src)) {
-				final ASTDumper dumper = new ASTDumper(cex);
-				dumper.dump(cu);
+				final ASTDumper dumper = new ASTDumper(true, cex);
+				dumper.dump(cu, cu);
 				System.out.flush();
 			}
 		} else {
-			final ASTDumper dumper = new ASTDumper();
+			final ASTDumper dumper = new ASTDumper(true);
+
 			for (final Object comment : cu.getCommentList()) {
 				((Comment) comment).delete();
 			}
-			dumper.dump(cu);
+			dumper.dump(cu, cu);
 		}
 	}
 }

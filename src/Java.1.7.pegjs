@@ -848,25 +848,6 @@ VariableDeclaratorId
     }
 
 //-------------------------------------------------------------------------
-//  LambdaParameters
-//-------------------------------------------------------------------------
-LambdaParameters
-    = LPAR params:FormalParameterList? RPAR
-    { return optionalList(params); }
-
-LambdaParameter
-    = FormalParameter / Identifier
-
-LastLambdaParameter
-    = LastFormalParameter / Identifier
-
-LambdaParameterList
-    = first:LambdaParameter rest:(COMMA LambdaParameter)* last:(COMMA LastLambdaParameter)?
-    { return buildList(first, rest, 1).concat(extractOptionalList(last, 1)); }
-    / last:LastLambdaParameter
-    { return [last]; }
-
-//-------------------------------------------------------------------------
 //  Statements
 //-------------------------------------------------------------------------
 
@@ -1389,14 +1370,6 @@ PostfixOp
       INC
     / DEC
     ) { return op[0]; /* remove ending spaces */ }
-
-FieldSelector
-    = DOT id:Identifier
-    { return { node: 'FieldAccess', location: location(), name: id }; }
-
-ArraySelector
-    = expr:DimExpr
-    { return { node: 'ArrayAccess',  location: location(), index: expr }; }
 
 Selector
     = DOT id:Identifier args:Arguments
@@ -2028,7 +2001,6 @@ SREQU           =   ">>="     Spacing
 STAR            =   "*"!"="   Spacing
 STAREQU         =   "*="      Spacing
 TILDA           =   "~"       Spacing
-ARROW           =   "->"      Spacing 
 
 EOT = !_
 

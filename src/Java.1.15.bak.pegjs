@@ -1,4 +1,3 @@
-
 //===========================================================================
 //
 //  Parsing Expression Grammar of Java 1.7 for Mouse 1.1 - 1.6.
@@ -20,7 +19,7 @@
 //
 //---------------------------------------------------------------------------
 //
-//  Latest update 2013-04-23
+//  Latest update 2021-02-11
 //
 //---------------------------------------------------------------------------
 //  Change log
@@ -86,6 +85,7 @@
 //
 //---------------------------------------------------------------------------
 //    Updates based on the new Java Language Specifications
+//---------------------------------------------------------------------------
 //    (SE7 Edition of 2012-07-27)
 //---------------------------------------------------------------------------
 //
@@ -109,11 +109,15 @@
 //    2013-02-19 Commented deviations from JLS SE7.
 //    2013-04-23 Updated Mouse version in the comment.
 //               Corrected spelling in a comment to IdentifierSuffix.
-//
+//---------------------------------------------------------------------------
+//    (SE15 Edition of 2020-08-10) -- INCOMPLETE, see log
+//---------------------------------------------------------------------------
+//    2021-02-11 Added support for Lambda Expressions (Greg Kramida)
 //===========================================================================
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  AST:  Copyright (C) 2015 Oleg Mazko
+//        Modifications (c) 2021 Gregory Kramida
 //  TODO: Comments, javadoc; Ugly UnaryExpression->Primary->Selector, split rules ?
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ClassType
@@ -388,6 +392,27 @@
     }
     return buildTree(mergeProps(sel, getMergeVal(sel, arg)),
       sels, function(result, element) {
+        return mergeProps(element, getMergeVal(element, result));
+    });
+  }
+
+  function buildSelectorTreeTerminal(arg, sels, sel) {
+    function getMergeVal(o,v) {
+      switch(o.node){
+        case 'SuperFieldAccess':
+        case 'SuperMethodInvocation':
+          return { qualifier: v };
+        case 'ArrayAccess':
+          return { array: v };
+        default:
+          return { expression: v };
+      }
+    }
+    all_selectors = sels.concat([sel]);
+    first = all_selectors[0];
+    rest = all_selectors.slice(1);
+    return buildTree(mergeProps(first, getMergeVal(first, arg)),
+      rest, function(result, element) {
         return mergeProps(element, getMergeVal(element, result));
     });
   }
@@ -866,6 +891,7 @@ LambdaParameterList
     / last:LastLambdaParameter
     { return [last]; }
 
+
 //-------------------------------------------------------------------------
 //  Statements
 //-------------------------------------------------------------------------
@@ -1088,13 +1114,50 @@ StatementExpression
       }
     }
 
+
+
+LambdaBody
+    = Expression / Block
+
+LambdaExpression
+    = params:LambdaParameters ARROW body:LambdaBody
+    {
+      return mergeProps( params, {
+        node:         'LambdaExpression',
+        location:      location(),
+        body:          body
+      });
+    }
+
     // This is more generous than definition in section 14.8, which allows only
     // specific forms of Expression.
-
-
 ConstantExpression
     = Expression
 
+     // This is a little less generous than the actual specification. In 15.26,
+     // the third variant of LeftHandSide is "ExpressionName", which has an
+     // AmbiguousName variant, and that is defined as either Identifier or AmbiguousName . Identifier
+LeftHandSide
+    = Identifier / FieldAccess / ArrayAccess
+
+Assignment
+    = left:LeftHandSide op:AssignmentOperator right:Expression
+    {
+      return {
+        node:         'Assignment',
+        location:      location(),
+        operator:      op[0] /* remove ending spaces */,
+        leftHandSide:  left,
+        rightHandSide: right
+      };
+    }
+
+
+AssignmentExpression 
+    = ConditionalExpression / Assignment
+
+//Expression
+//    = AssignmentExpression / LambdaExpression
 Expression
     = left:ConditionalExpression op:AssignmentOperator right:Expression
     {
@@ -1106,14 +1169,7 @@ Expression
         rightHandSide: right
       };
     }
-    / ConditionalExpression
 
-    // This definition is part of the modification in JLS Chapter 18
-    // to minimize look ahead. In JLS Chapter 15.27, Expression is defined
-    // as AssignmentExpression, which is effectively defined as
-    // (LeftHandSide AssignmentOperator)* ConditionalExpression.
-    // The above is obtained by allowing ANY ConditionalExpression
-    // as LeftHandSide, which results in accepting statements like 5 = a.
 
 AssignmentOperator
     = EQU
@@ -1214,6 +1270,16 @@ UnaryExpression
     }
     / UnaryExpressionNotPlusMinus
 
+FieldAccess
+    = arg:Primary sels:Selector* final_selector:FieldSelector
+    { return buildSelectorTreeTerminal(arg, sels, final_selector); }
+
+ArrayAccess
+    = arg:Primary sels:Selector* final_selector:ArraySelector
+    { return buildSelectorTreeTerminal(arg, sels, final_selector); }
+
+
+
 UnaryExpressionNotPlusMinus
     = expr:CastExpression
     {
@@ -1245,6 +1311,8 @@ UnaryExpressionNotPlusMinus
       };
     }
     / Primary
+
+
 
 CastExpression
     = LPAR PrimitiveType RPAR UnaryExpression
@@ -1397,6 +1465,20 @@ FieldSelector
 ArraySelector
     = expr:DimExpr
     { return { node: 'ArrayAccess',  location: location(), index: expr }; }
+
+/*Selector
+    = DOT id:Identifier args:Arguments
+    { return { node: 'MethodInvocation', location: location(), arguments: args, name: id, typeArguments: [] }; }
+    / FieldSelector
+    / DOT ret:ExplicitGenericInvocation
+    { return ret; }
+    / DOT THIS
+    { return TODO(/* Any sample ? *//*); }
+    / DOT SUPER suffix:SuperSuffix
+    { return suffix; }
+    / DOT NEW args:NonWildcardTypeArguments? ret:InnerCreator
+    { return mergeProps(ret, { typeArguments: optionalList(args) }); }
+    / ArraySelector*/
 
 Selector
     = DOT id:Identifier args:Arguments
@@ -1759,7 +1841,7 @@ ElementValues
 //-------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-//  JLS 3.6-7  Spacing
+//  JLS 3.6-7  Spacing & Comments
 //-------------------------------------------------------------------------
 
 Spacing
@@ -1807,8 +1889,8 @@ Keyword
       / "const"
       / "continue"
       / "default"
-      / "double"
       / "do"
+      / "double"
       / "else"
       / "enum"
       / "extends"

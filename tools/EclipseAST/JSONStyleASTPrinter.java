@@ -67,6 +67,7 @@ public class JSONStyleASTPrinter extends Indenter implements IASTPrinter {
 		hasItemsStack.pop();
 	}
 
+
 	public void startType(String name, boolean parentIsList) {
 		if (hasItemsStack.peek() == true) {
 			printer.println(",");

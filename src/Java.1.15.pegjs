@@ -1,211 +1,6 @@
-
-//===========================================================================
-//
-//  Parsing Expression Grammar of Java 1.7 for Mouse 1.1 - 1.6.
-//  Based on Java Language Specification, Java SE 7 Edition, dated 2012-07-27,
-//  obtained from http://docs.oracle.com/javase/specs/jls/se7/html/index.html.
-//
-//---------------------------------------------------------------------------
-//
-//  Copyright (C) 2006, 2009, 2010, 2011, 2013
-//  by Roman R Redziejowski(www.romanredz.se).
-//
-//  The author gives unlimited permission to copy and distribute
-//  this file, with or without modifications, as long as this notice
-//  is preserved, and any changes are properly documented.
-//
-//  This file is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//---------------------------------------------------------------------------
-//
-//  Latest update 2013-04-23
-//
-//---------------------------------------------------------------------------
-//  Change log
-//---------------------------------------------------------------------------
-//
-//    2006-12-06 Posted on Internet.
-//    2009-04-04 Modified to conform to Mouse syntax:
-//               Underscore removed from names
-//               \f in Space replaced by Unicode for FormFeed.
-//    2009-07-10 Unused rule THREADSAFE removed.
-//    2009-07-10 Copying and distribution conditions relaxed by the author.
-//    2010-07-01 Updated Mouse version in the comment.
-//    2010-09-15 Updated comment on Java release.
-//    2010-09-18 Updated list of reserved words ("keywords") according to
-//               JLS 3.9: added "const" and "goto", removed "threadsafe".
-//    2010-09-18 Removed superfluous "?" everywhere after "Spacing".
-//    2010-10-05 Removed erroneous "TypeArguments?" from "EnumConstant".
-//               See JLS 8.9, JLS 18.1.
-//               NB. "Annotations" are optional, but not shown as such in JLS.
-//    2010-10-20 Corrected "FormalParameterList" according to JLS 8.4.1.
-//               NB. "VariableModifiers" in "FormalParameter" and "LastFormalParameter"
-//               are optional, but not shown as such in JLS.
-//    2010-10-20 Corrected "Annotation" according to JLS 9.7.
-//               Is incorrect in JLS 18.1 (does not allow list of value pairs).
-//    2010-10-20 Corrected "LocalVariableDeclarationStatement".
-//               Is incorrect in JLS 18.1: only FINAL allowed as "VariableModifier".
-//               Is incorrect in JLS 14.4: "VariableModifiers" not shown as optional.
-//    2010-10-20 Corrected "AnnotationTypeElementRest": added SEMI as last alternative.
-//               See JLS 9.6. NB. Missing in JLS 18.1.
-//    2010-10-20 Moved "Identifier" from "AnnotationTypeElementRest" to
-//               "AnnotationMethodRest". Was incorrect in JLS 18.1.
-//    2010-10-21 Inverted order of alternatives in "HexSignificand".
-//    2010-10-24 Corrected previous correction: moved SEMI from
-//               "AnnotationTypeElementRest" to "AnnotationTypeElementDeclaration".
-//    2010-10-25 Repeated "u" allowed in UnicodeEscape (JLS 3.3).
-//               Line terminators not allowed in StringLiteral (JLS 3.10.5).
-//               (Found thanks to Java PEG for Parboiled, which in turn credits
-//               Reinier Zwitserloot for finding it.)
-//
-//---------------------------------------------------------------------------
-//    Change log for Java 1.7 starts here.
-//    Updates based on project documentation, guess, and javac parser code.
-//---------------------------------------------------------------------------
-//
-//    2011-07-18 Implemented Binary Literals: added "BinaryNumeral".
-//    2011-07-19 Implemented Underscores in Numerical Literals:
-//               Added "Digits" and "HexDigits". Removed "Digit".
-//               Modified "DecimalNumeral", "HexNumeral", "BinaryNumeral",
-//               "OctalNumeral", "DecimalFloat", "Exponent",
-//               "HexSignificand", and "BinaryExponent".
-//    2011-07-19 Added SEMI after "VariableDeclarators" in "MemberDecl" (JLS 8.3).
-//    2011-07-21 Corrected "ArrayInitializer" to allow for "{,}" (JLS 10.6).
-//    2011-07-20 Implemented Type Inference for Generic Instance Creation:
-//               Added "Diamond".
-//               Modified "ClassCreatorRest" by adding "Diamond?".
-//    2011-07-20 Implemented try-with-resources Statement:
-//               Added try-with-resources as an alternative of "Statement".
-//               Added "Resource".
-//    2011-07-20 Implemented catching of multiple exceptions:
-//               Modified "Catch" to allow multiple exception types.
-//    2011-10-15 Updated Mouse version in the comment.
-//    2011-11-05 Updated Mouse version in the comment.
-//
-//---------------------------------------------------------------------------
-//    Updates based on the new Java Language Specifications
-//    (SE7 Edition of 2012-07-27)
-//---------------------------------------------------------------------------
-//
-//    2013-02-15 Try-with-resource (14.20.3): replaced "Modifiers*"
-//               in "Resource" by "(FINAL / Annotation)*",
-//               which is the syntax for VariableModifier*.
-//    2013-02-15  Diamond operator: Copied definition of "Creator",
-//               "CreatedName", "TypeArgumentsOrDiamond",
-//               "NonWildcardTypeArgumentsOrDiamond", "ClassCreatorRest",
-//               "ArrayCreatorRest", and "InnerCreator" from Chapter 18.
-//               Removed "Diamond".
-//    2013-02-15 In "Creator", allowed "BasicType" for array creator.
-//               Was obviously an error. See JLS 15.10.
-//               (Found already 2006-11-10, not corrected in SE7.)
-//    2013-02-15 Expanded "ArrayCreatorRest".
-//    2013-02-18 Line terminators not allowed in CharLiteral (JLS 3.10.4).
-//    2013-02-19 Added "NonWildcardTypeArguments?" in the second alternative
-//               of "SuperSuffix". Version in Chapter 18 is incorrect.
-//               See JLS 15.10.
-//    2013-02-19 Added semicolon as dummy import declaration.
-//    2013-02-19 Commented deviations from JLS SE7.
-//    2013-04-23 Updated Mouse version in the comment.
-//               Corrected spelling in a comment to IdentifierSuffix.
-//
-//===========================================================================
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//  AST:  Copyright (C) 2015 Oleg Mazko
-//  TODO: Comments, javadoc; Ugly UnaryExpression->Primary->Selector, split rules ?
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ClassType
-//  = Identifier TypeArguments? (DOT Identifier TypeArguments?)*
-// ==>
-// ClassType
-//  = QualifiedIdentifier TypeArguments? (DOT Identifier TypeArguments?)*
-//---------------------------------------------------------------------------
-// Expression
-//  = ConditionalExpression (AssignmentOperator ConditionalExpression)*
-// ==>
-// Expression
-//  = ConditionalExpression AssignmentOperator Expression
-//  / ConditionalExpression
-//---------------------------------------------------------------------------
-// ConditionalExpression
-//  = ConditionalOrExpression (QUERY Expression COLON ConditionalOrExpression)*
-// ==>
-// ConditionalExpression
-//  = ConditionalOrExpression QUERY Expression COLON ConditionalExpression
-//  / ConditionalOrExpression
-//---------------------------------------------------------------------------
-// Primary
-//  = ParExpression
-//  ...
-//  / QualifiedIdentifier IdentifierSuffix?
-// ==>
-// Primary
-//  = ParExpression
-//  ...
-//  / QualifiedIdentifierSuffix
-//  / QualifiedIdentifier
-//---------------------------------------------------------------------------
-// IdentifierSuffix
-//  = LBRK ( RBRK Dim* DOT CLASS / Expression RBRK )
-//    / Arguments
-//    / DOT
-//      ( CLASS
-//      / ExplicitGenericInvocation
-//      / THIS
-//      / SUPER Arguments
-//      / NEW NonWildcardTypeArguments? InnerCreator
-//      )
-// ==>
-// QualifiedIdentifierSuffix
-//  = QualifiedIdentifier Dim+ DOT CLASS
-//  / QualifiedIdentifier LBRK Expression RBRK
-//  / QualifiedIdentifier Arguments
-//  / QualifiedIdentifier DOT CLASS 
-//  / QualifiedIdentifier DOT ExplicitGenericInvocation
-//  / QualifiedIdentifier DOT THIS
-//  / QualifiedIdentifier DOT SUPER Arguments
-//  / QualifiedIdentifier DOT NEW NonWildcardTypeArguments? InnerCreator
-//---------------------------------------------------------------------------
-// CreatedName
-//  = Identifier TypeArgumentsOrDiamond? ( DOT Identifier TypeArgumentsOrDiamond? )*
-// ==>
-// CreatedName
-//  = QualifiedIdentifier TypeArgumentsOrDiamond? 
-//  ( DOT Identifier TypeArgumentsOrDiamond? )*
-//---------------------------------------------------------------------------
-// UnaryExpression
-//  = PrefixOp UnaryExpression
-//  / LPAR Type RPAR UnaryExpression
-//  / Primary (Selector)* (PostfixOp)*
-// ==>
-// UnaryExpression
-//  = PrefixOp UnaryExpression
-//  / UnaryExpressionNotPlusMinus
-//
-// UnaryExpressionNotPlusMinus
-//  = CastExpression
-//  / Primary Selector Selector* PostfixOp+
-//  / Primary Selector Selector*
-//  / Primary PostfixOp+
-//  / Primary
-//
-// CastExpression
-//  = LPAR PrimitiveType RPAR UnaryExpression
-//  / LPAR ReferenceType RPAR UnaryExpressionNotPlusMinus
-//
-// PrimitiveType
-//  = BasicType
-//---------------------------------------------------------------------------
-// Selector
-//  = DOT Identifier Arguments?
-// ==>
-// Selector
-//  = DOT Identifier Arguments
-//  / DOT Identifier
-//---------------------------------------------------------------------------
-
+// Copyright (C) 2006, 2009, 2010, 2011, 2013 Roman R Redziejowski(www.romanredz.se).
+// AST:  Copyright (C) 2015 Oleg Mazko
+// Upgrade to Java 15 & addition of optional location nodes: Copyright (C) 2021 Gregory Kramida
 {
   function extractOptional(optional, index, def) {
     def = typeof def !== 'undefined' ?  def : null;
@@ -236,27 +31,32 @@
     return result;
   }
 
-  function buildInfixExpr(first, rest) {
+  function addLocation(object, options){
+    if(!options.hasOwnProperty("addLocations") || options.addLocations === true){
+      object["location"] = location();
+    }
+    return object;
+  }
+
+  function buildInfixExpr(first, rest, options) {
     return buildTree(first, rest, function(result, element) {
-      return {
+      return addLocation({
         node:        'InfixExpression',
         operator:     element[0][0], // remove ending Spacing
-        location:     location(),
         leftOperand:  result,
         rightOperand: element[1]
-      };
+      }, options);
     });
   }
 
-  function buildQualified(first, rest, index) {
+  function buildQualified(first, rest, index, options) {
     return buildTree(first, rest,
       function(result, element) {
-        return {
+        return addLocation({
           node:     'QualifiedName',
-          location:  location(),
           qualifier: result,
           name:      element[index]
-        };
+        }, options);
       }
     );
   }
@@ -284,7 +84,12 @@
       function(result, element) {
       return {
         node:         'ArrayType',
-        componentType: result
+        elementType: result,
+        dimensions: 
+        [{ 
+          "annotations": first.annotations,
+          "node": "Dimension"
+        }]
       };
     });
   }
@@ -301,9 +106,10 @@
     return list.filter(function(v){ return v !== null; });
   }
 
-  function makePrimitive(code) {
+  function makePrimitive(code, annotations=[]) {
     return {
-      node:             'PrimitiveType',
+      node:              'PrimitiveType',
+      annotations:       annotations,
       primitiveTypeCode: code
     }
   }
@@ -410,7 +216,11 @@ CompilationUnit
         node:   'CompilationUnit',
         types:   skipNulls(types),
         package: pack,
-        imports: skipNulls(imports)
+        imports: skipNulls(imports),
+        // module is actually determined via parsing of the separate module-info.java file,
+        // which is separate from the actual Java source file. For now, treat it is a property 
+        // that should be left as 'null' here then and populated later
+        module: null 
       };
     }
 
@@ -448,7 +258,12 @@ TypeDeclaration
         / InterfaceDeclaration
         / AnnotationTypeDeclaration
       )
-      { return mergeProps(type, { modifiers: modifiers }); }
+      { 
+        return mergeProps(type, { 
+          modifiers: modifiers,
+          javadoc: null //TODO
+        }); 
+      }
       / SEMI
       { return null; }
 
@@ -459,16 +274,15 @@ TypeDeclaration
 ClassDeclaration
     = CLASS id:Identifier gen:TypeParameters? ext:(EXTENDS ClassType)? impl:(IMPLEMENTS ClassTypeList)? body:ClassBody
     {
-      return {
+      return addLocation({
         node:               'TypeDeclaration',
-        location:            location(),
         name:                id,
         superInterfaceTypes: extractOptionalList(impl, 1),
         superclassType:      extractOptional(ext, 1),
         bodyDeclarations:    body,
         typeParameters:      optionalList(gen),
         interface:           false
-      };
+      }, options);
     }
 
 ClassBody
@@ -493,50 +307,49 @@ MemberDecl
     = params:TypeParameters
       rest:GenericMethodOrConstructorRest              // Generic Method or Constructor
     {
-      return mergeProps(rest, {
+      return mergeProps(rest, addLocation({
         node:          'MethodDeclaration',
-        location:       location(),
-        typeParameters: params
-      });
+        typeParameters: params,
+        javadoc: null //TODO
+      }, options));
     }
     / type:Type id:Identifier
-      rest:MethodDeclaratorRest                        // Method
+      rest:MethodDeclaratorRest                        // Method (JLS 8.4)
     {
-      return mergeProps(rest, {
+      return mergeProps(rest, addLocation({
         node:          'MethodDeclaration',
-        location:       location(),
         returnType2:    type,
         name:           id,
-        typeParameters: []
-      });
+        typeParameters: [],
+        javadoc: null //TODO
+      }, options));
     }
-    / type:Type decls:VariableDeclarators SEMI         // Field
+    / VOID id:Identifier rest:VoidMethodDeclaratorRest // Void method (JLS 8.4)
     {
-      return {
-        node:     'FieldDeclaration',
-        location:  location(),
-        fragments: decls,
-        type:      type
-      };
-    }
-    / VOID id:Identifier rest:VoidMethodDeclaratorRest // Void method
-    {
-      return mergeProps(rest, {
+      return mergeProps(rest, addLocation({
         node:       'MethodDeclaration',
-        location:    location(),
         returnType2: makePrimitive('void'),
         name:        id,
-        constructor: false
-      });
+        constructor: false,
+        javadoc: null //TODO
+      }, options));
     }
-    / id:Identifier rest:ConstructorDeclaratorRest     // Constructor
+    / id:Identifier rest:ConstructorDeclaratorRest     // Constructor (JLS 8.8)
     {
-      return mergeProps(rest, {
+      return mergeProps(rest, addLocation({
         node:           'MethodDeclaration',
-        location:        location(),
         name:            id,
-        typeParameters:  []
-      });
+        typeParameters:  [],
+        javadoc: null //TODO
+      }, options));
+    }
+    / type:Type decls:VariableDeclarators SEMI         // Field (JLS 8.3)
+    {
+      return addLocation({
+        node:     'FieldDeclaration',
+        fragments: decls,
+        type:      type
+      }, options);
     }
     / InterfaceDeclaration                             // Interface
     / ClassDeclaration                                 // Class
@@ -556,30 +369,36 @@ GenericMethodOrConstructorRest
     { return mergeProps(rest, { name: id }); }
 
 MethodDeclaratorRest
-    = params:FormalParameters dims:Dim*
+    = receiver:ReceiverParameter ?
+      params:FormalParameters dims:Dim*
       throws:(THROWS ClassTypeList)?
       body:(MethodBody / SEMI { return null; })
     {
       return {
         parameters:       params,
-        thrownExceptions: extractThrowsClassType(extractOptionalList(throws, 1)),
-        extraDimensions:  dims.length,
+        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
+        extraDimensions2: dims,
         body:             body,
-        constructor:      false
+        constructor:      false,
+        receiverQualifier: receiver === null ? null : receiver.receiverQualifier,
+        receiverType: receiver === null ? null : receiver.receiverQualifier
       };
     }
 
 VoidMethodDeclaratorRest
-    = params:FormalParameters
+    = receiver:ReceiverParameter ?
+      params:FormalParameters
       throws:(THROWS ClassTypeList)?
       body:(MethodBody / SEMI { return null; })
     {
       return {
         parameters:       params,
-        thrownExceptions: extractThrowsClassType(extractOptionalList(throws, 1)),
+        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
         body:             body,
-        extraDimensions:  0,
-        typeParameters:   []
+        extraDimensions2: [],
+        typeParameters:   [],
+        receiverQualifier: receiver === null ? null : receiver.receiverQualifier,
+        receiverType: receiver === null ? null : receiver.receiverQualifier
       };
     }
 
@@ -588,11 +407,11 @@ ConstructorDeclaratorRest
     {
       return {
         parameters:       params,
-        thrownExceptions: extractThrowsClassType(extractOptionalList(throws, 1)),
+        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
         body:             body,
         returnType2:      null,
         constructor:      true,
-        extraDimensions:  0
+        extraDimensions2: []
       };
     }
 
@@ -606,16 +425,15 @@ MethodBody
 InterfaceDeclaration
     = INTERFACE id:Identifier gen:TypeParameters? ext:(EXTENDS ClassTypeList)? body:InterfaceBody
     {
-      return {
+      return addLocation({
           node:               'TypeDeclaration',
-          location:            location(),
           name:                id,
           superInterfaceTypes: extractOptionalList(ext, 1),
           superclassType:      null,
           bodyDeclarations:    body,
           typeParameters:      optionalList(gen),
           interface:           true
-        };
+        }, options);
     }
 
 InterfaceBody
@@ -655,21 +473,25 @@ InterfaceMethodOrFieldDecl
 
 InterfaceMethodOrFieldRest
     = rest:ConstantDeclaratorsRest SEMI
-    { return { node: 'FieldDeclaration', location:  location(), fragments: rest }; }
+    { 
+      return addLocation({
+        node: 'FieldDeclaration',
+        fragments: rest 
+      }, options); 
+    }
     / InterfaceMethodDeclaratorRest
 
 InterfaceMethodDeclaratorRest
     = params:FormalParameters dims:Dim* throws:(THROWS ClassTypeList)? SEMI
     {
-      return {
+      return addLocation({
         node:            'MethodDeclaration',
-        location:         location(),
         parameters:       params,
-        thrownExceptions: extractThrowsClassType(extractOptionalList(throws, 1)),
-        extraDimensions:  dims.length,
+        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
+        extraDimensions2: [dims],
         body:             null,
         constructor:      false
-      };
+      }, options);
     }
 
 InterfaceGenericMethodDecl
@@ -685,17 +507,16 @@ InterfaceGenericMethodDecl
 VoidInterfaceMethodDeclaratorRest
     = params:FormalParameters throws:(THROWS ClassTypeList)? SEMI
     {
-      return {
+      return addLocation({
         node:            'MethodDeclaration',
-        location:         location(),
         parameters:       params,
-        thrownExceptions: extractThrowsClassType(extractOptionalList(throws, 1)),
+        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
         returnType2:      makePrimitive('void'),
-        extraDimensions:  0,
+        extraDimensions2: [],
         typeParameters:   [],
         body:             null,
         constructor:      false
-      };
+      }, options);
     }
 
 ConstantDeclaratorsRest
@@ -709,12 +530,11 @@ ConstantDeclarator
 ConstantDeclaratorRest
     = dims:Dim* EQU init:VariableInitializer
     {
-        return {
-          node:           'VariableDeclarationFragment',
-          location:        location(),
-          extraDimensions: dims.length,
-          initializer:     init
-      };
+      return addLocation({
+        node:           'VariableDeclarationFragment',
+        extraDimensions2: dims,
+        initializer:     init
+      }, options);
     }
 
 //-------------------------------------------------------------------------
@@ -724,12 +544,11 @@ ConstantDeclaratorRest
 EnumDeclaration
     = ENUM name:Identifier impl:(IMPLEMENTS ClassTypeList)? eb:EnumBody
     {
-      return mergeProps(eb, {
+      return mergeProps(eb, addLocation({
         node:               'EnumDeclaration',
-        location:            location(),
         name:                name,
         superInterfaceTypes: extractOptionalList(impl, 1)
-      });
+      }, options));
     }
 
 EnumBody
@@ -748,9 +567,8 @@ EnumConstants
 EnumConstant
     = annot:Annotation* name:Identifier args:Arguments? cls:ClassBody?
     {
-      return {
+      return addLocation({
         node:                     'EnumConstantDeclaration',
-        location:                  location(),
         anonymousClassDeclaration: cls === null ? null : {
           node:             'AnonymousClassDeclaration',
           bodyDeclarations:  cls
@@ -758,7 +576,7 @@ EnumConstant
         arguments:                 optionalList(args),
         modifiers:                 annot,
         name:                      name
-      };
+      }, options);
     }
 
 EnumBodyDeclarations
@@ -773,13 +591,12 @@ LocalVariableDeclarationStatement
     = modifiers:(FINAL { return makeModifier('final'); } / Annotation)*
       type:Type decls:VariableDeclarators SEMI
     {
-      return {
+      return addLocation({
         node:        'VariableDeclarationStatement',
-        location:     location(),
         fragments:    decls,
         modifiers:    modifiers,
         type:         type
-      };
+      }, options);
     }
 
 VariableDeclarators
@@ -789,22 +606,34 @@ VariableDeclarators
 VariableDeclarator
     = name:Identifier dims:Dim* init:(EQU VariableInitializer)?
     {
-      return {
+      return addLocation({
         node:           'VariableDeclarationFragment',
-        location:        location(),
         name:            name,
-        extraDimensions: dims.length,
+        extraDimensions2: dims,
         initializer:     extractOptional(init, 1)
-      };
+      }, options);
     }
 
 //-------------------------------------------------------------------------
-//  Formal Parameters
+//  Receiver Parameter (JLS 8.4)
+//-------------------------------------------------------------------------
+ReceiverParameter
+    = annot:Annotation? type:Type THIS
+    {
+      return {
+        receiverQualifier: annot,
+        receiverType: type
+      }
+    }
+
+//-------------------------------------------------------------------------
+//  Formal Parameters (JLS 8.4)
 //-------------------------------------------------------------------------
 
 FormalParameters
     = LPAR params:FormalParameterList? RPAR
     { return optionalList(params); }
+
 
 FormalParameter
     = modifiers:(FINAL { return makeModifier('final'); } / Annotation)*
@@ -814,6 +643,7 @@ FormalParameter
         type:        type,
         modifiers:   modifiers,
         varargs:     false,
+        varargsAnnotations: [], //TODO: this is unclear right now
         initializer: null
       });
     }
@@ -826,6 +656,7 @@ LastFormalParameter
         type:        type,
         modifiers:   modifiers,
         varargs:     true,
+        varargsAnnotations: [], //TODO: this is unclear right now
         initializer: null
       });
     }
@@ -839,12 +670,11 @@ FormalParameterList
 VariableDeclaratorId
     = id:Identifier dims:Dim*
     {
-      return {
-        node:           'SingleVariableDeclaration',
-        location:        location(),
-        name:            id,
-        extraDimensions: dims.length
-      };
+      return addLocation({
+        node:            'SingleVariableDeclaration',
+        name:             id,
+        extraDimensions2: dims
+      }, options);
     }
 
 //-------------------------------------------------------------------------
@@ -873,11 +703,10 @@ LambdaParameterList
 Block
     = LWING statements:BlockStatements RWING
     {
-      return {
+      return addLocation({
         node:      'Block',
-        location:   location(),
         statements: statements
-      }
+      }, options);
     }
 
 BlockStatements
@@ -887,11 +716,10 @@ BlockStatement
     = LocalVariableDeclarationStatement
     / modifiers:Modifier* decl:( ClassDeclaration / EnumDeclaration )
     {
-      return {
+      return addLocation({
         node:       'TypeDeclarationStatement',
-        location:    location(),
         declaration: mergeProps(decl,  { modifiers: modifiers })
-      };
+      }, options);
     }
     / Statement
 
@@ -899,113 +727,114 @@ Statement
     = Block
     / ASSERT expr:Expression message:(COLON Expression)? SEMI
     {
-      return {
+      return addLocation({
         node:      'AssertStatement',
         expression: expr,
         message:    extractOptional(message, 1)
-      };
+      }, options);
     }
     / IF expr:ParExpression then:Statement alt:(ELSE Statement)?
     {
-      return {
+      return addLocation({
         node:         'IfStatement',
-        location:      location(),
         elseStatement: extractOptional(alt, 1),
         thenStatement: then,
         expression:    expr.expression,
-      };
+      }, options);
     }
     / FOR LPAR init:ForInit? SEMI expr:Expression? SEMI up:ForUpdate? RPAR body:Statement
     {
-      return {
+      return addLocation({
         node:        'ForStatement',
-        location:     location(),
         initializers: optionalList(init),
         expression:   expr,
         updaters:     optionalList(up),
         body:         body
-      };
+      }, options);
     }
     / FOR LPAR param:FormalParameter COLON expr:Expression RPAR statement:Statement
     {
-      return {
+      return addLocation({
         node:      'EnhancedForStatement',
-        location:     location(),
         parameter:  param,
         expression: expr,
         body:       statement
-      };
+      }, options);
     }
     / WHILE expr:ParExpression body:Statement
     {
-      return {
+      return addLocation({
         node:      'WhileStatement',
-        location:   location(),
         expression: expr.expression,
         body:       body
-      };
+      }, options);
     }
     / DO statement:Statement WHILE expr:ParExpression SEMI
     {
-      return {
+      return addLocation({
         node:      'DoStatement',
-        location:   location(),
         expression: expr.expression,
         body:       statement
-      };
+      }, options);
     }
     / TRY LPAR first:Resource rest:(SEMI Resource)* SEMI? RPAR
       body:Block cat:Catch* fin:Finally?
     {
-      return mergeProps(makeCatchFinally(cat, fin), {
-        node:        'TryStatement',
-        location:     location(),
-        body:         body,
-        resources:    buildList(first, rest, 1)
-      });
+      return mergeProps(
+        makeCatchFinally(cat, fin), 
+        addLocation(
+          {
+            node:        'TryStatement',
+            body:         body,
+            resources:    buildList(first, rest, 1)
+          }, options
+        )
+      );
     }
     / TRY body:Block 
       rest:(cat:Catch+ fin:Finally? { return makeCatchFinally(cat, fin); }
             / fin:Finally { return makeCatchFinally([], fin); })
     {
-      return mergeProps(rest, {
-        node:        'TryStatement',
-        location:     location(),
-        body:         body,
-        resources:    []
-      });
+      return mergeProps(
+        rest, 
+        addLocation({
+            node:        'TryStatement',
+            body:         body,
+            resources:    []
+          }, options
+        )
+      );
     }
     / SWITCH expr:ParExpression LWING cases:SwitchBlockStatementGroups RWING
-    { return { node: 'SwitchStatement', location: location(), statements: cases, expression: expr.expression }; }
+    { return addLocation({ node: 'SwitchStatement', statements: cases, expression: expr.expression }, options); }
     / SYNCHRONIZED expr:ParExpression body:Block
-    { return { node: 'SynchronizedStatement', location: location(), expression: expr.expression, body: body } }
+    { return addLocation({ node: 'SynchronizedStatement', expression: expr.expression, body: body }, options); }
     / RETURN expr:Expression? SEMI
-    { return { node: 'ReturnStatement', location: location(), expression: expr } }
+    { return addLocation({ node: 'ReturnStatement', expression: expr }, options); }
     / THROW expr:Expression SEMI
-    { return { node: 'ThrowStatement', location: location(), expression: expr }; }
+    { return addLocation({ node: 'ThrowStatement', expression: expr }, options); }
     / BREAK id:Identifier? SEMI
-    { return { node: 'BreakStatement', location: location(), label: id }; }
+    { return addLocation({ node: 'BreakStatement', label: id }, options); }
     / CONTINUE id:Identifier? SEMI
-    { return { node: 'ContinueStatement', location: location(), label: id }; }
+    { return addLocation({ node: 'ContinueStatement', label: id }, options); }
     / SEMI
-    { return { node: 'EmptyStatement', location: location() }; }
+    { return addLocation({ node: 'EmptyStatement'}, options); }
     / statement:StatementExpression SEMI
     { return statement; }
     / id:Identifier COLON statement:Statement
-    { return { node: 'LabeledStatement', location: location(), label: id, body: statement }; }
+    { return addLocation({ node: 'LabeledStatement', label: id, body: statement }, options); }
 
 Resource
     = modifiers:(FINAL { return makeModifier('final'); } / Annotation)* type:Type decl:VariableDeclaratorId EQU expr:Expression
     {
       var fragment = mergeProps(decl, { initializer: expr });
       fragment.node = 'VariableDeclarationFragment';
-      return {
+      return addLocation({
         node:     'VariableDeclarationExpression',
-        location:     location(),
         modifiers: modifiers,
         type:      type,
         fragments: [fragment]
-      };
+      }, options);
     }
 
 Catch
@@ -1037,7 +866,7 @@ SwitchBlockStatementGroups
 
 SwitchBlockStatementGroup
     = expr:SwitchLabel blocks:BlockStatements
-    { return [{ node: 'SwitchCase', location: location(), expression: expr }].concat(blocks); }
+    { return [addLocation({ node: 'SwitchCase', expression: expr }, options)].concat(blocks); }
 
 SwitchLabel
     = CASE expr:ConstantExpression COLON
@@ -1050,13 +879,12 @@ SwitchLabel
 ForInit
     = modifiers:(FINAL { return makeModifier('final'); } / Annotation)* type:Type decls:VariableDeclarators
     {
-      return [{
+      return [addLocation({
         node:     'VariableDeclarationExpression',
-        location:  location(),
         modifiers: modifiers,
         fragments: decls,
         type:      type
-      }];
+      }, options)];
     }
     / first:StatementExpression rest:(COMMA StatementExpression)*
     { return extractExpressions(buildList(first, rest, 1)); }
@@ -1080,11 +908,10 @@ StatementExpression
         case 'ConstructorInvocation':
           return expr;
         default:
-          return {
+          return addLocation({
             node:      'ExpressionStatement',
-            location:   location(),
             expression: expr
-          };
+          }, options);
       }
     }
 
@@ -1098,13 +925,12 @@ ConstantExpression
 Expression
     = left:ConditionalExpression op:AssignmentOperator right:Expression
     {
-      return {
+      return addLocation({
         node:         'Assignment',
-        location:      location(),
         operator:      op[0] /* remove ending spaces */,
         leftHandSide:  left,
         rightHandSide: right
-      };
+      }, options);
     }
     / ConditionalExpression
 
@@ -1132,117 +958,110 @@ AssignmentOperator
 ConditionalExpression
     = expr:ConditionalOrExpression QUERY then:Expression COLON alt:ConditionalExpression
     {
-      return {
+      return addLocation({
         node:          'ConditionalExpression',
-        location:       location(),
         expression:     expr,
         thenExpression: then,
         elseExpression: alt
-      };
+      }, options);
     }
     / ConditionalOrExpression
 
 ConditionalOrExpression
     = first:ConditionalAndExpression rest:(OROR ConditionalAndExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 ConditionalAndExpression
     = first:InclusiveOrExpression rest:(ANDAND InclusiveOrExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 InclusiveOrExpression
     = first:ExclusiveOrExpression rest:(OR ExclusiveOrExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 ExclusiveOrExpression
     = first:AndExpression rest:(HAT AndExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 AndExpression
     = first:EqualityExpression rest:(AND EqualityExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 EqualityExpression
     = first:RelationalExpression rest:((EQUAL /  NOTEQUAL) RelationalExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 RelationalExpression
     = first:ShiftExpression rest:((LE / GE / LT / GT) ShiftExpression / INSTANCEOF ReferenceType )*
     {
       return buildTree(first, rest, function(result, element) {
-        return element[0][0] === 'instanceof' ? {
+        return addLocation(element[0][0] === 'instanceof' ? {
           node:        'InstanceofExpression',
-          location:     location(),
           leftOperand:  result,
           rightOperand: element[1]
         } : {
           node:        'InfixExpression',
           operator:     element[0][0], // remove ending Spacing
-          location:     location(),
           leftOperand:  result,
           rightOperand: element[1]
-        };
+        }, options);
       });
     }
 
 ShiftExpression
     = first:AdditiveExpression rest:((SL / SR / BSR) AdditiveExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 AdditiveExpression
     = first:MultiplicativeExpression rest:((PLUS / MINUS) MultiplicativeExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 MultiplicativeExpression
     = first:UnaryExpression rest:((STAR / DIV / MOD) UnaryExpression)*
-    { return buildInfixExpr(first, rest); }
+    { return buildInfixExpr(first, rest, options); }
 
 UnaryExpression
     = operator:PrefixOp operand:UnaryExpression
     {
-      return operand.node === 'NumberLiteral' && operator === '-' &&
+      return addLocation(operand.node === 'NumberLiteral' && operator === '-' &&
         (operand.token === '9223372036854775808L' ||
          operand.token === '9223372036854775808l' ||
          operand.token === '2147483648')
-        ? { node: 'NumberLiteral', location: location(), token: text() }
+        ? { node: 'NumberLiteral', token: text() }
         : {
           node:    'PrefixExpression',
-          location: location(),
           operator: operator,
           operand:  operand
-        };
+        }, options);
     }
     / UnaryExpressionNotPlusMinus
 
 UnaryExpressionNotPlusMinus
     = expr:CastExpression
     {
-      return {
+      return addLocation({
         node:      'CastExpression',
-        location:   location(),
         type:       expr[1],
         expression: expr[3]
-      };
+      }, options);
     }
     / arg:Primary sel:Selector sels:Selector* operator:PostfixOp+
     {
-      return operator.length > 1 ? TODO(/* JLS7? */) : {
+      return addLocation(operator.length > 1 ? TODO(/* JLS7? */) : {
         node:    'PostfixExpression',
-        location:   location(),
         operator: operator[0],
         operand:  buildSelectorTree(arg, sel, sels)
-      };
+      }, options);
     }
     / arg:Primary sel:Selector sels:Selector*
     { return buildSelectorTree(arg, sel, sels); }
     / arg:Primary operator:PostfixOp+
     {
-      return operator.length > 1 ? TODO(/* JLS7? */) : {
+      return addLocation(operator.length > 1 ? TODO(/* JLS7? */) : {
         node:    'PostfixExpression',
-        location:   location(),
         operator: operator[0],
         operand:  arg
-      };
+      }, options);
     }
     / Primary
 
@@ -1262,21 +1081,23 @@ Primary
     }
     / THIS args:Arguments?
     {
-      return args === null ? {
+      return addLocation(args === null ? {
         node:     'ThisExpression',
-        location:     location(),
         qualifier: null
       } : {
         node:         'ConstructorInvocation',
         arguments:     args,
         typeArguments: []
-      };
+      }, options);
     }
     / SUPER suffix:SuperSuffix
     {
-      return suffix.node === 'SuperConstructorInvocation'
-        ? suffix
-        : mergeProps(suffix, { qualifier: null });
+      return addLocation(
+        suffix.node === 'SuperConstructorInvocation'
+                    ? suffix
+                    : mergeProps(suffix, { qualifier: null })
+        , options
+      );
     }
     / Literal
     / NEW creator:Creator
@@ -1285,43 +1106,39 @@ Primary
     / QualifiedIdentifier
     / type:BasicType dims:Dim* DOT CLASS
     {
-      return {
+      return addLocation({
         node: 'TypeLiteral',
-        location: location(),
         type:  buildArrayTree(type, dims)
-      };
+      }, options);
     }
     / VOID DOT CLASS
     {
-      return {
+      return addLocation({
         node: 'TypeLiteral',
-        location: location(),
         type:  makePrimitive('void')
-      };
+      }, options);
     }
 
 QualifiedIdentifierSuffix
     = qual:QualifiedIdentifier dims:Dim+ DOT CLASS
     {
-      return {
+      return addLocation({
         node: 'TypeLiteral',
-        location: location(),
         type:  buildArrayTree(buildTypeName(qual, null, []), dims)
-      };
+      }, options);
     }
     / qual:QualifiedIdentifier LBRK expr:Expression RBRK
     { return { node: 'ArrayAccess',  location: location(), array: qual, index: expr }; }
     / qual:QualifiedIdentifier args:Arguments
     {
-      return mergeProps(popQualified(qual), {
+      return addLocation(mergeProps(popQualified(qual), {
         node:         'MethodInvocation',
-        location:      location(),
         arguments:     args,
         typeArguments: []
-      });
+      }), options);
     }
     / qual:QualifiedIdentifier DOT CLASS
-    { return { node: 'TypeLiteral', location: location(), type: buildTypeName(qual, null, []) }; }
+    { return addLocation({ node: 'TypeLiteral', type: buildTypeName(qual, null, []) }, options); }
     / qual:QualifiedIdentifier DOT ret:ExplicitGenericInvocation
     {
       if (ret.expression) return TODO(/* Ugly ! */);
@@ -1329,16 +1146,15 @@ QualifiedIdentifierSuffix
       return ret;
     }
     / qual:QualifiedIdentifier DOT THIS
-    { return { node: 'ThisExpression', location: location(), qualifier: qual }; }
+    { return addLocation({ node: 'ThisExpression', qualifier: qual }, options); }
     / qual:QualifiedIdentifier DOT SUPER args:Arguments
     {
-      return {
+      return addLocation({
         node:         'SuperConstructorInvocation',
-        location:      location(),
         arguments:     args,
         expression:    qual,
         typeArguments: []
-      };
+      }, options);
     }
     / qual:QualifiedIdentifier DOT NEW args:NonWildcardTypeArguments? rest:InnerCreator
     { return mergeProps(rest, { expression: qual, typeArguments: optionalList(args) }); }
@@ -1372,7 +1188,7 @@ ExplicitGenericInvocationSuffix
     = SUPER suffix:SuperSuffix
     { return suffix; }
     / id:Identifier args:Arguments
-    { return { node: 'MethodInvocation', location: location(), arguments: args, name: id, typeArguments: [] }; }
+    { return addLocation({ node: 'MethodInvocation', arguments: args, name: id, typeArguments: [] }, options); }
 
 PrefixOp
     = op:(
@@ -1392,17 +1208,17 @@ PostfixOp
 
 FieldSelector
     = DOT id:Identifier
-    { return { node: 'FieldAccess', location: location(), name: id }; }
+    { return addLocation({ node: 'FieldAccess', name: id }, options); }
 
 ArraySelector
     = expr:DimExpr
-    { return { node: 'ArrayAccess',  location: location(), index: expr }; }
+    { return addLocation({ node: 'ArrayAccess', index: expr }, options); }
 
 Selector
     = DOT id:Identifier args:Arguments
-    { return { node: 'MethodInvocation', location: location(), arguments: args, name: id, typeArguments: [] }; }
+    { return addLocation({ node: 'MethodInvocation', arguments: args, name: id, typeArguments: [] }, options); }
     / DOT id:Identifier
-    { return { node: 'FieldAccess', location: location(), name: id }; }
+    { return addLocation({ node: 'FieldAccess', name: id }, options); }
     / DOT ret:ExplicitGenericInvocation
     { return ret; }
     / DOT THIS
@@ -1412,39 +1228,37 @@ Selector
     / DOT NEW args:NonWildcardTypeArguments? ret:InnerCreator
     { return mergeProps(ret, { typeArguments: optionalList(args) }); }
     / expr:DimExpr
-    { return { node: 'ArrayAccess',  location: location(), index: expr }; }
+    { return addLocation({ node: 'ArrayAccess', index: expr }, options); }
 
 SuperSuffix
     = args:Arguments
     {
-      return {
+      return addLocation({
         node:         'SuperConstructorInvocation',
-        location:      location(),
         arguments:     args,
         expression:    null,
         typeArguments: []
-      };
+      }, options);
     }
     / DOT gen:NonWildcardTypeArguments? id:Identifier args:Arguments?
     {
-      return args === null ? {
+      return addLocation(args === null ? {
         node: 'SuperFieldAccess',
-        location: location(),
         name:  id
       } : {
         node:         'SuperMethodInvocation',
-        location:      location(),
         typeArguments: optionalList(gen),
         name:          id,
         arguments:     args
-      };
+      }, options);
     }
 
     // The definition of SuperSuffix in JLS Chapter 18 is incorrect:
     // it does not allow NonWildcardTypeArguments. See JLS 15.12.
 
 BasicType
-    = type:(
+    = annot:Annotation*
+      type:(
         "byte"
       / "short"
       / "char"
@@ -1454,7 +1268,7 @@ BasicType
       / "double"
       / "boolean"
       ) !LetterOrDigit Spacing
-    { return makePrimitive(type); }
+    { return makePrimitive(type, annot); }
 
 PrimitiveType
     = BasicType
@@ -1466,23 +1280,21 @@ Arguments
 Creator
     = type:(BasicType / CreatedName) rest:ArrayCreatorRest
     {
-      return  {
+      return addLocation({
         node:       'ArrayCreation',
-        location:    location(),
         type:        buildArrayTree(type, rest.extraDims),
         initializer: rest.init,
         dimensions:  rest.dimms
-      };
+      }, options);
     }
     / args:NonWildcardTypeArguments? type:CreatedName rest:ClassCreatorRest
     {
-      return mergeProps(rest, {
+      return mergeProps(rest, addLocation({
         node:          'ClassInstanceCreation',
         type:           type,
-        location:       location(),
         typeArguments:  optionalList(args),
         expression:     null
-      });
+      }, options));
     }
 
     // The definition of Creator in JLS Chapter 18 is incorrect:
@@ -1495,11 +1307,10 @@ CreatedName
 InnerCreator
     = id:Identifier args:NonWildcardTypeArgumentsOrDiamond? rest:ClassCreatorRest
     {
-      return mergeProps(rest, {
+      return addLocation(rest, {
         node: 'ClassInstanceCreation',
-        location: location(),
         type:  buildTypeName(id, args, [])
-      });
+      }, options);
     }
 
 ClassCreatorRest
@@ -1535,7 +1346,7 @@ ArrayInitializer
         { return buildList(first, rest, 1); }
       )?
       COMMA?  RWING
-    { return { node: 'ArrayInitializer', location: location(), expressions: optionalList(init) }; }
+    { return addLocation({ node: 'ArrayInitializer', expressions: optionalList(init) }, options); }
 
 VariableInitializer
     = ArrayInitializer
@@ -1543,11 +1354,11 @@ VariableInitializer
 
 ParExpression
     = LPAR expr:Expression RPAR
-    { return { node: 'ParenthesizedExpression', location: location(), expression: expr }; }
+    { return addLocation({ node: 'ParenthesizedExpression', expression: expr }, options); }
 
 QualifiedIdentifier
     = first:Identifier rest:(DOT Identifier)*
-    { return buildQualified(first, rest, 1); }
+    { return buildQualified(first, rest, 1, options); }
 
 Dim
     = LBRK RBRK
@@ -1571,8 +1382,8 @@ ReferenceType
     { return buildArrayTree(cls, dims); }
 
 ClassType
-    = qual:QualifiedIdentifier args:TypeArguments? rest:(DOT Identifier TypeArguments?)*
-    { return buildTypeName(qual, args, rest); }
+    = annot:Annotation* qual:QualifiedIdentifier args:TypeArguments? rest:(DOT Identifier TypeArguments?)*
+    { return mergeProps(buildTypeName(qual, args, rest), { annotations: annot }); }
 
 ClassTypeList
     = first:ClassType rest:(COMMA ClassType)*
@@ -1680,7 +1491,7 @@ AnnotationMethodRest
 
 AnnotationConstantRest
     = fragments:VariableDeclarators
-    { return { node: 'FieldDeclaration', location:  location(),  fragments: fragments }; }
+    { return addLocation({ node: 'FieldDeclaration', fragments: fragments }, options); }
 
 DefaultValue
     = DEFAULT val:ElementValue
@@ -1736,7 +1547,7 @@ ElementValue
 
 ElementValueArrayInitializer
     = LWING values:ElementValues? COMMA? RWING
-    { return { node: 'ArrayInitializer', location: location(), expressions: optionalList(values)}; }
+    { return addLocation({ node: 'ArrayInitializer', expressions: optionalList(values)}, options); }
 
 ElementValues
     = first:ElementValue rest:(COMMA ElementValue)*
@@ -1774,7 +1585,7 @@ Spacing
 
 Identifier
     = !Keyword first:Letter rest:$LetterOrDigit* Spacing
-    { return { identifier: first + rest, node: 'SimpleName', location: location() }; }
+    { return addLocation({ identifier: first + rest, node: 'SimpleName', var: (first + rest) === 'var'  }, options); }
 
 Letter = [a-z] / [A-Z] / [_$] ;
 
@@ -1893,11 +1704,11 @@ Literal
       / CharLiteral
       / StringLiteral
       / "true"  !LetterOrDigit
-      { return { node: 'BooleanLiteral', booleanValue: true, location: location() }; }
+      { return addLocation({ node: 'BooleanLiteral', booleanValue: true}, options); }
       / "false" !LetterOrDigit
-      { return { node: 'BooleanLiteral', booleanValue: false, location: location() }; }
+      { return addLocation({ node: 'BooleanLiteral', booleanValue: false}, options); }
       / "null"  !LetterOrDigit
-      { return { node: 'NullLiteral', location: location() }; }
+      { return addLocation({ node: 'NullLiteral'}, options); }
       ) Spacing
     { return literal; }
 
@@ -1907,7 +1718,7 @@ IntegerLiteral
       / OctalNumeral            // May be a prefix of HexNumeral or BinaryNumeral
       / DecimalNumeral          // May be a prefix of OctalNumeral
       ) [lL]?
-    { return { node: 'NumberLiteral', token: text(), location: location() }; }
+    { return addLocation({ node: 'NumberLiteral', token: text()}, options); }
 
 DecimalNumeral
     = "0"
@@ -1925,7 +1736,7 @@ OctalNumeral
 FloatLiteral
     = ( HexFloat
     / DecimalFloat )
-    { return { node: 'NumberLiteral', token: text(), location: location() }; }
+    { return addLocation({ node: 'NumberLiteral', token: text()}, options); }
 
 DecimalFloat
     = Digits "." Digits?  Exponent? [fFdD]?
@@ -1957,11 +1768,11 @@ HexDigit
 
 CharLiteral
     = "'" (Escape / !['\\\n\r] _) "'"                      // this " keeps the editor happy
-    { return { node: 'CharacterLiteral', escapedValue: text(), location: location() }; }
+    { return addLocation({ node: 'CharacterLiteral', escapedValue: text()}, options); }
 
 StringLiteral
     = "\"" (Escape / !["\\\n\r] _)* "\""                   // this " keeps the editor happy
-    { return { node: 'StringLiteral', escapedValue: text(), location: location() }; }
+    { return addLocation({ node: 'StringLiteral', escapedValue: text()}, options); }
 
 Escape
     = "\\" ([btnfr"'\\] / OctalEscape / UnicodeEscape)     // this " keeps the editor happy

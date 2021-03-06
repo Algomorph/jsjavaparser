@@ -1,253 +1,4 @@
-test("ExpressionStatement", function(assert) {
-      var src = multiline(function(){/*
-        class Test {
-          public static void main(String[] args) {
-            println("hello");
-          }
-        }
-        */});
-      assert.deepEqual(
-        JavaParser.parse(src)
-        ,
-        {
-            node: "CompilationUnit",
-            package: null,
-            imports: [],
-            types: [
-                {
-                    node: "TypeDeclaration",
-                    "location": {
-                        "end": {
-                            "column": 10,
-                            "line": 5,
-                            "offset": 123
-                        },
-                        "start": {
-                            "column": 9,
-                            "line": 1,
-                            "offset": 8
-                        }
-                    },
-                    modifiers: [],
-                    interface: false,
-                    name: {
-                        node: "SimpleName",
-                        "location": {
-                            "end": {
-                                "column": 20,
-                                "line": 1,
-                                "offset": 19
-                            },
-                            "start": {
-                                "column": 15,
-                                "line": 1,
-                                "offset": 14
-                            }
-                        },
-                        identifier: "Test"
-                    },
-                    typeParameters: [],
-                    superclassType: null,
-                    superInterfaceTypes: [],
-                    bodyDeclarations: [
-                        {
-                            node: "MethodDeclaration",
-                            "location": {
-                                "end": {
-                                    "column": 9,
-                                    "line": 5,
-                                    "offset": 122
-                                },
-                                "start": {
-                                    "column": 25,
-                                    "line": 2,
-                                    "offset": 45
-                                }
-                            },
-                            modifiers: [
-                                {
-                                    node: "Modifier",
-                                    keyword: "public"
-                                },
-                                {
-                                    node: "Modifier",
-                                    keyword: "static"
-                                }
-                            ],
-                            constructor: false,
-                            typeParameters: [],
-                            returnType2: {
-                                node: "PrimitiveType",
-                                primitiveTypeCode: "void"
-                            },
-                            name: {
-                                node: "SimpleName",
-                                identifier: "main",
-                                location: {
-                                    "end": {
-                                        "column": 34,
-                                        "line": 2,
-                                        "offset": 54
-                                    },
-                                    "start": {
-                                        "column": 30,
-                                        "line": 2,
-                                        "offset": 50
-                                    }
-                                },
-                            },
-                            parameters: [
-                                {
-                                    node: "SingleVariableDeclaration",
-                                    location: {
-                                        "end": {
-                                            "column": 48,
-                                            "line": 2,
-                                            "offset": 68
-                                        },
-                                        "start": {
-                                            "column": 44,
-                                            "line": 2,
-                                            "offset": 64
-                                        }
-                                    },
-                                    modifiers: [],
-                                    type: {
-                                        node: "ArrayType",
-                                        componentType: {
-                                            node: "SimpleType",
-                                            name: {
-                                                node: "SimpleName",
-                                                location: {
-                                                    "end": {
-                                                        "column": 41,
-                                                        "line": 2,
-                                                        "offset": 61
-                                                    },
-                                                    "start": {
-                                                        "column": 35,
-                                                        "line": 2,
-                                                        "offset": 55
-                                                    }
-                                                },
-                                                identifier: "String"
-                                            }
-                                        }
-                                    },
-                                    varargs: false,
-                                    name: {
-                                        node: "SimpleName",
-                                        identifier: "args",
-                                        location: {
-                                            "end": {
-                                                "column": 48,
-                                                "line": 2,
-                                                "offset": 68
-                                            },
-                                            "start": {
-                                                "column": 44,
-                                                "line": 2,
-                                                "offset": 64
-                                            }
-                                        },
-                                    },
 
-                                    extraDimensions: 0,
-                                    initializer: null
-                                }
-                            ],
-                            extraDimensions: 0,
-                            thrownExceptions: [],
-                            body: {
-                                node: "Block",
-                                "location": {
-                                    "end": {
-                                        "column": 9,
-                                        "line": 5,
-                                        "offset": 122
-                                    },
-                                    "start": {
-                                        "column": 50,
-                                        "line": 2,
-                                        "offset": 70
-                                    }
-                                },
-                                statements: [
-                                    {
-                                        node: "ExpressionStatement",
-                                        "location": {
-                                            "end": {
-                                                "column": 29,
-                                                "line": 3,
-                                                "offset": 100
-                                            },
-                                            "start": {
-                                                "column": 13,
-                                                "line": 3,
-                                                "offset": 84
-                                            }
-                                        },
-                                        expression: {
-                                            node: "MethodInvocation",
-                                            "location": {
-                                                "end": {
-                                                    "column": 29,
-                                                    "line": 3,
-                                                    "offset": 100
-                                                },
-                                                "start": {
-                                                    "column": 13,
-                                                    "line": 3,
-                                                    "offset": 84
-                                                }
-                                            },
-                                            expression: null,
-                                            typeArguments: [],
-                                            name: {
-                                                node: "SimpleName",
-                                                "location": {
-                                                    "end": {
-                                                        "column": 20,
-                                                        "line": 3,
-                                                        "offset": 91
-                                                    },
-                                                    "start": {
-                                                        "column": 13,
-                                                        "line": 3,
-                                                        "offset": 84
-                                                    }
-                                                },
-                                                identifier: "println"
-                                            },
-                                            arguments: [
-                                                {
-                                                    "location": {
-                                                        "end": {
-                                                            "column": 28,
-                                                            "line": 3,
-                                                            "offset": 99
-                                                        },
-                                                        "start": {
-                                                            "column": 21,
-                                                            "line": 3,
-                                                            "offset": 92
-                                                        }
-                                                    },
-                                                    node: "StringLiteral",
-                                                    escapedValue: "\"hello\""
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-      );
-    });
 
     // test("Assignment Expression", function(assert) {
     //   var src = multiline(function(){/*
@@ -5768,2551 +5519,2551 @@ test("ExpressionStatement", function(assert) {
     //   );
     // });
 
-    test("Primary UnaryExpression", function(assert) {
-      var src = multiline(function(){/*
-        class Test {
-          public static void main(String[] args) {
-            new Object(); // Primary
-            new java.lang.String("hello").hashCode("hello"); // Primary Selector
-            new String(new char[]{'h', 'e', 'l', 'l', 'o'}).hashCode().equals(42); // Primary Selector+
-            new String(new char[]{'h', 'e', 'l', 'l', 'o'}).hashCode().some(42).equals(42); // Primary Selector+
-            Hello.World++; // Primary PostfixOp
-            Hello().World++; // Primary Selector PostfixOp
-            new java.lang.String("hello").hashCode("hello").v++; // Primary Selector+ PostfixOp
-            new java.lang.String("hello").hashCode("hello").h.v++; // Primary Selector+ PostfixOp
-            new String("hello").hashCode("hello").h.v().hello.world++;
-            ++new String("hello").hashCode("hello").h.v().hello.world;
-          }
-        }
-      */});
-      assert.deepEqual(
-        JavaParser.parse(src)
-        ,
-          {
-              node: "CompilationUnit",
-              package: null,
-              imports: [],
-              types: [
-                  {
-                      node: "TypeDeclaration",
-                      location: {
-                          start: {
-                              column: 0,
-                              line: 1,
-                              offset: 0
-                          },
-                          end: {
-                              column: -1,
-                              line: -1,
-                              offset: 804
-                          }
-                      },
-                      javadoc: null,
-                      modifiers: [],
-                      interface: false,
-                      name: {
-                          node: "SimpleName",
-                          location: {
-                              start: {
-                                  column: 6,
-                                  line: 1,
-                                  offset: 6
-                              },
-                              end: {
-                                  column: 5,
-                                  line: 1,
-                                  offset: 5
-                              }
-                          },
-                          identifier: "Test",
-                          var: false
-                      },
-                      typeParameters: [],
-                      superclassType: null,
-                      superInterfaceTypes: [],
-                      bodyDeclarations: [
-                          {
-                              node: "MethodDeclaration",
-                              location: {
-                                  start: {
-                                      column: 4,
-                                      line: 2,
-                                      offset: 17
-                                  },
-                                  end: {
-                                      column: 57,
-                                      line: 12,
-                                      offset: 786
-                                  }
-                              },
-                              javadoc: null,
-                              modifiers: [
-                                  {
-                                      node: "Modifier",
-                                      location: {
-                                          start: {
-                                              column: 4,
-                                              line: 2,
-                                              offset: 17
-                                          },
-                                          end: {
-                                              column: 8,
-                                              line: 1,
-                                              offset: 8
-                                          }
-                                      },
-                                      keyword: "public"
-                                  },
-                                  {
-                                      node: "Modifier",
-                                      location: {
-                                          start: {
-                                              column: 11,
-                                              line: 2,
-                                              offset: 24
-                                          },
-                                          end: {
-                                              column: 8,
-                                              line: 1,
-                                              offset: 8
-                                          }
-                                      },
-                                      keyword: "static"
-                                  }
-                              ],
-                              constructor: false,
-                              typeParameters: [],
-                              returnType2: {
-                                  node: "PrimitiveType",
-                                  location: {
-                                      start: {
-                                          column: 18,
-                                          line: 2,
-                                          offset: 31
-                                      },
-                                      end: {
-                                          column: 6,
-                                          line: 1,
-                                          offset: 6
-                                      }
-                                  },
-                                  annotations: [],
-                                  primitiveTypeCode: "void"
-                              },
-                              name: {
-                                  node: "SimpleName",
-                                  location: {
-                                      start: {
-                                          column: 23,
-                                          line: 2,
-                                          offset: 36
-                                      },
-                                      end: {
-                                          column: 6,
-                                          line: 1,
-                                          offset: 6
-                                      }
-                                  },
-                                  identifier: "main",
-                                  var: false
-                              },
-                              receiverType: null,
-                              receiverQualifier: null,
-                              parameters: [
-                                  {
-                                      node: "SingleVariableDeclaration",
-                                      location: {
-                                          start: {
-                                              column: 28,
-                                              line: 2,
-                                              offset: 41
-                                          },
-                                          end: {
-                                              column: 2,
-                                              line: 2,
-                                              offset: 15
-                                          }
-                                      },
-                                      modifiers: [],
-                                      type: {
-                                          node: "ArrayType",
-                                          location: {
-                                              start: {
-                                                  column: 28,
-                                                  line: 2,
-                                                  offset: 41
-                                              },
-                                              end: {
-                                                  column: 10,
-                                                  line: 1,
-                                                  offset: 10
-                                              }
-                                          },
-                                          elementType: {
-                                              node: "SimpleType",
-                                              location: {
-                                                  start: {
-                                                      column: 28,
-                                                      line: 2,
-                                                      offset: 41
-                                                  },
-                                                  end: {
-                                                      column: 8,
-                                                      line: 1,
-                                                      offset: 8
-                                                  }
-                                              },
-                                              annotations: [],
-                                              name: {
-                                                  node: "SimpleName",
-                                                  location: {
-                                                      start: {
-                                                          column: 28,
-                                                          line: 2,
-                                                          offset: 41
-                                                      },
-                                                      end: {
-                                                          column: 8,
-                                                          line: 1,
-                                                          offset: 8
-                                                      }
-                                                  },
-                                                  identifier: "String",
-                                                  var: false
-                                              }
-                                          },
-                                          dimensions: [
-                                              {
-                                                  node: "Dimension",
-                                                  location: {
-                                                      start: {
-                                                          column: 34,
-                                                          line: 2,
-                                                          offset: 47
-                                                      },
-                                                      end: {
-                                                          column: 4,
-                                                          line: 1,
-                                                          offset: 4
-                                                      }
-                                                  },
-                                                  annotations: []
-                                              }
-                                          ]
-                                      },
-                                      varargsAnnotations: [],
-                                      varargs: false,
-                                      name: {
-                                          node: "SimpleName",
-                                          location: {
-                                              start: {
-                                                  column: 37,
-                                                  line: 2,
-                                                  offset: 50
-                                              },
-                                              end: {
-                                                  column: 6,
-                                                  line: 1,
-                                                  offset: 6
-                                              }
-                                          },
-                                          identifier: "args",
-                                          var: false
-                                      },
-                                      extraDimensions2: [],
-                                      initializer: null
-                                  }
-                              ],
-                              extraDimensions2: [],
-                              thrownExceptionTypes: [],
-                              body: {
-                                  node: "Block",
-                                  location: {
-                                      start: {
-                                          column: 43,
-                                          line: 2,
-                                          offset: 56
-                                      },
-                                      end: {
-                                          column: 18,
-                                          line: 12,
-                                          offset: 747
-                                      }
-                                  },
-                                  statements: [
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 3,
-                                                  offset: 66
-                                              },
-                                              end: {
-                                                  column: 3,
-                                                  line: 2,
-                                                  offset: 16
-                                              }
-                                          },
-                                          trailingComments: [
-                                              {
-                                                  node: "LineComment",
-                                                  value: "\/\/ Primary"
-                                              }
-                                          ],
-                                          expression: {
-                                              node: "ClassInstanceCreation",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 3,
-                                                      offset: 66
-                                                  },
-                                                  end: {
-                                                      column: 2,
-                                                      line: 2,
-                                                      offset: 15
-                                                  }
-                                              },
-                                              expression: null,
-                                              typeArguments: [],
-                                              type: {
-                                                  node: "SimpleType",
-                                                  location: {
-                                                      start: {
-                                                          column: 12,
-                                                          line: 3,
-                                                          offset: 70
-                                                      },
-                                                      end: {
-                                                          column: 9,
-                                                          line: 1,
-                                                          offset: 9
-                                                      }
-                                                  },
-                                                  annotations: [],
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 12,
-                                                              line: 3,
-                                                              offset: 70
-                                                          },
-                                                          end: {
-                                                              column: 9,
-                                                              line: 1,
-                                                              offset: 9
-                                                          }
-                                                      },
-                                                      identifier: "Object",
-                                                      var: false
-                                                  }
-                                              },
-                                              arguments: [],
-                                              anonymousClassDeclaration: null
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 4,
-                                                  offset: 99
-                                              },
-                                              end: {
-                                                  column: 39,
-                                                  line: 2,
-                                                  offset: 52
-                                              }
-                                          },
-                                          trailingComments: [
-                                              {
-                                                  node: "LineComment",
-                                                  value: "\/\/ Primary Selector"
-                                              }
-                                          ],
-                                          expression: {
-                                              node: "MethodInvocation",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 4,
-                                                      offset: 99
-                                                  },
-                                                  end: {
-                                                      column: 38,
-                                                      line: 2,
-                                                      offset: 51
-                                                  }
-                                              },
-                                              expression: {
-                                                  node: "ClassInstanceCreation",
-                                                  location: {
-                                                      start: {
-                                                          column: 8,
-                                                          line: 4,
-                                                          offset: 99
-                                                      },
-                                                      end: {
-                                                          column: 20,
-                                                          line: 2,
-                                                          offset: 33
-                                                      }
-                                                  },
-                                                  expression: null,
-                                                  typeArguments: [],
-                                                  type: {
-                                                      node: "SimpleType",
-                                                      location: {
-                                                          start: {
-                                                              column: 12,
-                                                              line: 4,
-                                                              offset: 103
-                                                          },
-                                                          end: {
-                                                              column: 7,
-                                                              line: 2,
-                                                              offset: 20
-                                                          }
-                                                      },
-                                                      annotations: [],
-                                                      name: {
-                                                          node: "QualifiedName",
-                                                          location: {
-                                                              start: {
-                                                                  column: 12,
-                                                                  line: 4,
-                                                                  offset: 103
-                                                              },
-                                                              end: {
-                                                                  column: 7,
-                                                                  line: 2,
-                                                                  offset: 20
-                                                              }
-                                                          },
-                                                          qualifier: {
-                                                              node: "QualifiedName",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 12,
-                                                                      line: 4,
-                                                                      offset: 103
-                                                                  },
-                                                                  end: {
-                                                                      column: 0,
-                                                                      line: 2,
-                                                                      offset: 13
-                                                                  }
-                                                              },
-                                                              qualifier: {
-                                                                  node: "SimpleName",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 12,
-                                                                          line: 4,
-                                                                          offset: 103
-                                                                      },
-                                                                      end: {
-                                                                          column: 8,
-                                                                          line: 1,
-                                                                          offset: 8
-                                                                      }
-                                                                  },
-                                                                  identifier: "java",
-                                                                  var: false
-                                                              },
-                                                              name: {
-                                                                  node: "SimpleName",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 17,
-                                                                          line: 4,
-                                                                          offset: 108
-                                                                      },
-                                                                      end: {
-                                                                          column: 8,
-                                                                          line: 1,
-                                                                          offset: 8
-                                                                      }
-                                                                  },
-                                                                  identifier: "lang",
-                                                                  var: false
-                                                              }
-                                                          },
-                                                          name: {
-                                                              node: "SimpleName",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 22,
-                                                                      line: 4,
-                                                                      offset: 113
-                                                                  },
-                                                                  end: {
-                                                                      column: 10,
-                                                                      line: 1,
-                                                                      offset: 10
-                                                                  }
-                                                              },
-                                                              identifier: "String",
-                                                              var: false
-                                                          }
-                                                      }
-                                                  },
-                                                  arguments: [
-                                                      {
-                                                          node: "StringLiteral",
-                                                          location: {
-                                                              start: {
-                                                                  column: 29,
-                                                                  line: 4,
-                                                                  offset: 120
-                                                              },
-                                                              end: {
-                                                                  column: 11,
-                                                                  line: 1,
-                                                                  offset: 11
-                                                              }
-                                                          },
-                                                          escapedValue: "\"hello\""
-                                                      }
-                                                  ],
-                                                  anonymousClassDeclaration: null
-                                              },
-                                              typeArguments: [],
-                                              name: {
-                                                  node: "SimpleName",
-                                                  location: {
-                                                      start: {
-                                                          column: 38,
-                                                          line: 4,
-                                                          offset: 129
-                                                      },
-                                                      end: {
-                                                          column: 12,
-                                                          line: 1,
-                                                          offset: 12
-                                                      }
-                                                  },
-                                                  identifier: "hashCode",
-                                                  var: false
-                                              },
-                                              arguments: [
-                                                  {
-                                                      node: "StringLiteral",
-                                                      location: {
-                                                          start: {
-                                                              column: 47,
-                                                              line: 4,
-                                                              offset: 138
-                                                          },
-                                                          end: {
-                                                              column: 11,
-                                                              line: 1,
-                                                              offset: 11
-                                                          }
-                                                      },
-                                                      escapedValue: "\"hello\""
-                                                  }
-                                              ]
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 5,
-                                                  offset: 176
-                                              },
-                                              end: {
-                                                  column: 17,
-                                                  line: 3,
-                                                  offset: 75
-                                              }
-                                          },
-                                          trailingComments: [
-                                              {
-                                                  node: "LineComment",
-                                                  value: "\/\/ Primary Selector+"
-                                              }
-                                          ],
-                                          expression: {
-                                              node: "MethodInvocation",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 5,
-                                                      offset: 176
-                                                  },
-                                                  end: {
-                                                      column: 16,
-                                                      line: 3,
-                                                      offset: 74
-                                                  }
-                                              },
-                                              expression: {
-                                                  node: "MethodInvocation",
-                                                  location: {
-                                                      start: {
-                                                          column: 8,
-                                                          line: 5,
-                                                          offset: 176
-                                                      },
-                                                      end: {
-                                                          column: 5,
-                                                          line: 3,
-                                                          offset: 63
-                                                      }
-                                                  },
-                                                  expression: {
-                                                      node: "ClassInstanceCreation",
-                                                      location: {
-                                                          start: {
-                                                              column: 8,
-                                                              line: 5,
-                                                              offset: 176
-                                                          },
-                                                          end: {
-                                                              column: 39,
-                                                              line: 2,
-                                                              offset: 52
-                                                          }
-                                                      },
-                                                      expression: null,
-                                                      typeArguments: [],
-                                                      type: {
-                                                          node: "SimpleType",
-                                                          location: {
-                                                              start: {
-                                                                  column: 12,
-                                                                  line: 5,
-                                                                  offset: 180
-                                                              },
-                                                              end: {
-                                                                  column: 11,
-                                                                  line: 1,
-                                                                  offset: 11
-                                                              }
-                                                          },
-                                                          annotations: [],
-                                                          name: {
-                                                              node: "SimpleName",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 12,
-                                                                      line: 5,
-                                                                      offset: 180
-                                                                  },
-                                                                  end: {
-                                                                      column: 11,
-                                                                      line: 1,
-                                                                      offset: 11
-                                                                  }
-                                                              },
-                                                              identifier: "String",
-                                                              var: false
-                                                          }
-                                                      },
-                                                      arguments: [
-                                                          {
-                                                              node: "ArrayCreation",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 19,
-                                                                      line: 5,
-                                                                      offset: 187
-                                                                  },
-                                                                  end: {
-                                                                      column: 27,
-                                                                      line: 2,
-                                                                      offset: 40
-                                                                  }
-                                                              },
-                                                              type: {
-                                                                  node: "ArrayType",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 23,
-                                                                          line: 5,
-                                                                          offset: 191
-                                                                      },
-                                                                      end: {
-                                                                          column: 11,
-                                                                          line: 1,
-                                                                          offset: 11
-                                                                      }
-                                                                  },
-                                                                  elementType: {
-                                                                      node: "PrimitiveType",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 23,
-                                                                              line: 5,
-                                                                              offset: 191
-                                                                          },
-                                                                          end: {
-                                                                              column: 9,
-                                                                              line: 1,
-                                                                              offset: 9
-                                                                          }
-                                                                      },
-                                                                      annotations: [],
-                                                                      primitiveTypeCode: "char"
-                                                                  },
-                                                                  dimensions: [
-                                                                      {
-                                                                          node: "Dimension",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 27,
-                                                                                  line: 5,
-                                                                                  offset: 195
-                                                                              },
-                                                                              end: {
-                                                                                  column: 7,
-                                                                                  line: 1,
-                                                                                  offset: 7
-                                                                              }
-                                                                          },
-                                                                          annotations: []
-                                                                      }
-                                                                  ]
-                                                              },
-                                                              dimensions: [],
-                                                              initializer: {
-                                                                  node: "ArrayInitializer",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 29,
-                                                                          line: 5,
-                                                                          offset: 197
-                                                                      },
-                                                                      end: {
-                                                                          column: 17,
-                                                                          line: 2,
-                                                                          offset: 30
-                                                                      }
-                                                                  },
-                                                                  expressions: [
-                                                                      {
-                                                                          node: "CharacterLiteral",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 30,
-                                                                                  line: 5,
-                                                                                  offset: 198
-                                                                              },
-                                                                              end: {
-                                                                                  column: 8,
-                                                                                  line: 1,
-                                                                                  offset: 8
-                                                                              }
-                                                                          },
-                                                                          escapedValue: "'h'"
-                                                                      },
-                                                                      {
-                                                                          node: "CharacterLiteral",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 35,
-                                                                                  line: 5,
-                                                                                  offset: 203
-                                                                              },
-                                                                              end: {
-                                                                                  column: 8,
-                                                                                  line: 1,
-                                                                                  offset: 8
-                                                                              }
-                                                                          },
-                                                                          escapedValue: "'e'"
-                                                                      },
-                                                                      {
-                                                                          node: "CharacterLiteral",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 40,
-                                                                                  line: 5,
-                                                                                  offset: 208
-                                                                              },
-                                                                              end: {
-                                                                                  column: 8,
-                                                                                  line: 1,
-                                                                                  offset: 8
-                                                                              }
-                                                                          },
-                                                                          escapedValue: "'l'"
-                                                                      },
-                                                                      {
-                                                                          node: "CharacterLiteral",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 45,
-                                                                                  line: 5,
-                                                                                  offset: 213
-                                                                              },
-                                                                              end: {
-                                                                                  column: 8,
-                                                                                  line: 1,
-                                                                                  offset: 8
-                                                                              }
-                                                                          },
-                                                                          escapedValue: "'l'"
-                                                                      },
-                                                                      {
-                                                                          node: "CharacterLiteral",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 50,
-                                                                                  line: 5,
-                                                                                  offset: 218
-                                                                              },
-                                                                              end: {
-                                                                                  column: 8,
-                                                                                  line: 1,
-                                                                                  offset: 8
-                                                                              }
-                                                                          },
-                                                                          escapedValue: "'o'"
-                                                                      }
-                                                                  ]
-                                                              }
-                                                          }
-                                                      ],
-                                                      anonymousClassDeclaration: null
-                                                  },
-                                                  typeArguments: [],
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 56,
-                                                              line: 5,
-                                                              offset: 224
-                                                          },
-                                                          end: {
-                                                              column: 0,
-                                                              line: 2,
-                                                              offset: 13
-                                                          }
-                                                      },
-                                                      identifier: "hashCode",
-                                                      var: false
-                                                  },
-                                                  arguments: []
-                                              },
-                                              typeArguments: [],
-                                              name: {
-                                                  node: "SimpleName",
-                                                  location: {
-                                                      start: {
-                                                          column: 67,
-                                                          line: 5,
-                                                          offset: 235
-                                                      },
-                                                      end: {
-                                                          column: 11,
-                                                          line: 1,
-                                                          offset: 11
-                                                      }
-                                                  },
-                                                  identifier: "equals",
-                                                  var: false
-                                              },
-                                              arguments: [
-                                                  {
-                                                      node: "NumberLiteral",
-                                                      location: {
-                                                          start: {
-                                                              column: 74,
-                                                              line: 5,
-                                                              offset: 242
-                                                          },
-                                                          end: {
-                                                              column: 7,
-                                                              line: 1,
-                                                              offset: 7
-                                                          }
-                                                      },
-                                                      token: "42"
-                                                  }
-                                              ]
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 6,
-                                                  offset: 276
-                                              },
-                                              end: {
-                                                  column: 27,
-                                                  line: 3,
-                                                  offset: 85
-                                              }
-                                          },
-                                          trailingComments: [
-                                              {
-                                                  node: "LineComment",
-                                                  value: "\/\/ Primary Selector+"
-                                              }
-                                          ],
-                                          expression: {
-                                              node: "MethodInvocation",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 6,
-                                                      offset: 276
-                                                  },
-                                                  end: {
-                                                      column: 26,
-                                                      line: 3,
-                                                      offset: 84
-                                                  }
-                                              },
-                                              expression: {
-                                                  node: "MethodInvocation",
-                                                  location: {
-                                                      start: {
-                                                          column: 8,
-                                                          line: 6,
-                                                          offset: 276
-                                                      },
-                                                      end: {
-                                                          column: 15,
-                                                          line: 3,
-                                                          offset: 73
-                                                      }
-                                                  },
-                                                  expression: {
-                                                      node: "MethodInvocation",
-                                                      location: {
-                                                          start: {
-                                                              column: 8,
-                                                              line: 6,
-                                                              offset: 276
-                                                          },
-                                                          end: {
-                                                              column: 6,
-                                                              line: 3,
-                                                              offset: 64
-                                                          }
-                                                      },
-                                                      expression: {
-                                                          node: "ClassInstanceCreation",
-                                                          location: {
-                                                              start: {
-                                                                  column: 8,
-                                                                  line: 6,
-                                                                  offset: 276
-                                                              },
-                                                              end: {
-                                                                  column: 40,
-                                                                  line: 2,
-                                                                  offset: 53
-                                                              }
-                                                          },
-                                                          expression: null,
-                                                          typeArguments: [],
-                                                          type: {
-                                                              node: "SimpleType",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 12,
-                                                                      line: 6,
-                                                                      offset: 280
-                                                                  },
-                                                                  end: {
-                                                                      column: 12,
-                                                                      line: 1,
-                                                                      offset: 12
-                                                                  }
-                                                              },
-                                                              annotations: [],
-                                                              name: {
-                                                                  node: "SimpleName",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 12,
-                                                                          line: 6,
-                                                                          offset: 280
-                                                                      },
-                                                                      end: {
-                                                                          column: 12,
-                                                                          line: 1,
-                                                                          offset: 12
-                                                                      }
-                                                                  },
-                                                                  identifier: "String",
-                                                                  var: false
-                                                              }
-                                                          },
-                                                          arguments: [
-                                                              {
-                                                                  node: "ArrayCreation",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 19,
-                                                                          line: 6,
-                                                                          offset: 287
-                                                                      },
-                                                                      end: {
-                                                                          column: 28,
-                                                                          line: 2,
-                                                                          offset: 41
-                                                                      }
-                                                                  },
-                                                                  type: {
-                                                                      node: "ArrayType",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 23,
-                                                                              line: 6,
-                                                                              offset: 291
-                                                                          },
-                                                                          end: {
-                                                                              column: 12,
-                                                                              line: 1,
-                                                                              offset: 12
-                                                                          }
-                                                                      },
-                                                                      elementType: {
-                                                                          node: "PrimitiveType",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 23,
-                                                                                  line: 6,
-                                                                                  offset: 291
-                                                                              },
-                                                                              end: {
-                                                                                  column: 10,
-                                                                                  line: 1,
-                                                                                  offset: 10
-                                                                              }
-                                                                          },
-                                                                          annotations: [],
-                                                                          primitiveTypeCode: "char"
-                                                                      },
-                                                                      dimensions: [
-                                                                          {
-                                                                              node: "Dimension",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 27,
-                                                                                      line: 6,
-                                                                                      offset: 295
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 8,
-                                                                                      line: 1,
-                                                                                      offset: 8
-                                                                                  }
-                                                                              },
-                                                                              annotations: []
-                                                                          }
-                                                                      ]
-                                                                  },
-                                                                  dimensions: [],
-                                                                  initializer: {
-                                                                      node: "ArrayInitializer",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 29,
-                                                                              line: 6,
-                                                                              offset: 297
-                                                                          },
-                                                                          end: {
-                                                                              column: 18,
-                                                                              line: 2,
-                                                                              offset: 31
-                                                                          }
-                                                                      },
-                                                                      expressions: [
-                                                                          {
-                                                                              node: "CharacterLiteral",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 30,
-                                                                                      line: 6,
-                                                                                      offset: 298
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 9,
-                                                                                      line: 1,
-                                                                                      offset: 9
-                                                                                  }
-                                                                              },
-                                                                              escapedValue: "'h'"
-                                                                          },
-                                                                          {
-                                                                              node: "CharacterLiteral",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 35,
-                                                                                      line: 6,
-                                                                                      offset: 303
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 9,
-                                                                                      line: 1,
-                                                                                      offset: 9
-                                                                                  }
-                                                                              },
-                                                                              escapedValue: "'e'"
-                                                                          },
-                                                                          {
-                                                                              node: "CharacterLiteral",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 40,
-                                                                                      line: 6,
-                                                                                      offset: 308
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 9,
-                                                                                      line: 1,
-                                                                                      offset: 9
-                                                                                  }
-                                                                              },
-                                                                              escapedValue: "'l'"
-                                                                          },
-                                                                          {
-                                                                              node: "CharacterLiteral",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 45,
-                                                                                      line: 6,
-                                                                                      offset: 313
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 9,
-                                                                                      line: 1,
-                                                                                      offset: 9
-                                                                                  }
-                                                                              },
-                                                                              escapedValue: "'l'"
-                                                                          },
-                                                                          {
-                                                                              node: "CharacterLiteral",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 50,
-                                                                                      line: 6,
-                                                                                      offset: 318
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 9,
-                                                                                      line: 1,
-                                                                                      offset: 9
-                                                                                  }
-                                                                              },
-                                                                              escapedValue: "'o'"
-                                                                          }
-                                                                      ]
-                                                                  }
-                                                              }
-                                                          ],
-                                                          anonymousClassDeclaration: null
-                                                      },
-                                                      typeArguments: [],
-                                                      name: {
-                                                          node: "SimpleName",
-                                                          location: {
-                                                              start: {
-                                                                  column: 56,
-                                                                  line: 6,
-                                                                  offset: 324
-                                                              },
-                                                              end: {
-                                                                  column: 1,
-                                                                  line: 2,
-                                                                  offset: 14
-                                                              }
-                                                          },
-                                                          identifier: "hashCode",
-                                                          var: false
-                                                      },
-                                                      arguments: []
-                                                  },
-                                                  typeArguments: [],
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 67,
-                                                              line: 6,
-                                                              offset: 335
-                                                          },
-                                                          end: {
-                                                              column: 10,
-                                                              line: 1,
-                                                              offset: 10
-                                                          }
-                                                      },
-                                                      identifier: "some",
-                                                      var: false
-                                                  },
-                                                  arguments: [
-                                                      {
-                                                          node: "NumberLiteral",
-                                                          location: {
-                                                              start: {
-                                                                  column: 72,
-                                                                  line: 6,
-                                                                  offset: 340
-                                                              },
-                                                              end: {
-                                                                  column: 8,
-                                                                  line: 1,
-                                                                  offset: 8
-                                                              }
-                                                          },
-                                                          token: "42"
-                                                      }
-                                                  ]
-                                              },
-                                              typeArguments: [],
-                                              name: {
-                                                  node: "SimpleName",
-                                                  location: {
-                                                      start: {
-                                                          column: 76,
-                                                          line: 6,
-                                                          offset: 344
-                                                      },
-                                                      end: {
-                                                          column: 12,
-                                                          line: 1,
-                                                          offset: 12
-                                                      }
-                                                  },
-                                                  identifier: "equals",
-                                                  var: false
-                                              },
-                                              arguments: [
-                                                  {
-                                                      node: "NumberLiteral",
-                                                      location: {
-                                                          start: {
-                                                              column: 83,
-                                                              line: 6,
-                                                              offset: 351
-                                                          },
-                                                          end: {
-                                                              column: 8,
-                                                              line: 1,
-                                                              offset: 8
-                                                          }
-                                                      },
-                                                      token: "42"
-                                                  }
-                                              ]
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 7,
-                                                  offset: 385
-                                              },
-                                              end: {
-                                                  column: 8,
-                                                  line: 2,
-                                                  offset: 21
-                                              }
-                                          },
-                                          trailingComments: [
-                                              {
-                                                  node: "LineComment",
-                                                  value: "\/\/ Primary PostfixOp"
-                                              }
-                                          ],
-                                          expression: {
-                                              node: "PostfixExpression",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 7,
-                                                      offset: 385
-                                                  },
-                                                  end: {
-                                                      column: 7,
-                                                      line: 2,
-                                                      offset: 20
-                                                  }
-                                              },
-                                              operand: {
-                                                  node: "QualifiedName",
-                                                  location: {
-                                                      start: {
-                                                          column: 8,
-                                                          line: 7,
-                                                          offset: 385
-                                                      },
-                                                      end: {
-                                                          column: 5,
-                                                          line: 2,
-                                                          offset: 18
-                                                      }
-                                                  },
-                                                  qualifier: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 8,
-                                                              line: 7,
-                                                              offset: 385
-                                                          },
-                                                          end: {
-                                                              column: 12,
-                                                              line: 1,
-                                                              offset: 12
-                                                          }
-                                                      },
-                                                      identifier: "Hello",
-                                                      var: false
-                                                  },
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 14,
-                                                              line: 7,
-                                                              offset: 391
-                                                          },
-                                                          end: {
-                                                              column: 12,
-                                                              line: 1,
-                                                              offset: 12
-                                                          }
-                                                      },
-                                                      identifier: "World",
-                                                      var: false
-                                                  }
-                                              },
-                                              operator: "++"
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 8,
-                                                  offset: 429
-                                              },
-                                              end: {
-                                                  column: 11,
-                                                  line: 2,
-                                                  offset: 24
-                                              }
-                                          },
-                                          trailingComments: [
-                                              {
-                                                  node: "LineComment",
-                                                  value: "\/\/ Primary Selector PostfixOp"
-                                              }
-                                          ],
-                                          expression: {
-                                              node: "PostfixExpression",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 8,
-                                                      offset: 429
-                                                  },
-                                                  end: {
-                                                      column: 10,
-                                                      line: 2,
-                                                      offset: 23
-                                                  }
-                                              },
-                                              operand: {
-                                                  node: "FieldAccess",
-                                                  location: {
-                                                      start: {
-                                                          column: 8,
-                                                          line: 8,
-                                                          offset: 429
-                                                      },
-                                                      end: {
-                                                          column: 8,
-                                                          line: 2,
-                                                          offset: 21
-                                                      }
-                                                  },
-                                                  expression: {
-                                                      node: "MethodInvocation",
-                                                      location: {
-                                                          start: {
-                                                              column: 8,
-                                                              line: 8,
-                                                              offset: 429
-                                                          },
-                                                          end: {
-                                                              column: 2,
-                                                              line: 2,
-                                                              offset: 15
-                                                          }
-                                                      },
-                                                      expression: null,
-                                                      typeArguments: [],
-                                                      name: {
-                                                          node: "SimpleName",
-                                                          location: {
-                                                              start: {
-                                                                  column: 8,
-                                                                  line: 8,
-                                                                  offset: 429
-                                                              },
-                                                              end: {
-                                                                  column: 0,
-                                                                  line: 2,
-                                                                  offset: 13
-                                                              }
-                                                          },
-                                                          identifier: "Hello",
-                                                          var: false
-                                                      },
-                                                      arguments: []
-                                                  },
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 16,
-                                                              line: 8,
-                                                              offset: 437
-                                                          },
-                                                          end: {
-                                                              column: 0,
-                                                              line: 2,
-                                                              offset: 13
-                                                          }
-                                                      },
-                                                      identifier: "World",
-                                                      var: false
-                                                  }
-                                              },
-                                              operator: "++"
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 9,
-                                                  offset: 484
-                                              },
-                                              end: {
-                                                  column: 3,
-                                                  line: 3,
-                                                  offset: 61
-                                              }
-                                          },
-                                          trailingComments: [
-                                              {
-                                                  node: "LineComment",
-                                                  value: "\/\/ Primary Selector+ PostfixOp"
-                                              }
-                                          ],
-                                          expression: {
-                                              node: "PostfixExpression",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 9,
-                                                      offset: 484
-                                                  },
-                                                  end: {
-                                                      column: 2,
-                                                      line: 3,
-                                                      offset: 60
-                                                  }
-                                              },
-                                              operand: {
-                                                  node: "FieldAccess",
-                                                  location: {
-                                                      start: {
-                                                          column: 8,
-                                                          line: 9,
-                                                          offset: 484
-                                                      },
-                                                      end: {
-                                                          column: 0,
-                                                          line: 3,
-                                                          offset: 58
-                                                      }
-                                                  },
-                                                  expression: {
-                                                      node: "MethodInvocation",
-                                                      location: {
-                                                          start: {
-                                                              column: 8,
-                                                              line: 9,
-                                                              offset: 484
-                                                          },
-                                                          end: {
-                                                              column: 43,
-                                                              line: 2,
-                                                              offset: 56
-                                                          }
-                                                      },
-                                                      expression: {
-                                                          node: "ClassInstanceCreation",
-                                                          location: {
-                                                              start: {
-                                                                  column: 8,
-                                                                  line: 9,
-                                                                  offset: 484
-                                                              },
-                                                              end: {
-                                                                  column: 25,
-                                                                  line: 2,
-                                                                  offset: 38
-                                                              }
-                                                          },
-                                                          expression: null,
-                                                          typeArguments: [],
-                                                          type: {
-                                                              node: "SimpleType",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 12,
-                                                                      line: 9,
-                                                                      offset: 488
-                                                                  },
-                                                                  end: {
-                                                                      column: 12,
-                                                                      line: 2,
-                                                                      offset: 25
-                                                                  }
-                                                              },
-                                                              annotations: [],
-                                                              name: {
-                                                                  node: "QualifiedName",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 12,
-                                                                          line: 9,
-                                                                          offset: 488
-                                                                      },
-                                                                      end: {
-                                                                          column: 12,
-                                                                          line: 2,
-                                                                          offset: 25
-                                                                      }
-                                                                  },
-                                                                  qualifier: {
-                                                                      node: "QualifiedName",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 12,
-                                                                              line: 9,
-                                                                              offset: 488
-                                                                          },
-                                                                          end: {
-                                                                              column: 5,
-                                                                              line: 2,
-                                                                              offset: 18
-                                                                          }
-                                                                      },
-                                                                      qualifier: {
-                                                                          node: "SimpleName",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 12,
-                                                                                  line: 9,
-                                                                                  offset: 488
-                                                                              },
-                                                                              end: {
-                                                                                  column: 0,
-                                                                                  line: 2,
-                                                                                  offset: 13
-                                                                              }
-                                                                          },
-                                                                          identifier: "java",
-                                                                          var: false
-                                                                      },
-                                                                      name: {
-                                                                          node: "SimpleName",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 17,
-                                                                                  line: 9,
-                                                                                  offset: 493
-                                                                              },
-                                                                              end: {
-                                                                                  column: 0,
-                                                                                  line: 2,
-                                                                                  offset: 13
-                                                                              }
-                                                                          },
-                                                                          identifier: "lang",
-                                                                          var: false
-                                                                      }
-                                                                  },
-                                                                  name: {
-                                                                      node: "SimpleName",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 22,
-                                                                              line: 9,
-                                                                              offset: 498
-                                                                          },
-                                                                          end: {
-                                                                              column: 2,
-                                                                              line: 2,
-                                                                              offset: 15
-                                                                          }
-                                                                      },
-                                                                      identifier: "String",
-                                                                      var: false
-                                                                  }
-                                                              }
-                                                          },
-                                                          arguments: [
-                                                              {
-                                                                  node: "StringLiteral",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 29,
-                                                                          line: 9,
-                                                                          offset: 505
-                                                                      },
-                                                                      end: {
-                                                                          column: 3,
-                                                                          line: 2,
-                                                                          offset: 16
-                                                                      }
-                                                                  },
-                                                                  escapedValue: "\"hello\""
-                                                              }
-                                                          ],
-                                                          anonymousClassDeclaration: null
-                                                      },
-                                                      typeArguments: [],
-                                                      name: {
-                                                          node: "SimpleName",
-                                                          location: {
-                                                              start: {
-                                                                  column: 38,
-                                                                  line: 9,
-                                                                  offset: 514
-                                                              },
-                                                              end: {
-                                                                  column: 4,
-                                                                  line: 2,
-                                                                  offset: 17
-                                                              }
-                                                          },
-                                                          identifier: "hashCode",
-                                                          var: false
-                                                      },
-                                                      arguments: [
-                                                          {
-                                                              node: "StringLiteral",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 47,
-                                                                      line: 9,
-                                                                      offset: 523
-                                                                  },
-                                                                  end: {
-                                                                      column: 3,
-                                                                      line: 2,
-                                                                      offset: 16
-                                                                  }
-                                                              },
-                                                              escapedValue: "\"hello\""
-                                                          }
-                                                      ]
-                                                  },
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 56,
-                                                              line: 9,
-                                                              offset: 532
-                                                          },
-                                                          end: {
-                                                              column: 10,
-                                                              line: 1,
-                                                              offset: 10
-                                                          }
-                                                      },
-                                                      identifier: "v",
-                                                      var: false
-                                                  }
-                                              },
-                                              operator: "++"
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 10,
-                                                  offset: 576
-                                              },
-                                              end: {
-                                                  column: 6,
-                                                  line: 3,
-                                                  offset: 64
-                                              }
-                                          },
-                                          trailingComments: [
-                                              {
-                                                  node: "LineComment",
-                                                  value: "\/\/ Primary Selector+ PostfixOp"
-                                              }
-                                          ],
-                                          expression: {
-                                              node: "PostfixExpression",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 10,
-                                                      offset: 576
-                                                  },
-                                                  end: {
-                                                      column: 5,
-                                                      line: 3,
-                                                      offset: 63
-                                                  }
-                                              },
-                                              operand: {
-                                                  node: "FieldAccess",
-                                                  location: {
-                                                      start: {
-                                                          column: 8,
-                                                          line: 10,
-                                                          offset: 576
-                                                      },
-                                                      end: {
-                                                          column: 3,
-                                                          line: 3,
-                                                          offset: 61
-                                                      }
-                                                  },
-                                                  expression: {
-                                                      node: "FieldAccess",
-                                                      location: {
-                                                          start: {
-                                                              column: 8,
-                                                              line: 10,
-                                                              offset: 576
-                                                          },
-                                                          end: {
-                                                              column: 1,
-                                                              line: 3,
-                                                              offset: 59
-                                                          }
-                                                      },
-                                                      expression: {
-                                                          node: "MethodInvocation",
-                                                          location: {
-                                                              start: {
-                                                                  column: 8,
-                                                                  line: 10,
-                                                                  offset: 576
-                                                              },
-                                                              end: {
-                                                                  column: 44,
-                                                                  line: 2,
-                                                                  offset: 57
-                                                              }
-                                                          },
-                                                          expression: {
-                                                              node: "ClassInstanceCreation",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 8,
-                                                                      line: 10,
-                                                                      offset: 576
-                                                                  },
-                                                                  end: {
-                                                                      column: 26,
-                                                                      line: 2,
-                                                                      offset: 39
-                                                                  }
-                                                              },
-                                                              expression: null,
-                                                              typeArguments: [],
-                                                              type: {
-                                                                  node: "SimpleType",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 12,
-                                                                          line: 10,
-                                                                          offset: 580
-                                                                      },
-                                                                      end: {
-                                                                          column: 13,
-                                                                          line: 2,
-                                                                          offset: 26
-                                                                      }
-                                                                  },
-                                                                  annotations: [],
-                                                                  name: {
-                                                                      node: "QualifiedName",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 12,
-                                                                              line: 10,
-                                                                              offset: 580
-                                                                          },
-                                                                          end: {
-                                                                              column: 13,
-                                                                              line: 2,
-                                                                              offset: 26
-                                                                          }
-                                                                      },
-                                                                      qualifier: {
-                                                                          node: "QualifiedName",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 12,
-                                                                                  line: 10,
-                                                                                  offset: 580
-                                                                              },
-                                                                              end: {
-                                                                                  column: 6,
-                                                                                  line: 2,
-                                                                                  offset: 19
-                                                                              }
-                                                                          },
-                                                                          qualifier: {
-                                                                              node: "SimpleName",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 12,
-                                                                                      line: 10,
-                                                                                      offset: 580
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 1,
-                                                                                      line: 2,
-                                                                                      offset: 14
-                                                                                  }
-                                                                              },
-                                                                              identifier: "java",
-                                                                              var: false
-                                                                          },
-                                                                          name: {
-                                                                              node: "SimpleName",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 17,
-                                                                                      line: 10,
-                                                                                      offset: 585
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 1,
-                                                                                      line: 2,
-                                                                                      offset: 14
-                                                                                  }
-                                                                              },
-                                                                              identifier: "lang",
-                                                                              var: false
-                                                                          }
-                                                                      },
-                                                                      name: {
-                                                                          node: "SimpleName",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 22,
-                                                                                  line: 10,
-                                                                                  offset: 590
-                                                                              },
-                                                                              end: {
-                                                                                  column: 3,
-                                                                                  line: 2,
-                                                                                  offset: 16
-                                                                              }
-                                                                          },
-                                                                          identifier: "String",
-                                                                          var: false
-                                                                      }
-                                                                  }
-                                                              },
-                                                              arguments: [
-                                                                  {
-                                                                      node: "StringLiteral",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 29,
-                                                                              line: 10,
-                                                                              offset: 597
-                                                                          },
-                                                                          end: {
-                                                                              column: 4,
-                                                                              line: 2,
-                                                                              offset: 17
-                                                                          }
-                                                                      },
-                                                                      escapedValue: "\"hello\""
-                                                                  }
-                                                              ],
-                                                              anonymousClassDeclaration: null
-                                                          },
-                                                          typeArguments: [],
-                                                          name: {
-                                                              node: "SimpleName",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 38,
-                                                                      line: 10,
-                                                                      offset: 606
-                                                                  },
-                                                                  end: {
-                                                                      column: 5,
-                                                                      line: 2,
-                                                                      offset: 18
-                                                                  }
-                                                              },
-                                                              identifier: "hashCode",
-                                                              var: false
-                                                          },
-                                                          arguments: [
-                                                              {
-                                                                  node: "StringLiteral",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 47,
-                                                                          line: 10,
-                                                                          offset: 615
-                                                                      },
-                                                                      end: {
-                                                                          column: 4,
-                                                                          line: 2,
-                                                                          offset: 17
-                                                                      }
-                                                                  },
-                                                                  escapedValue: "\"hello\""
-                                                              }
-                                                          ]
-                                                      },
-                                                      name: {
-                                                          node: "SimpleName",
-                                                          location: {
-                                                              start: {
-                                                                  column: 56,
-                                                                  line: 10,
-                                                                  offset: 624
-                                                              },
-                                                              end: {
-                                                                  column: 11,
-                                                                  line: 1,
-                                                                  offset: 11
-                                                              }
-                                                          },
-                                                          identifier: "h",
-                                                          var: false
-                                                      }
-                                                  },
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 58,
-                                                              line: 10,
-                                                              offset: 626
-                                                          },
-                                                          end: {
-                                                              column: 11,
-                                                              line: 1,
-                                                              offset: 11
-                                                          }
-                                                      },
-                                                      identifier: "v",
-                                                      var: false
-                                                  }
-                                              },
-                                              operator: "++"
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 11,
-                                                  offset: 670
-                                              },
-                                              end: {
-                                                  column: 11,
-                                                  line: 3,
-                                                  offset: 69
-                                              }
-                                          },
-                                          expression: {
-                                              node: "PostfixExpression",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 11,
-                                                      offset: 670
-                                                  },
-                                                  end: {
-                                                      column: 10,
-                                                      line: 3,
-                                                      offset: 68
-                                                  }
-                                              },
-                                              operand: {
-                                                  node: "FieldAccess",
-                                                  location: {
-                                                      start: {
-                                                          column: 8,
-                                                          line: 11,
-                                                          offset: 670
-                                                      },
-                                                      end: {
-                                                          column: 8,
-                                                          line: 3,
-                                                          offset: 66
-                                                      }
-                                                  },
-                                                  expression: {
-                                                      node: "FieldAccess",
-                                                      location: {
-                                                          start: {
-                                                              column: 8,
-                                                              line: 11,
-                                                              offset: 670
-                                                          },
-                                                          end: {
-                                                              column: 2,
-                                                              line: 3,
-                                                              offset: 60
-                                                          }
-                                                      },
-                                                      expression: {
-                                                          node: "MethodInvocation",
-                                                          location: {
-                                                              start: {
-                                                                  column: 8,
-                                                                  line: 11,
-                                                                  offset: 670
-                                                              },
-                                                              end: {
-                                                                  column: 41,
-                                                                  line: 2,
-                                                                  offset: 54
-                                                              }
-                                                          },
-                                                          expression: {
-                                                              node: "FieldAccess",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 8,
-                                                                      line: 11,
-                                                                      offset: 670
-                                                                  },
-                                                                  end: {
-                                                                      column: 37,
-                                                                      line: 2,
-                                                                      offset: 50
-                                                                  }
-                                                              },
-                                                              expression: {
-                                                                  node: "MethodInvocation",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 8,
-                                                                          line: 11,
-                                                                          offset: 670
-                                                                      },
-                                                                      end: {
-                                                                          column: 35,
-                                                                          line: 2,
-                                                                          offset: 48
-                                                                      }
-                                                                  },
-                                                                  expression: {
-                                                                      node: "ClassInstanceCreation",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 8,
-                                                                              line: 11,
-                                                                              offset: 670
-                                                                          },
-                                                                          end: {
-                                                                              column: 17,
-                                                                              line: 2,
-                                                                              offset: 30
-                                                                          }
-                                                                      },
-                                                                      expression: null,
-                                                                      typeArguments: [],
-                                                                      type: {
-                                                                          node: "SimpleType",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 12,
-                                                                                  line: 11,
-                                                                                  offset: 674
-                                                                              },
-                                                                              end: {
-                                                                                  column: 4,
-                                                                                  line: 2,
-                                                                                  offset: 17
-                                                                              }
-                                                                          },
-                                                                          annotations: [],
-                                                                          name: {
-                                                                              node: "SimpleName",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 12,
-                                                                                      line: 11,
-                                                                                      offset: 674
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 4,
-                                                                                      line: 2,
-                                                                                      offset: 17
-                                                                                  }
-                                                                              },
-                                                                              identifier: "String",
-                                                                              var: false
-                                                                          }
-                                                                      },
-                                                                      arguments: [
-                                                                          {
-                                                                              node: "StringLiteral",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 19,
-                                                                                      line: 11,
-                                                                                      offset: 681
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 5,
-                                                                                      line: 2,
-                                                                                      offset: 18
-                                                                                  }
-                                                                              },
-                                                                              escapedValue: "\"hello\""
-                                                                          }
-                                                                      ],
-                                                                      anonymousClassDeclaration: null
-                                                                  },
-                                                                  typeArguments: [],
-                                                                  name: {
-                                                                      node: "SimpleName",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 28,
-                                                                              line: 11,
-                                                                              offset: 690
-                                                                          },
-                                                                          end: {
-                                                                              column: 6,
-                                                                              line: 2,
-                                                                              offset: 19
-                                                                          }
-                                                                      },
-                                                                      identifier: "hashCode",
-                                                                      var: false
-                                                                  },
-                                                                  arguments: [
-                                                                      {
-                                                                          node: "StringLiteral",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 37,
-                                                                                  line: 11,
-                                                                                  offset: 699
-                                                                              },
-                                                                              end: {
-                                                                                  column: 5,
-                                                                                  line: 2,
-                                                                                  offset: 18
-                                                                              }
-                                                                          },
-                                                                          escapedValue: "\"hello\""
-                                                                      }
-                                                                  ]
-                                                              },
-                                                              name: {
-                                                                  node: "SimpleName",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 46,
-                                                                          line: 11,
-                                                                          offset: 708
-                                                                      },
-                                                                      end: {
-                                                                          column: 12,
-                                                                          line: 1,
-                                                                          offset: 12
-                                                                      }
-                                                                  },
-                                                                  identifier: "h",
-                                                                  var: false
-                                                              }
-                                                          },
-                                                          typeArguments: [],
-                                                          name: {
-                                                              node: "SimpleName",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 48,
-                                                                      line: 11,
-                                                                      offset: 710
-                                                                  },
-                                                                  end: {
-                                                                      column: 12,
-                                                                      line: 1,
-                                                                      offset: 12
-                                                                  }
-                                                              },
-                                                              identifier: "v",
-                                                              var: false
-                                                          },
-                                                          arguments: []
-                                                      },
-                                                      name: {
-                                                          node: "SimpleName",
-                                                          location: {
-                                                              start: {
-                                                                  column: 52,
-                                                                  line: 11,
-                                                                  offset: 714
-                                                              },
-                                                              end: {
-                                                                  column: 3,
-                                                                  line: 2,
-                                                                  offset: 16
-                                                              }
-                                                          },
-                                                          identifier: "hello",
-                                                          var: false
-                                                      }
-                                                  },
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 58,
-                                                              line: 11,
-                                                              offset: 720
-                                                          },
-                                                          end: {
-                                                              column: 3,
-                                                              line: 2,
-                                                              offset: 16
-                                                          }
-                                                      },
-                                                      identifier: "world",
-                                                      var: false
-                                                  }
-                                              },
-                                              operator: "++"
-                                          }
-                                      },
-                                      {
-                                          node: "ExpressionStatement",
-                                          location: {
-                                              start: {
-                                                  column: 8,
-                                                  line: 12,
-                                                  offset: 737
-                                              },
-                                              end: {
-                                                  column: 12,
-                                                  line: 3,
-                                                  offset: 70
-                                              }
-                                          },
-                                          expression: {
-                                              node: "PrefixExpression",
-                                              location: {
-                                                  start: {
-                                                      column: 8,
-                                                      line: 12,
-                                                      offset: 737
-                                                  },
-                                                  end: {
-                                                      column: 11,
-                                                      line: 3,
-                                                      offset: 69
-                                                  }
-                                              },
-                                              operator: "++",
-                                              operand: {
-                                                  node: "FieldAccess",
-                                                  location: {
-                                                      start: {
-                                                          column: 10,
-                                                          line: 12,
-                                                          offset: 739
-                                                      },
-                                                      end: {
-                                                          column: 9,
-                                                          line: 3,
-                                                          offset: 67
-                                                      }
-                                                  },
-                                                  expression: {
-                                                      node: "FieldAccess",
-                                                      location: {
-                                                          start: {
-                                                              column: 10,
-                                                              line: 12,
-                                                              offset: 739
-                                                          },
-                                                          end: {
-                                                              column: 3,
-                                                              line: 3,
-                                                              offset: 61
-                                                          }
-                                                      },
-                                                      expression: {
-                                                          node: "MethodInvocation",
-                                                          location: {
-                                                              start: {
-                                                                  column: 10,
-                                                                  line: 12,
-                                                                  offset: 739
-                                                              },
-                                                              end: {
-                                                                  column: 42,
-                                                                  line: 2,
-                                                                  offset: 55
-                                                              }
-                                                          },
-                                                          expression: {
-                                                              node: "FieldAccess",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 10,
-                                                                      line: 12,
-                                                                      offset: 739
-                                                                  },
-                                                                  end: {
-                                                                      column: 38,
-                                                                      line: 2,
-                                                                      offset: 51
-                                                                  }
-                                                              },
-                                                              expression: {
-                                                                  node: "MethodInvocation",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 10,
-                                                                          line: 12,
-                                                                          offset: 739
-                                                                      },
-                                                                      end: {
-                                                                          column: 36,
-                                                                          line: 2,
-                                                                          offset: 49
-                                                                      }
-                                                                  },
-                                                                  expression: {
-                                                                      node: "ClassInstanceCreation",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 10,
-                                                                              line: 12,
-                                                                              offset: 739
-                                                                          },
-                                                                          end: {
-                                                                              column: 18,
-                                                                              line: 2,
-                                                                              offset: 31
-                                                                          }
-                                                                      },
-                                                                      expression: null,
-                                                                      typeArguments: [],
-                                                                      type: {
-                                                                          node: "SimpleType",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 14,
-                                                                                  line: 12,
-                                                                                  offset: 743
-                                                                              },
-                                                                              end: {
-                                                                                  column: 5,
-                                                                                  line: 2,
-                                                                                  offset: 18
-                                                                              }
-                                                                          },
-                                                                          annotations: [],
-                                                                          name: {
-                                                                              node: "SimpleName",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 14,
-                                                                                      line: 12,
-                                                                                      offset: 743
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 5,
-                                                                                      line: 2,
-                                                                                      offset: 18
-                                                                                  }
-                                                                              },
-                                                                              identifier: "String",
-                                                                              var: false
-                                                                          }
-                                                                      },
-                                                                      arguments: [
-                                                                          {
-                                                                              node: "StringLiteral",
-                                                                              location: {
-                                                                                  start: {
-                                                                                      column: 21,
-                                                                                      line: 12,
-                                                                                      offset: 750
-                                                                                  },
-                                                                                  end: {
-                                                                                      column: 6,
-                                                                                      line: 2,
-                                                                                      offset: 19
-                                                                                  }
-                                                                              },
-                                                                              escapedValue: "\"hello\""
-                                                                          }
-                                                                      ],
-                                                                      anonymousClassDeclaration: null
-                                                                  },
-                                                                  typeArguments: [],
-                                                                  name: {
-                                                                      node: "SimpleName",
-                                                                      location: {
-                                                                          start: {
-                                                                              column: 30,
-                                                                              line: 12,
-                                                                              offset: 759
-                                                                          },
-                                                                          end: {
-                                                                              column: 7,
-                                                                              line: 2,
-                                                                              offset: 20
-                                                                          }
-                                                                      },
-                                                                      identifier: "hashCode",
-                                                                      var: false
-                                                                  },
-                                                                  arguments: [
-                                                                      {
-                                                                          node: "StringLiteral",
-                                                                          location: {
-                                                                              start: {
-                                                                                  column: 39,
-                                                                                  line: 12,
-                                                                                  offset: 768
-                                                                              },
-                                                                              end: {
-                                                                                  column: 6,
-                                                                                  line: 2,
-                                                                                  offset: 19
-                                                                              }
-                                                                          },
-                                                                          escapedValue: "\"hello\""
-                                                                      }
-                                                                  ]
-                                                              },
-                                                              name: {
-                                                                  node: "SimpleName",
-                                                                  location: {
-                                                                      start: {
-                                                                          column: 48,
-                                                                          line: 12,
-                                                                          offset: 777
-                                                                      },
-                                                                      end: {
-                                                                          column: 0,
-                                                                          line: 2,
-                                                                          offset: 13
-                                                                      }
-                                                                  },
-                                                                  identifier: "h",
-                                                                  var: false
-                                                              }
-                                                          },
-                                                          typeArguments: [],
-                                                          name: {
-                                                              node: "SimpleName",
-                                                              location: {
-                                                                  start: {
-                                                                      column: 50,
-                                                                      line: 12,
-                                                                      offset: 779
-                                                                  },
-                                                                  end: {
-                                                                      column: 0,
-                                                                      line: 2,
-                                                                      offset: 13
-                                                                  }
-                                                              },
-                                                              identifier: "v",
-                                                              var: false
-                                                          },
-                                                          arguments: []
-                                                      },
-                                                      name: {
-                                                          node: "SimpleName",
-                                                          location: {
-                                                              start: {
-                                                                  column: 54,
-                                                                  line: 12,
-                                                                  offset: 783
-                                                              },
-                                                              end: {
-                                                                  column: 4,
-                                                                  line: 2,
-                                                                  offset: 17
-                                                              }
-                                                          },
-                                                          identifier: "hello",
-                                                          var: false
-                                                      }
-                                                  },
-                                                  name: {
-                                                      node: "SimpleName",
-                                                      location: {
-                                                          start: {
-                                                              column: 60,
-                                                              line: 12,
-                                                              offset: 789
-                                                          },
-                                                          end: {
-                                                              column: 4,
-                                                              line: 2,
-                                                              offset: 17
-                                                          }
-                                                      },
-                                                      identifier: "world",
-                                                      var: false
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  ]
-                              }
-                          }
-                      ]
-                  }
-              ],
-              module: null
-          }
-      );
-    });
+    // test("Primary UnaryExpression", function(assert) {
+    //   var src = multiline(function(){/*
+    //     class Test {
+    //       public static void main(String[] args) {
+    //         new Object(); // Primary
+    //         new java.lang.String("hello").hashCode("hello"); // Primary Selector
+    //         new String(new char[]{'h', 'e', 'l', 'l', 'o'}).hashCode().equals(42); // Primary Selector+
+    //         new String(new char[]{'h', 'e', 'l', 'l', 'o'}).hashCode().some(42).equals(42); // Primary Selector+
+    //         Hello.World++; // Primary PostfixOp
+    //         Hello().World++; // Primary Selector PostfixOp
+    //         new java.lang.String("hello").hashCode("hello").v++; // Primary Selector+ PostfixOp
+    //         new java.lang.String("hello").hashCode("hello").h.v++; // Primary Selector+ PostfixOp
+    //         new String("hello").hashCode("hello").h.v().hello.world++;
+    //         ++new String("hello").hashCode("hello").h.v().hello.world;
+    //       }
+    //     }
+    //   */});
+    //   assert.deepEqual(
+    //     JavaParser.parse(src, {'addLocations' : false})
+    //     ,
+    //       {
+    //           node: "CompilationUnit",
+    //           package: null,
+    //           imports: [],
+    //           types: [
+    //               {
+    //                   node: "TypeDeclaration",
+    //                   location: {
+    //                       start: {
+    //                           column: 0,
+    //                           line: 1,
+    //                           offset: 0
+    //                       },
+    //                       end: {
+    //                           column: -1,
+    //                           line: -1,
+    //                           offset: 804
+    //                       }
+    //                   },
+    //                   javadoc: null,
+    //                   modifiers: [],
+    //                   interface: false,
+    //                   name: {
+    //                       node: "SimpleName",
+    //                       location: {
+    //                           start: {
+    //                               column: 6,
+    //                               line: 1,
+    //                               offset: 6
+    //                           },
+    //                           end: {
+    //                               column: 5,
+    //                               line: 1,
+    //                               offset: 5
+    //                           }
+    //                       },
+    //                       identifier: "Test",
+    //                       var: false
+    //                   },
+    //                   typeParameters: [],
+    //                   superclassType: null,
+    //                   superInterfaceTypes: [],
+    //                   bodyDeclarations: [
+    //                       {
+    //                           node: "MethodDeclaration",
+    //                           location: {
+    //                               start: {
+    //                                   column: 4,
+    //                                   line: 2,
+    //                                   offset: 17
+    //                               },
+    //                               end: {
+    //                                   column: 57,
+    //                                   line: 12,
+    //                                   offset: 786
+    //                               }
+    //                           },
+    //                           javadoc: null,
+    //                           modifiers: [
+    //                               {
+    //                                   node: "Modifier",
+    //                                   location: {
+    //                                       start: {
+    //                                           column: 4,
+    //                                           line: 2,
+    //                                           offset: 17
+    //                                       },
+    //                                       end: {
+    //                                           column: 8,
+    //                                           line: 1,
+    //                                           offset: 8
+    //                                       }
+    //                                   },
+    //                                   keyword: "public"
+    //                               },
+    //                               {
+    //                                   node: "Modifier",
+    //                                   location: {
+    //                                       start: {
+    //                                           column: 11,
+    //                                           line: 2,
+    //                                           offset: 24
+    //                                       },
+    //                                       end: {
+    //                                           column: 8,
+    //                                           line: 1,
+    //                                           offset: 8
+    //                                       }
+    //                                   },
+    //                                   keyword: "static"
+    //                               }
+    //                           ],
+    //                           constructor: false,
+    //                           typeParameters: [],
+    //                           returnType2: {
+    //                               node: "PrimitiveType",
+    //                               location: {
+    //                                   start: {
+    //                                       column: 18,
+    //                                       line: 2,
+    //                                       offset: 31
+    //                                   },
+    //                                   end: {
+    //                                       column: 6,
+    //                                       line: 1,
+    //                                       offset: 6
+    //                                   }
+    //                               },
+    //                               annotations: [],
+    //                               primitiveTypeCode: "void"
+    //                           },
+    //                           name: {
+    //                               node: "SimpleName",
+    //                               location: {
+    //                                   start: {
+    //                                       column: 23,
+    //                                       line: 2,
+    //                                       offset: 36
+    //                                   },
+    //                                   end: {
+    //                                       column: 6,
+    //                                       line: 1,
+    //                                       offset: 6
+    //                                   }
+    //                               },
+    //                               identifier: "main",
+    //                               var: false
+    //                           },
+    //                           receiverType: null,
+    //                           receiverQualifier: null,
+    //                           parameters: [
+    //                               {
+    //                                   node: "SingleVariableDeclaration",
+    //                                   location: {
+    //                                       start: {
+    //                                           column: 28,
+    //                                           line: 2,
+    //                                           offset: 41
+    //                                       },
+    //                                       end: {
+    //                                           column: 2,
+    //                                           line: 2,
+    //                                           offset: 15
+    //                                       }
+    //                                   },
+    //                                   modifiers: [],
+    //                                   type: {
+    //                                       node: "ArrayType",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 28,
+    //                                               line: 2,
+    //                                               offset: 41
+    //                                           },
+    //                                           end: {
+    //                                               column: 10,
+    //                                               line: 1,
+    //                                               offset: 10
+    //                                           }
+    //                                       },
+    //                                       elementType: {
+    //                                           node: "SimpleType",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 28,
+    //                                                   line: 2,
+    //                                                   offset: 41
+    //                                               },
+    //                                               end: {
+    //                                                   column: 8,
+    //                                                   line: 1,
+    //                                                   offset: 8
+    //                                               }
+    //                                           },
+    //                                           annotations: [],
+    //                                           name: {
+    //                                               node: "SimpleName",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 28,
+    //                                                       line: 2,
+    //                                                       offset: 41
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 8,
+    //                                                       line: 1,
+    //                                                       offset: 8
+    //                                                   }
+    //                                               },
+    //                                               identifier: "String",
+    //                                               var: false
+    //                                           }
+    //                                       },
+    //                                       dimensions: [
+    //                                           {
+    //                                               node: "Dimension",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 34,
+    //                                                       line: 2,
+    //                                                       offset: 47
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 4,
+    //                                                       line: 1,
+    //                                                       offset: 4
+    //                                                   }
+    //                                               },
+    //                                               annotations: []
+    //                                           }
+    //                                       ]
+    //                                   },
+    //                                   varargsAnnotations: [],
+    //                                   varargs: false,
+    //                                   name: {
+    //                                       node: "SimpleName",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 37,
+    //                                               line: 2,
+    //                                               offset: 50
+    //                                           },
+    //                                           end: {
+    //                                               column: 6,
+    //                                               line: 1,
+    //                                               offset: 6
+    //                                           }
+    //                                       },
+    //                                       identifier: "args",
+    //                                       var: false
+    //                                   },
+    //                                   extraDimensions2: [],
+    //                                   initializer: null
+    //                               }
+    //                           ],
+    //                           extraDimensions2: [],
+    //                           thrownExceptionTypes: [],
+    //                           body: {
+    //                               node: "Block",
+    //                               location: {
+    //                                   start: {
+    //                                       column: 43,
+    //                                       line: 2,
+    //                                       offset: 56
+    //                                   },
+    //                                   end: {
+    //                                       column: 18,
+    //                                       line: 12,
+    //                                       offset: 747
+    //                                   }
+    //                               },
+    //                               statements: [
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 3,
+    //                                               offset: 66
+    //                                           },
+    //                                           end: {
+    //                                               column: 3,
+    //                                               line: 2,
+    //                                               offset: 16
+    //                                           }
+    //                                       },
+    //                                       trailingComments: [
+    //                                           {
+    //                                               node: "LineComment",
+    //                                               value: "\/\/ Primary"
+    //                                           }
+    //                                       ],
+    //                                       expression: {
+    //                                           node: "ClassInstanceCreation",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 3,
+    //                                                   offset: 66
+    //                                               },
+    //                                               end: {
+    //                                                   column: 2,
+    //                                                   line: 2,
+    //                                                   offset: 15
+    //                                               }
+    //                                           },
+    //                                           expression: null,
+    //                                           typeArguments: [],
+    //                                           type: {
+    //                                               node: "SimpleType",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 12,
+    //                                                       line: 3,
+    //                                                       offset: 70
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 9,
+    //                                                       line: 1,
+    //                                                       offset: 9
+    //                                                   }
+    //                                               },
+    //                                               annotations: [],
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 12,
+    //                                                           line: 3,
+    //                                                           offset: 70
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 9,
+    //                                                           line: 1,
+    //                                                           offset: 9
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "Object",
+    //                                                   var: false
+    //                                               }
+    //                                           },
+    //                                           arguments: [],
+    //                                           anonymousClassDeclaration: null
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 4,
+    //                                               offset: 99
+    //                                           },
+    //                                           end: {
+    //                                               column: 39,
+    //                                               line: 2,
+    //                                               offset: 52
+    //                                           }
+    //                                       },
+    //                                       trailingComments: [
+    //                                           {
+    //                                               node: "LineComment",
+    //                                               value: "\/\/ Primary Selector"
+    //                                           }
+    //                                       ],
+    //                                       expression: {
+    //                                           node: "MethodInvocation",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 4,
+    //                                                   offset: 99
+    //                                               },
+    //                                               end: {
+    //                                                   column: 38,
+    //                                                   line: 2,
+    //                                                   offset: 51
+    //                                               }
+    //                                           },
+    //                                           expression: {
+    //                                               node: "ClassInstanceCreation",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 8,
+    //                                                       line: 4,
+    //                                                       offset: 99
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 20,
+    //                                                       line: 2,
+    //                                                       offset: 33
+    //                                                   }
+    //                                               },
+    //                                               expression: null,
+    //                                               typeArguments: [],
+    //                                               type: {
+    //                                                   node: "SimpleType",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 12,
+    //                                                           line: 4,
+    //                                                           offset: 103
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 7,
+    //                                                           line: 2,
+    //                                                           offset: 20
+    //                                                       }
+    //                                                   },
+    //                                                   annotations: [],
+    //                                                   name: {
+    //                                                       node: "QualifiedName",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 12,
+    //                                                               line: 4,
+    //                                                               offset: 103
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 7,
+    //                                                               line: 2,
+    //                                                               offset: 20
+    //                                                           }
+    //                                                       },
+    //                                                       qualifier: {
+    //                                                           node: "QualifiedName",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 12,
+    //                                                                   line: 4,
+    //                                                                   offset: 103
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 0,
+    //                                                                   line: 2,
+    //                                                                   offset: 13
+    //                                                               }
+    //                                                           },
+    //                                                           qualifier: {
+    //                                                               node: "SimpleName",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 12,
+    //                                                                       line: 4,
+    //                                                                       offset: 103
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 8,
+    //                                                                       line: 1,
+    //                                                                       offset: 8
+    //                                                                   }
+    //                                                               },
+    //                                                               identifier: "java",
+    //                                                               var: false
+    //                                                           },
+    //                                                           name: {
+    //                                                               node: "SimpleName",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 17,
+    //                                                                       line: 4,
+    //                                                                       offset: 108
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 8,
+    //                                                                       line: 1,
+    //                                                                       offset: 8
+    //                                                                   }
+    //                                                               },
+    //                                                               identifier: "lang",
+    //                                                               var: false
+    //                                                           }
+    //                                                       },
+    //                                                       name: {
+    //                                                           node: "SimpleName",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 22,
+    //                                                                   line: 4,
+    //                                                                   offset: 113
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 10,
+    //                                                                   line: 1,
+    //                                                                   offset: 10
+    //                                                               }
+    //                                                           },
+    //                                                           identifier: "String",
+    //                                                           var: false
+    //                                                       }
+    //                                                   }
+    //                                               },
+    //                                               arguments: [
+    //                                                   {
+    //                                                       node: "StringLiteral",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 29,
+    //                                                               line: 4,
+    //                                                               offset: 120
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 11,
+    //                                                               line: 1,
+    //                                                               offset: 11
+    //                                                           }
+    //                                                       },
+    //                                                       escapedValue: "\"hello\""
+    //                                                   }
+    //                                               ],
+    //                                               anonymousClassDeclaration: null
+    //                                           },
+    //                                           typeArguments: [],
+    //                                           name: {
+    //                                               node: "SimpleName",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 38,
+    //                                                       line: 4,
+    //                                                       offset: 129
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 12,
+    //                                                       line: 1,
+    //                                                       offset: 12
+    //                                                   }
+    //                                               },
+    //                                               identifier: "hashCode",
+    //                                               var: false
+    //                                           },
+    //                                           arguments: [
+    //                                               {
+    //                                                   node: "StringLiteral",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 47,
+    //                                                           line: 4,
+    //                                                           offset: 138
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 11,
+    //                                                           line: 1,
+    //                                                           offset: 11
+    //                                                       }
+    //                                                   },
+    //                                                   escapedValue: "\"hello\""
+    //                                               }
+    //                                           ]
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 5,
+    //                                               offset: 176
+    //                                           },
+    //                                           end: {
+    //                                               column: 17,
+    //                                               line: 3,
+    //                                               offset: 75
+    //                                           }
+    //                                       },
+    //                                       trailingComments: [
+    //                                           {
+    //                                               node: "LineComment",
+    //                                               value: "\/\/ Primary Selector+"
+    //                                           }
+    //                                       ],
+    //                                       expression: {
+    //                                           node: "MethodInvocation",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 5,
+    //                                                   offset: 176
+    //                                               },
+    //                                               end: {
+    //                                                   column: 16,
+    //                                                   line: 3,
+    //                                                   offset: 74
+    //                                               }
+    //                                           },
+    //                                           expression: {
+    //                                               node: "MethodInvocation",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 8,
+    //                                                       line: 5,
+    //                                                       offset: 176
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 5,
+    //                                                       line: 3,
+    //                                                       offset: 63
+    //                                                   }
+    //                                               },
+    //                                               expression: {
+    //                                                   node: "ClassInstanceCreation",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 8,
+    //                                                           line: 5,
+    //                                                           offset: 176
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 39,
+    //                                                           line: 2,
+    //                                                           offset: 52
+    //                                                       }
+    //                                                   },
+    //                                                   expression: null,
+    //                                                   typeArguments: [],
+    //                                                   type: {
+    //                                                       node: "SimpleType",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 12,
+    //                                                               line: 5,
+    //                                                               offset: 180
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 11,
+    //                                                               line: 1,
+    //                                                               offset: 11
+    //                                                           }
+    //                                                       },
+    //                                                       annotations: [],
+    //                                                       name: {
+    //                                                           node: "SimpleName",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 12,
+    //                                                                   line: 5,
+    //                                                                   offset: 180
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 11,
+    //                                                                   line: 1,
+    //                                                                   offset: 11
+    //                                                               }
+    //                                                           },
+    //                                                           identifier: "String",
+    //                                                           var: false
+    //                                                       }
+    //                                                   },
+    //                                                   arguments: [
+    //                                                       {
+    //                                                           node: "ArrayCreation",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 19,
+    //                                                                   line: 5,
+    //                                                                   offset: 187
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 27,
+    //                                                                   line: 2,
+    //                                                                   offset: 40
+    //                                                               }
+    //                                                           },
+    //                                                           type: {
+    //                                                               node: "ArrayType",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 23,
+    //                                                                       line: 5,
+    //                                                                       offset: 191
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 11,
+    //                                                                       line: 1,
+    //                                                                       offset: 11
+    //                                                                   }
+    //                                                               },
+    //                                                               elementType: {
+    //                                                                   node: "PrimitiveType",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 23,
+    //                                                                           line: 5,
+    //                                                                           offset: 191
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 9,
+    //                                                                           line: 1,
+    //                                                                           offset: 9
+    //                                                                       }
+    //                                                                   },
+    //                                                                   annotations: [],
+    //                                                                   primitiveTypeCode: "char"
+    //                                                               },
+    //                                                               dimensions: [
+    //                                                                   {
+    //                                                                       node: "Dimension",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 27,
+    //                                                                               line: 5,
+    //                                                                               offset: 195
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 7,
+    //                                                                               line: 1,
+    //                                                                               offset: 7
+    //                                                                           }
+    //                                                                       },
+    //                                                                       annotations: []
+    //                                                                   }
+    //                                                               ]
+    //                                                           },
+    //                                                           dimensions: [],
+    //                                                           initializer: {
+    //                                                               node: "ArrayInitializer",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 29,
+    //                                                                       line: 5,
+    //                                                                       offset: 197
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 17,
+    //                                                                       line: 2,
+    //                                                                       offset: 30
+    //                                                                   }
+    //                                                               },
+    //                                                               expressions: [
+    //                                                                   {
+    //                                                                       node: "CharacterLiteral",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 30,
+    //                                                                               line: 5,
+    //                                                                               offset: 198
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 8,
+    //                                                                               line: 1,
+    //                                                                               offset: 8
+    //                                                                           }
+    //                                                                       },
+    //                                                                       escapedValue: "'h'"
+    //                                                                   },
+    //                                                                   {
+    //                                                                       node: "CharacterLiteral",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 35,
+    //                                                                               line: 5,
+    //                                                                               offset: 203
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 8,
+    //                                                                               line: 1,
+    //                                                                               offset: 8
+    //                                                                           }
+    //                                                                       },
+    //                                                                       escapedValue: "'e'"
+    //                                                                   },
+    //                                                                   {
+    //                                                                       node: "CharacterLiteral",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 40,
+    //                                                                               line: 5,
+    //                                                                               offset: 208
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 8,
+    //                                                                               line: 1,
+    //                                                                               offset: 8
+    //                                                                           }
+    //                                                                       },
+    //                                                                       escapedValue: "'l'"
+    //                                                                   },
+    //                                                                   {
+    //                                                                       node: "CharacterLiteral",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 45,
+    //                                                                               line: 5,
+    //                                                                               offset: 213
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 8,
+    //                                                                               line: 1,
+    //                                                                               offset: 8
+    //                                                                           }
+    //                                                                       },
+    //                                                                       escapedValue: "'l'"
+    //                                                                   },
+    //                                                                   {
+    //                                                                       node: "CharacterLiteral",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 50,
+    //                                                                               line: 5,
+    //                                                                               offset: 218
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 8,
+    //                                                                               line: 1,
+    //                                                                               offset: 8
+    //                                                                           }
+    //                                                                       },
+    //                                                                       escapedValue: "'o'"
+    //                                                                   }
+    //                                                               ]
+    //                                                           }
+    //                                                       }
+    //                                                   ],
+    //                                                   anonymousClassDeclaration: null
+    //                                               },
+    //                                               typeArguments: [],
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 56,
+    //                                                           line: 5,
+    //                                                           offset: 224
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 0,
+    //                                                           line: 2,
+    //                                                           offset: 13
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "hashCode",
+    //                                                   var: false
+    //                                               },
+    //                                               arguments: []
+    //                                           },
+    //                                           typeArguments: [],
+    //                                           name: {
+    //                                               node: "SimpleName",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 67,
+    //                                                       line: 5,
+    //                                                       offset: 235
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 11,
+    //                                                       line: 1,
+    //                                                       offset: 11
+    //                                                   }
+    //                                               },
+    //                                               identifier: "equals",
+    //                                               var: false
+    //                                           },
+    //                                           arguments: [
+    //                                               {
+    //                                                   node: "NumberLiteral",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 74,
+    //                                                           line: 5,
+    //                                                           offset: 242
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 7,
+    //                                                           line: 1,
+    //                                                           offset: 7
+    //                                                       }
+    //                                                   },
+    //                                                   token: "42"
+    //                                               }
+    //                                           ]
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 6,
+    //                                               offset: 276
+    //                                           },
+    //                                           end: {
+    //                                               column: 27,
+    //                                               line: 3,
+    //                                               offset: 85
+    //                                           }
+    //                                       },
+    //                                       trailingComments: [
+    //                                           {
+    //                                               node: "LineComment",
+    //                                               value: "\/\/ Primary Selector+"
+    //                                           }
+    //                                       ],
+    //                                       expression: {
+    //                                           node: "MethodInvocation",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 6,
+    //                                                   offset: 276
+    //                                               },
+    //                                               end: {
+    //                                                   column: 26,
+    //                                                   line: 3,
+    //                                                   offset: 84
+    //                                               }
+    //                                           },
+    //                                           expression: {
+    //                                               node: "MethodInvocation",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 8,
+    //                                                       line: 6,
+    //                                                       offset: 276
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 15,
+    //                                                       line: 3,
+    //                                                       offset: 73
+    //                                                   }
+    //                                               },
+    //                                               expression: {
+    //                                                   node: "MethodInvocation",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 8,
+    //                                                           line: 6,
+    //                                                           offset: 276
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 6,
+    //                                                           line: 3,
+    //                                                           offset: 64
+    //                                                       }
+    //                                                   },
+    //                                                   expression: {
+    //                                                       node: "ClassInstanceCreation",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 8,
+    //                                                               line: 6,
+    //                                                               offset: 276
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 40,
+    //                                                               line: 2,
+    //                                                               offset: 53
+    //                                                           }
+    //                                                       },
+    //                                                       expression: null,
+    //                                                       typeArguments: [],
+    //                                                       type: {
+    //                                                           node: "SimpleType",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 12,
+    //                                                                   line: 6,
+    //                                                                   offset: 280
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 12,
+    //                                                                   line: 1,
+    //                                                                   offset: 12
+    //                                                               }
+    //                                                           },
+    //                                                           annotations: [],
+    //                                                           name: {
+    //                                                               node: "SimpleName",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 12,
+    //                                                                       line: 6,
+    //                                                                       offset: 280
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 12,
+    //                                                                       line: 1,
+    //                                                                       offset: 12
+    //                                                                   }
+    //                                                               },
+    //                                                               identifier: "String",
+    //                                                               var: false
+    //                                                           }
+    //                                                       },
+    //                                                       arguments: [
+    //                                                           {
+    //                                                               node: "ArrayCreation",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 19,
+    //                                                                       line: 6,
+    //                                                                       offset: 287
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 28,
+    //                                                                       line: 2,
+    //                                                                       offset: 41
+    //                                                                   }
+    //                                                               },
+    //                                                               type: {
+    //                                                                   node: "ArrayType",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 23,
+    //                                                                           line: 6,
+    //                                                                           offset: 291
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 12,
+    //                                                                           line: 1,
+    //                                                                           offset: 12
+    //                                                                       }
+    //                                                                   },
+    //                                                                   elementType: {
+    //                                                                       node: "PrimitiveType",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 23,
+    //                                                                               line: 6,
+    //                                                                               offset: 291
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 10,
+    //                                                                               line: 1,
+    //                                                                               offset: 10
+    //                                                                           }
+    //                                                                       },
+    //                                                                       annotations: [],
+    //                                                                       primitiveTypeCode: "char"
+    //                                                                   },
+    //                                                                   dimensions: [
+    //                                                                       {
+    //                                                                           node: "Dimension",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 27,
+    //                                                                                   line: 6,
+    //                                                                                   offset: 295
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 8,
+    //                                                                                   line: 1,
+    //                                                                                   offset: 8
+    //                                                                               }
+    //                                                                           },
+    //                                                                           annotations: []
+    //                                                                       }
+    //                                                                   ]
+    //                                                               },
+    //                                                               dimensions: [],
+    //                                                               initializer: {
+    //                                                                   node: "ArrayInitializer",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 29,
+    //                                                                           line: 6,
+    //                                                                           offset: 297
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 18,
+    //                                                                           line: 2,
+    //                                                                           offset: 31
+    //                                                                       }
+    //                                                                   },
+    //                                                                   expressions: [
+    //                                                                       {
+    //                                                                           node: "CharacterLiteral",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 30,
+    //                                                                                   line: 6,
+    //                                                                                   offset: 298
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 9,
+    //                                                                                   line: 1,
+    //                                                                                   offset: 9
+    //                                                                               }
+    //                                                                           },
+    //                                                                           escapedValue: "'h'"
+    //                                                                       },
+    //                                                                       {
+    //                                                                           node: "CharacterLiteral",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 35,
+    //                                                                                   line: 6,
+    //                                                                                   offset: 303
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 9,
+    //                                                                                   line: 1,
+    //                                                                                   offset: 9
+    //                                                                               }
+    //                                                                           },
+    //                                                                           escapedValue: "'e'"
+    //                                                                       },
+    //                                                                       {
+    //                                                                           node: "CharacterLiteral",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 40,
+    //                                                                                   line: 6,
+    //                                                                                   offset: 308
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 9,
+    //                                                                                   line: 1,
+    //                                                                                   offset: 9
+    //                                                                               }
+    //                                                                           },
+    //                                                                           escapedValue: "'l'"
+    //                                                                       },
+    //                                                                       {
+    //                                                                           node: "CharacterLiteral",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 45,
+    //                                                                                   line: 6,
+    //                                                                                   offset: 313
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 9,
+    //                                                                                   line: 1,
+    //                                                                                   offset: 9
+    //                                                                               }
+    //                                                                           },
+    //                                                                           escapedValue: "'l'"
+    //                                                                       },
+    //                                                                       {
+    //                                                                           node: "CharacterLiteral",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 50,
+    //                                                                                   line: 6,
+    //                                                                                   offset: 318
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 9,
+    //                                                                                   line: 1,
+    //                                                                                   offset: 9
+    //                                                                               }
+    //                                                                           },
+    //                                                                           escapedValue: "'o'"
+    //                                                                       }
+    //                                                                   ]
+    //                                                               }
+    //                                                           }
+    //                                                       ],
+    //                                                       anonymousClassDeclaration: null
+    //                                                   },
+    //                                                   typeArguments: [],
+    //                                                   name: {
+    //                                                       node: "SimpleName",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 56,
+    //                                                               line: 6,
+    //                                                               offset: 324
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 1,
+    //                                                               line: 2,
+    //                                                               offset: 14
+    //                                                           }
+    //                                                       },
+    //                                                       identifier: "hashCode",
+    //                                                       var: false
+    //                                                   },
+    //                                                   arguments: []
+    //                                               },
+    //                                               typeArguments: [],
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 67,
+    //                                                           line: 6,
+    //                                                           offset: 335
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 10,
+    //                                                           line: 1,
+    //                                                           offset: 10
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "some",
+    //                                                   var: false
+    //                                               },
+    //                                               arguments: [
+    //                                                   {
+    //                                                       node: "NumberLiteral",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 72,
+    //                                                               line: 6,
+    //                                                               offset: 340
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 8,
+    //                                                               line: 1,
+    //                                                               offset: 8
+    //                                                           }
+    //                                                       },
+    //                                                       token: "42"
+    //                                                   }
+    //                                               ]
+    //                                           },
+    //                                           typeArguments: [],
+    //                                           name: {
+    //                                               node: "SimpleName",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 76,
+    //                                                       line: 6,
+    //                                                       offset: 344
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 12,
+    //                                                       line: 1,
+    //                                                       offset: 12
+    //                                                   }
+    //                                               },
+    //                                               identifier: "equals",
+    //                                               var: false
+    //                                           },
+    //                                           arguments: [
+    //                                               {
+    //                                                   node: "NumberLiteral",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 83,
+    //                                                           line: 6,
+    //                                                           offset: 351
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 8,
+    //                                                           line: 1,
+    //                                                           offset: 8
+    //                                                       }
+    //                                                   },
+    //                                                   token: "42"
+    //                                               }
+    //                                           ]
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 7,
+    //                                               offset: 385
+    //                                           },
+    //                                           end: {
+    //                                               column: 8,
+    //                                               line: 2,
+    //                                               offset: 21
+    //                                           }
+    //                                       },
+    //                                       trailingComments: [
+    //                                           {
+    //                                               node: "LineComment",
+    //                                               value: "\/\/ Primary PostfixOp"
+    //                                           }
+    //                                       ],
+    //                                       expression: {
+    //                                           node: "PostfixExpression",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 7,
+    //                                                   offset: 385
+    //                                               },
+    //                                               end: {
+    //                                                   column: 7,
+    //                                                   line: 2,
+    //                                                   offset: 20
+    //                                               }
+    //                                           },
+    //                                           operand: {
+    //                                               node: "QualifiedName",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 8,
+    //                                                       line: 7,
+    //                                                       offset: 385
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 5,
+    //                                                       line: 2,
+    //                                                       offset: 18
+    //                                                   }
+    //                                               },
+    //                                               qualifier: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 8,
+    //                                                           line: 7,
+    //                                                           offset: 385
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 12,
+    //                                                           line: 1,
+    //                                                           offset: 12
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "Hello",
+    //                                                   var: false
+    //                                               },
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 14,
+    //                                                           line: 7,
+    //                                                           offset: 391
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 12,
+    //                                                           line: 1,
+    //                                                           offset: 12
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "World",
+    //                                                   var: false
+    //                                               }
+    //                                           },
+    //                                           operator: "++"
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 8,
+    //                                               offset: 429
+    //                                           },
+    //                                           end: {
+    //                                               column: 11,
+    //                                               line: 2,
+    //                                               offset: 24
+    //                                           }
+    //                                       },
+    //                                       trailingComments: [
+    //                                           {
+    //                                               node: "LineComment",
+    //                                               value: "\/\/ Primary Selector PostfixOp"
+    //                                           }
+    //                                       ],
+    //                                       expression: {
+    //                                           node: "PostfixExpression",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 8,
+    //                                                   offset: 429
+    //                                               },
+    //                                               end: {
+    //                                                   column: 10,
+    //                                                   line: 2,
+    //                                                   offset: 23
+    //                                               }
+    //                                           },
+    //                                           operand: {
+    //                                               node: "FieldAccess",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 8,
+    //                                                       line: 8,
+    //                                                       offset: 429
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 8,
+    //                                                       line: 2,
+    //                                                       offset: 21
+    //                                                   }
+    //                                               },
+    //                                               expression: {
+    //                                                   node: "MethodInvocation",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 8,
+    //                                                           line: 8,
+    //                                                           offset: 429
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 2,
+    //                                                           line: 2,
+    //                                                           offset: 15
+    //                                                       }
+    //                                                   },
+    //                                                   expression: null,
+    //                                                   typeArguments: [],
+    //                                                   name: {
+    //                                                       node: "SimpleName",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 8,
+    //                                                               line: 8,
+    //                                                               offset: 429
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 0,
+    //                                                               line: 2,
+    //                                                               offset: 13
+    //                                                           }
+    //                                                       },
+    //                                                       identifier: "Hello",
+    //                                                       var: false
+    //                                                   },
+    //                                                   arguments: []
+    //                                               },
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 16,
+    //                                                           line: 8,
+    //                                                           offset: 437
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 0,
+    //                                                           line: 2,
+    //                                                           offset: 13
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "World",
+    //                                                   var: false
+    //                                               }
+    //                                           },
+    //                                           operator: "++"
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 9,
+    //                                               offset: 484
+    //                                           },
+    //                                           end: {
+    //                                               column: 3,
+    //                                               line: 3,
+    //                                               offset: 61
+    //                                           }
+    //                                       },
+    //                                       trailingComments: [
+    //                                           {
+    //                                               node: "LineComment",
+    //                                               value: "\/\/ Primary Selector+ PostfixOp"
+    //                                           }
+    //                                       ],
+    //                                       expression: {
+    //                                           node: "PostfixExpression",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 9,
+    //                                                   offset: 484
+    //                                               },
+    //                                               end: {
+    //                                                   column: 2,
+    //                                                   line: 3,
+    //                                                   offset: 60
+    //                                               }
+    //                                           },
+    //                                           operand: {
+    //                                               node: "FieldAccess",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 8,
+    //                                                       line: 9,
+    //                                                       offset: 484
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 0,
+    //                                                       line: 3,
+    //                                                       offset: 58
+    //                                                   }
+    //                                               },
+    //                                               expression: {
+    //                                                   node: "MethodInvocation",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 8,
+    //                                                           line: 9,
+    //                                                           offset: 484
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 43,
+    //                                                           line: 2,
+    //                                                           offset: 56
+    //                                                       }
+    //                                                   },
+    //                                                   expression: {
+    //                                                       node: "ClassInstanceCreation",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 8,
+    //                                                               line: 9,
+    //                                                               offset: 484
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 25,
+    //                                                               line: 2,
+    //                                                               offset: 38
+    //                                                           }
+    //                                                       },
+    //                                                       expression: null,
+    //                                                       typeArguments: [],
+    //                                                       type: {
+    //                                                           node: "SimpleType",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 12,
+    //                                                                   line: 9,
+    //                                                                   offset: 488
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 12,
+    //                                                                   line: 2,
+    //                                                                   offset: 25
+    //                                                               }
+    //                                                           },
+    //                                                           annotations: [],
+    //                                                           name: {
+    //                                                               node: "QualifiedName",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 12,
+    //                                                                       line: 9,
+    //                                                                       offset: 488
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 12,
+    //                                                                       line: 2,
+    //                                                                       offset: 25
+    //                                                                   }
+    //                                                               },
+    //                                                               qualifier: {
+    //                                                                   node: "QualifiedName",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 12,
+    //                                                                           line: 9,
+    //                                                                           offset: 488
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 5,
+    //                                                                           line: 2,
+    //                                                                           offset: 18
+    //                                                                       }
+    //                                                                   },
+    //                                                                   qualifier: {
+    //                                                                       node: "SimpleName",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 12,
+    //                                                                               line: 9,
+    //                                                                               offset: 488
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 0,
+    //                                                                               line: 2,
+    //                                                                               offset: 13
+    //                                                                           }
+    //                                                                       },
+    //                                                                       identifier: "java",
+    //                                                                       var: false
+    //                                                                   },
+    //                                                                   name: {
+    //                                                                       node: "SimpleName",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 17,
+    //                                                                               line: 9,
+    //                                                                               offset: 493
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 0,
+    //                                                                               line: 2,
+    //                                                                               offset: 13
+    //                                                                           }
+    //                                                                       },
+    //                                                                       identifier: "lang",
+    //                                                                       var: false
+    //                                                                   }
+    //                                                               },
+    //                                                               name: {
+    //                                                                   node: "SimpleName",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 22,
+    //                                                                           line: 9,
+    //                                                                           offset: 498
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 2,
+    //                                                                           line: 2,
+    //                                                                           offset: 15
+    //                                                                       }
+    //                                                                   },
+    //                                                                   identifier: "String",
+    //                                                                   var: false
+    //                                                               }
+    //                                                           }
+    //                                                       },
+    //                                                       arguments: [
+    //                                                           {
+    //                                                               node: "StringLiteral",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 29,
+    //                                                                       line: 9,
+    //                                                                       offset: 505
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 3,
+    //                                                                       line: 2,
+    //                                                                       offset: 16
+    //                                                                   }
+    //                                                               },
+    //                                                               escapedValue: "\"hello\""
+    //                                                           }
+    //                                                       ],
+    //                                                       anonymousClassDeclaration: null
+    //                                                   },
+    //                                                   typeArguments: [],
+    //                                                   name: {
+    //                                                       node: "SimpleName",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 38,
+    //                                                               line: 9,
+    //                                                               offset: 514
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 4,
+    //                                                               line: 2,
+    //                                                               offset: 17
+    //                                                           }
+    //                                                       },
+    //                                                       identifier: "hashCode",
+    //                                                       var: false
+    //                                                   },
+    //                                                   arguments: [
+    //                                                       {
+    //                                                           node: "StringLiteral",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 47,
+    //                                                                   line: 9,
+    //                                                                   offset: 523
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 3,
+    //                                                                   line: 2,
+    //                                                                   offset: 16
+    //                                                               }
+    //                                                           },
+    //                                                           escapedValue: "\"hello\""
+    //                                                       }
+    //                                                   ]
+    //                                               },
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 56,
+    //                                                           line: 9,
+    //                                                           offset: 532
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 10,
+    //                                                           line: 1,
+    //                                                           offset: 10
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "v",
+    //                                                   var: false
+    //                                               }
+    //                                           },
+    //                                           operator: "++"
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 10,
+    //                                               offset: 576
+    //                                           },
+    //                                           end: {
+    //                                               column: 6,
+    //                                               line: 3,
+    //                                               offset: 64
+    //                                           }
+    //                                       },
+    //                                       trailingComments: [
+    //                                           {
+    //                                               node: "LineComment",
+    //                                               value: "\/\/ Primary Selector+ PostfixOp"
+    //                                           }
+    //                                       ],
+    //                                       expression: {
+    //                                           node: "PostfixExpression",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 10,
+    //                                                   offset: 576
+    //                                               },
+    //                                               end: {
+    //                                                   column: 5,
+    //                                                   line: 3,
+    //                                                   offset: 63
+    //                                               }
+    //                                           },
+    //                                           operand: {
+    //                                               node: "FieldAccess",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 8,
+    //                                                       line: 10,
+    //                                                       offset: 576
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 3,
+    //                                                       line: 3,
+    //                                                       offset: 61
+    //                                                   }
+    //                                               },
+    //                                               expression: {
+    //                                                   node: "FieldAccess",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 8,
+    //                                                           line: 10,
+    //                                                           offset: 576
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 1,
+    //                                                           line: 3,
+    //                                                           offset: 59
+    //                                                       }
+    //                                                   },
+    //                                                   expression: {
+    //                                                       node: "MethodInvocation",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 8,
+    //                                                               line: 10,
+    //                                                               offset: 576
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 44,
+    //                                                               line: 2,
+    //                                                               offset: 57
+    //                                                           }
+    //                                                       },
+    //                                                       expression: {
+    //                                                           node: "ClassInstanceCreation",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 8,
+    //                                                                   line: 10,
+    //                                                                   offset: 576
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 26,
+    //                                                                   line: 2,
+    //                                                                   offset: 39
+    //                                                               }
+    //                                                           },
+    //                                                           expression: null,
+    //                                                           typeArguments: [],
+    //                                                           type: {
+    //                                                               node: "SimpleType",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 12,
+    //                                                                       line: 10,
+    //                                                                       offset: 580
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 13,
+    //                                                                       line: 2,
+    //                                                                       offset: 26
+    //                                                                   }
+    //                                                               },
+    //                                                               annotations: [],
+    //                                                               name: {
+    //                                                                   node: "QualifiedName",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 12,
+    //                                                                           line: 10,
+    //                                                                           offset: 580
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 13,
+    //                                                                           line: 2,
+    //                                                                           offset: 26
+    //                                                                       }
+    //                                                                   },
+    //                                                                   qualifier: {
+    //                                                                       node: "QualifiedName",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 12,
+    //                                                                               line: 10,
+    //                                                                               offset: 580
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 6,
+    //                                                                               line: 2,
+    //                                                                               offset: 19
+    //                                                                           }
+    //                                                                       },
+    //                                                                       qualifier: {
+    //                                                                           node: "SimpleName",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 12,
+    //                                                                                   line: 10,
+    //                                                                                   offset: 580
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 1,
+    //                                                                                   line: 2,
+    //                                                                                   offset: 14
+    //                                                                               }
+    //                                                                           },
+    //                                                                           identifier: "java",
+    //                                                                           var: false
+    //                                                                       },
+    //                                                                       name: {
+    //                                                                           node: "SimpleName",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 17,
+    //                                                                                   line: 10,
+    //                                                                                   offset: 585
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 1,
+    //                                                                                   line: 2,
+    //                                                                                   offset: 14
+    //                                                                               }
+    //                                                                           },
+    //                                                                           identifier: "lang",
+    //                                                                           var: false
+    //                                                                       }
+    //                                                                   },
+    //                                                                   name: {
+    //                                                                       node: "SimpleName",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 22,
+    //                                                                               line: 10,
+    //                                                                               offset: 590
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 3,
+    //                                                                               line: 2,
+    //                                                                               offset: 16
+    //                                                                           }
+    //                                                                       },
+    //                                                                       identifier: "String",
+    //                                                                       var: false
+    //                                                                   }
+    //                                                               }
+    //                                                           },
+    //                                                           arguments: [
+    //                                                               {
+    //                                                                   node: "StringLiteral",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 29,
+    //                                                                           line: 10,
+    //                                                                           offset: 597
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 4,
+    //                                                                           line: 2,
+    //                                                                           offset: 17
+    //                                                                       }
+    //                                                                   },
+    //                                                                   escapedValue: "\"hello\""
+    //                                                               }
+    //                                                           ],
+    //                                                           anonymousClassDeclaration: null
+    //                                                       },
+    //                                                       typeArguments: [],
+    //                                                       name: {
+    //                                                           node: "SimpleName",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 38,
+    //                                                                   line: 10,
+    //                                                                   offset: 606
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 5,
+    //                                                                   line: 2,
+    //                                                                   offset: 18
+    //                                                               }
+    //                                                           },
+    //                                                           identifier: "hashCode",
+    //                                                           var: false
+    //                                                       },
+    //                                                       arguments: [
+    //                                                           {
+    //                                                               node: "StringLiteral",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 47,
+    //                                                                       line: 10,
+    //                                                                       offset: 615
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 4,
+    //                                                                       line: 2,
+    //                                                                       offset: 17
+    //                                                                   }
+    //                                                               },
+    //                                                               escapedValue: "\"hello\""
+    //                                                           }
+    //                                                       ]
+    //                                                   },
+    //                                                   name: {
+    //                                                       node: "SimpleName",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 56,
+    //                                                               line: 10,
+    //                                                               offset: 624
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 11,
+    //                                                               line: 1,
+    //                                                               offset: 11
+    //                                                           }
+    //                                                       },
+    //                                                       identifier: "h",
+    //                                                       var: false
+    //                                                   }
+    //                                               },
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 58,
+    //                                                           line: 10,
+    //                                                           offset: 626
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 11,
+    //                                                           line: 1,
+    //                                                           offset: 11
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "v",
+    //                                                   var: false
+    //                                               }
+    //                                           },
+    //                                           operator: "++"
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 11,
+    //                                               offset: 670
+    //                                           },
+    //                                           end: {
+    //                                               column: 11,
+    //                                               line: 3,
+    //                                               offset: 69
+    //                                           }
+    //                                       },
+    //                                       expression: {
+    //                                           node: "PostfixExpression",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 11,
+    //                                                   offset: 670
+    //                                               },
+    //                                               end: {
+    //                                                   column: 10,
+    //                                                   line: 3,
+    //                                                   offset: 68
+    //                                               }
+    //                                           },
+    //                                           operand: {
+    //                                               node: "FieldAccess",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 8,
+    //                                                       line: 11,
+    //                                                       offset: 670
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 8,
+    //                                                       line: 3,
+    //                                                       offset: 66
+    //                                                   }
+    //                                               },
+    //                                               expression: {
+    //                                                   node: "FieldAccess",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 8,
+    //                                                           line: 11,
+    //                                                           offset: 670
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 2,
+    //                                                           line: 3,
+    //                                                           offset: 60
+    //                                                       }
+    //                                                   },
+    //                                                   expression: {
+    //                                                       node: "MethodInvocation",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 8,
+    //                                                               line: 11,
+    //                                                               offset: 670
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 41,
+    //                                                               line: 2,
+    //                                                               offset: 54
+    //                                                           }
+    //                                                       },
+    //                                                       expression: {
+    //                                                           node: "FieldAccess",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 8,
+    //                                                                   line: 11,
+    //                                                                   offset: 670
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 37,
+    //                                                                   line: 2,
+    //                                                                   offset: 50
+    //                                                               }
+    //                                                           },
+    //                                                           expression: {
+    //                                                               node: "MethodInvocation",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 8,
+    //                                                                       line: 11,
+    //                                                                       offset: 670
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 35,
+    //                                                                       line: 2,
+    //                                                                       offset: 48
+    //                                                                   }
+    //                                                               },
+    //                                                               expression: {
+    //                                                                   node: "ClassInstanceCreation",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 8,
+    //                                                                           line: 11,
+    //                                                                           offset: 670
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 17,
+    //                                                                           line: 2,
+    //                                                                           offset: 30
+    //                                                                       }
+    //                                                                   },
+    //                                                                   expression: null,
+    //                                                                   typeArguments: [],
+    //                                                                   type: {
+    //                                                                       node: "SimpleType",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 12,
+    //                                                                               line: 11,
+    //                                                                               offset: 674
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 4,
+    //                                                                               line: 2,
+    //                                                                               offset: 17
+    //                                                                           }
+    //                                                                       },
+    //                                                                       annotations: [],
+    //                                                                       name: {
+    //                                                                           node: "SimpleName",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 12,
+    //                                                                                   line: 11,
+    //                                                                                   offset: 674
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 4,
+    //                                                                                   line: 2,
+    //                                                                                   offset: 17
+    //                                                                               }
+    //                                                                           },
+    //                                                                           identifier: "String",
+    //                                                                           var: false
+    //                                                                       }
+    //                                                                   },
+    //                                                                   arguments: [
+    //                                                                       {
+    //                                                                           node: "StringLiteral",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 19,
+    //                                                                                   line: 11,
+    //                                                                                   offset: 681
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 5,
+    //                                                                                   line: 2,
+    //                                                                                   offset: 18
+    //                                                                               }
+    //                                                                           },
+    //                                                                           escapedValue: "\"hello\""
+    //                                                                       }
+    //                                                                   ],
+    //                                                                   anonymousClassDeclaration: null
+    //                                                               },
+    //                                                               typeArguments: [],
+    //                                                               name: {
+    //                                                                   node: "SimpleName",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 28,
+    //                                                                           line: 11,
+    //                                                                           offset: 690
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 6,
+    //                                                                           line: 2,
+    //                                                                           offset: 19
+    //                                                                       }
+    //                                                                   },
+    //                                                                   identifier: "hashCode",
+    //                                                                   var: false
+    //                                                               },
+    //                                                               arguments: [
+    //                                                                   {
+    //                                                                       node: "StringLiteral",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 37,
+    //                                                                               line: 11,
+    //                                                                               offset: 699
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 5,
+    //                                                                               line: 2,
+    //                                                                               offset: 18
+    //                                                                           }
+    //                                                                       },
+    //                                                                       escapedValue: "\"hello\""
+    //                                                                   }
+    //                                                               ]
+    //                                                           },
+    //                                                           name: {
+    //                                                               node: "SimpleName",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 46,
+    //                                                                       line: 11,
+    //                                                                       offset: 708
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 12,
+    //                                                                       line: 1,
+    //                                                                       offset: 12
+    //                                                                   }
+    //                                                               },
+    //                                                               identifier: "h",
+    //                                                               var: false
+    //                                                           }
+    //                                                       },
+    //                                                       typeArguments: [],
+    //                                                       name: {
+    //                                                           node: "SimpleName",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 48,
+    //                                                                   line: 11,
+    //                                                                   offset: 710
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 12,
+    //                                                                   line: 1,
+    //                                                                   offset: 12
+    //                                                               }
+    //                                                           },
+    //                                                           identifier: "v",
+    //                                                           var: false
+    //                                                       },
+    //                                                       arguments: []
+    //                                                   },
+    //                                                   name: {
+    //                                                       node: "SimpleName",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 52,
+    //                                                               line: 11,
+    //                                                               offset: 714
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 3,
+    //                                                               line: 2,
+    //                                                               offset: 16
+    //                                                           }
+    //                                                       },
+    //                                                       identifier: "hello",
+    //                                                       var: false
+    //                                                   }
+    //                                               },
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 58,
+    //                                                           line: 11,
+    //                                                           offset: 720
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 3,
+    //                                                           line: 2,
+    //                                                           offset: 16
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "world",
+    //                                                   var: false
+    //                                               }
+    //                                           },
+    //                                           operator: "++"
+    //                                       }
+    //                                   },
+    //                                   {
+    //                                       node: "ExpressionStatement",
+    //                                       location: {
+    //                                           start: {
+    //                                               column: 8,
+    //                                               line: 12,
+    //                                               offset: 737
+    //                                           },
+    //                                           end: {
+    //                                               column: 12,
+    //                                               line: 3,
+    //                                               offset: 70
+    //                                           }
+    //                                       },
+    //                                       expression: {
+    //                                           node: "PrefixExpression",
+    //                                           location: {
+    //                                               start: {
+    //                                                   column: 8,
+    //                                                   line: 12,
+    //                                                   offset: 737
+    //                                               },
+    //                                               end: {
+    //                                                   column: 11,
+    //                                                   line: 3,
+    //                                                   offset: 69
+    //                                               }
+    //                                           },
+    //                                           operator: "++",
+    //                                           operand: {
+    //                                               node: "FieldAccess",
+    //                                               location: {
+    //                                                   start: {
+    //                                                       column: 10,
+    //                                                       line: 12,
+    //                                                       offset: 739
+    //                                                   },
+    //                                                   end: {
+    //                                                       column: 9,
+    //                                                       line: 3,
+    //                                                       offset: 67
+    //                                                   }
+    //                                               },
+    //                                               expression: {
+    //                                                   node: "FieldAccess",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 10,
+    //                                                           line: 12,
+    //                                                           offset: 739
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 3,
+    //                                                           line: 3,
+    //                                                           offset: 61
+    //                                                       }
+    //                                                   },
+    //                                                   expression: {
+    //                                                       node: "MethodInvocation",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 10,
+    //                                                               line: 12,
+    //                                                               offset: 739
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 42,
+    //                                                               line: 2,
+    //                                                               offset: 55
+    //                                                           }
+    //                                                       },
+    //                                                       expression: {
+    //                                                           node: "FieldAccess",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 10,
+    //                                                                   line: 12,
+    //                                                                   offset: 739
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 38,
+    //                                                                   line: 2,
+    //                                                                   offset: 51
+    //                                                               }
+    //                                                           },
+    //                                                           expression: {
+    //                                                               node: "MethodInvocation",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 10,
+    //                                                                       line: 12,
+    //                                                                       offset: 739
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 36,
+    //                                                                       line: 2,
+    //                                                                       offset: 49
+    //                                                                   }
+    //                                                               },
+    //                                                               expression: {
+    //                                                                   node: "ClassInstanceCreation",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 10,
+    //                                                                           line: 12,
+    //                                                                           offset: 739
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 18,
+    //                                                                           line: 2,
+    //                                                                           offset: 31
+    //                                                                       }
+    //                                                                   },
+    //                                                                   expression: null,
+    //                                                                   typeArguments: [],
+    //                                                                   type: {
+    //                                                                       node: "SimpleType",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 14,
+    //                                                                               line: 12,
+    //                                                                               offset: 743
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 5,
+    //                                                                               line: 2,
+    //                                                                               offset: 18
+    //                                                                           }
+    //                                                                       },
+    //                                                                       annotations: [],
+    //                                                                       name: {
+    //                                                                           node: "SimpleName",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 14,
+    //                                                                                   line: 12,
+    //                                                                                   offset: 743
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 5,
+    //                                                                                   line: 2,
+    //                                                                                   offset: 18
+    //                                                                               }
+    //                                                                           },
+    //                                                                           identifier: "String",
+    //                                                                           var: false
+    //                                                                       }
+    //                                                                   },
+    //                                                                   arguments: [
+    //                                                                       {
+    //                                                                           node: "StringLiteral",
+    //                                                                           location: {
+    //                                                                               start: {
+    //                                                                                   column: 21,
+    //                                                                                   line: 12,
+    //                                                                                   offset: 750
+    //                                                                               },
+    //                                                                               end: {
+    //                                                                                   column: 6,
+    //                                                                                   line: 2,
+    //                                                                                   offset: 19
+    //                                                                               }
+    //                                                                           },
+    //                                                                           escapedValue: "\"hello\""
+    //                                                                       }
+    //                                                                   ],
+    //                                                                   anonymousClassDeclaration: null
+    //                                                               },
+    //                                                               typeArguments: [],
+    //                                                               name: {
+    //                                                                   node: "SimpleName",
+    //                                                                   location: {
+    //                                                                       start: {
+    //                                                                           column: 30,
+    //                                                                           line: 12,
+    //                                                                           offset: 759
+    //                                                                       },
+    //                                                                       end: {
+    //                                                                           column: 7,
+    //                                                                           line: 2,
+    //                                                                           offset: 20
+    //                                                                       }
+    //                                                                   },
+    //                                                                   identifier: "hashCode",
+    //                                                                   var: false
+    //                                                               },
+    //                                                               arguments: [
+    //                                                                   {
+    //                                                                       node: "StringLiteral",
+    //                                                                       location: {
+    //                                                                           start: {
+    //                                                                               column: 39,
+    //                                                                               line: 12,
+    //                                                                               offset: 768
+    //                                                                           },
+    //                                                                           end: {
+    //                                                                               column: 6,
+    //                                                                               line: 2,
+    //                                                                               offset: 19
+    //                                                                           }
+    //                                                                       },
+    //                                                                       escapedValue: "\"hello\""
+    //                                                                   }
+    //                                                               ]
+    //                                                           },
+    //                                                           name: {
+    //                                                               node: "SimpleName",
+    //                                                               location: {
+    //                                                                   start: {
+    //                                                                       column: 48,
+    //                                                                       line: 12,
+    //                                                                       offset: 777
+    //                                                                   },
+    //                                                                   end: {
+    //                                                                       column: 0,
+    //                                                                       line: 2,
+    //                                                                       offset: 13
+    //                                                                   }
+    //                                                               },
+    //                                                               identifier: "h",
+    //                                                               var: false
+    //                                                           }
+    //                                                       },
+    //                                                       typeArguments: [],
+    //                                                       name: {
+    //                                                           node: "SimpleName",
+    //                                                           location: {
+    //                                                               start: {
+    //                                                                   column: 50,
+    //                                                                   line: 12,
+    //                                                                   offset: 779
+    //                                                               },
+    //                                                               end: {
+    //                                                                   column: 0,
+    //                                                                   line: 2,
+    //                                                                   offset: 13
+    //                                                               }
+    //                                                           },
+    //                                                           identifier: "v",
+    //                                                           var: false
+    //                                                       },
+    //                                                       arguments: []
+    //                                                   },
+    //                                                   name: {
+    //                                                       node: "SimpleName",
+    //                                                       location: {
+    //                                                           start: {
+    //                                                               column: 54,
+    //                                                               line: 12,
+    //                                                               offset: 783
+    //                                                           },
+    //                                                           end: {
+    //                                                               column: 4,
+    //                                                               line: 2,
+    //                                                               offset: 17
+    //                                                           }
+    //                                                       },
+    //                                                       identifier: "hello",
+    //                                                       var: false
+    //                                                   }
+    //                                               },
+    //                                               name: {
+    //                                                   node: "SimpleName",
+    //                                                   location: {
+    //                                                       start: {
+    //                                                           column: 60,
+    //                                                           line: 12,
+    //                                                           offset: 789
+    //                                                       },
+    //                                                       end: {
+    //                                                           column: 4,
+    //                                                           line: 2,
+    //                                                           offset: 17
+    //                                                       }
+    //                                                   },
+    //                                                   identifier: "world",
+    //                                                   var: false
+    //                                               }
+    //                                           }
+    //                                       }
+    //                                   }
+    //                               ]
+    //                           }
+    //                       }
+    //                   ]
+    //               }
+    //           ],
+    //           module: null
+    //       }
+    //   );
+    // });
     //
     // test("Primary ParExpression", function(assert) {
     //   var src = multiline(function(){/*

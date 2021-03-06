@@ -113,12 +113,12 @@ public class App {
 
 		if (cmd.hasOption("c")) {
 			try (final UglyMathCommentsExtractor cex = new UglyMathCommentsExtractor(cu, src)) {
-				final ASTDumper dumper = new ASTDumper(true, cex);
+				final ASTDumper dumper = new ASTDumper(false, cex);
 				dumper.dump(cu, cu);
 				System.out.flush();
 			}
 		} else {
-			final ASTDumper dumper = new ASTDumper(true);
+			final ASTDumper dumper = new ASTDumper(false);
 
 			for (final Object comment : cu.getCommentList()) {
 				((Comment) comment).delete();

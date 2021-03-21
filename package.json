@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "Java1.15 parser",
   "scripts": {
-    "build": "node_modules/pegjs/bin/pegjs -o lib/javaparser15.js --format umd src/Java.1.15.pegjs",
+    "build": "node_modules/pegjs/bin/pegjs -o lib/javaparser15.js --format umd --export-var JavaParser src/Java.1.15.pegjs",
     "build-min": "npm run build && node_modules/uglify-js/bin/uglifyjs lib/javaparser15.js -o lib/javaparser15.min.js"
   },
   "repository": {
@@ -26,7 +26,7 @@
   "devDependencies": {
     "pegjs": "^0.10.0",
     "uglify-js": "^2.8.29",
-    "umd": "^3.0.1"
+    "umd": "^3.0.3"
   },
   "dependencies": {
     "cli": "^1.0.1",

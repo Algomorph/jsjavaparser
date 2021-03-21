@@ -1,10 +1,34 @@
 {
-  "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-cli": "~0.1",
-    "grunt-contrib-qunit": "~0.7.0",
-    "grunt-coveralls": "^1.0.0"
+  "name": "java-parser",
+  "version": "0.0.2",
+  "description": "Java1.15 parser",
+  "scripts": {
+    "build": "node_modules/pegjs/bin/pegjs -o lib/javaparser15.js --format umd src/Java.1.15.pegjs",
+    "build-min": "npm run build && minify lib/javaparser15.js > ./lib/javaparser15.min.js"
   },
-  "name": "jsjavaparser",
-  "version": "0.1.1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/algomorph/jsjavaparser.git"
+  },
+  "keywords": [
+    "java",
+    "parser"
+  ],
+  "author": "Oleg Mazko",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/algomorph/jsjavaparser/issues"
+  },
+  "main": "javaparser15.js",
+  "bin": {
+    "java-parser": "cmd.js"
+  },
+  "devDependencies": {
+    "pegjs": "^0.10.0",
+    "uglify-js": "^2.7.3",
+    "umd": "^3.0.1"
+  },
+  "dependencies": {
+    "cli": "^1.0.1"
+  }
 }

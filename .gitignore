@@ -4,4 +4,5 @@ bower_components/
 .coveralls.yml
 .idea/*
 lib/*
+tools/target/
 package-lock.json

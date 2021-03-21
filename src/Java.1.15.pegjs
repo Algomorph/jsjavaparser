@@ -260,8 +260,7 @@ TypeDeclaration
       )
       { 
         return mergeProps(type, { 
-          modifiers: modifiers,
-          javadoc: null //TODO
+          modifiers: modifiers
         }); 
       }
       / SEMI
@@ -309,8 +308,7 @@ MemberDecl
     {
       return mergeProps(rest, addLocation({
         node:          'MethodDeclaration',
-        typeParameters: params,
-        javadoc: null //TODO
+        typeParameters: params
       }, options));
     }
     / type:Type id:Identifier
@@ -320,8 +318,7 @@ MemberDecl
         node:          'MethodDeclaration',
         returnType2:    type,
         name:           id,
-        typeParameters: [],
-        javadoc: null //TODO
+        typeParameters: []
       }, options));
     }
     / VOID id:Identifier rest:VoidMethodDeclaratorRest // Void method (JLS 8.4)
@@ -330,8 +327,7 @@ MemberDecl
         node:       'MethodDeclaration',
         returnType2: makePrimitive('void'),
         name:        id,
-        constructor: false,
-        javadoc: null //TODO
+        constructor: false
       }, options));
     }
     / id:Identifier rest:ConstructorDeclaratorRest     // Constructor (JLS 8.8)
@@ -339,8 +335,7 @@ MemberDecl
       return mergeProps(rest, addLocation({
         node:           'MethodDeclaration',
         name:            id,
-        typeParameters:  [],
-        javadoc: null //TODO
+        typeParameters:  []
       }, options));
     }
     / type:Type decls:VariableDeclarators SEMI         // Field (JLS 8.3)

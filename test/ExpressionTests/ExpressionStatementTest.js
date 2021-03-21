@@ -19,7 +19,6 @@ test("ExpressionStatement", function (assert) {
             types: [
                 {
                     node: "TypeDeclaration",
-                    javadoc: null,
                     modifiers: [],
                     interface: false,
                     name: {
@@ -33,7 +32,6 @@ test("ExpressionStatement", function (assert) {
                     bodyDeclarations: [
                         {
                             node: "MethodDeclaration",
-                            javadoc: null,
                             modifiers: [
                                 {
                                     node: "Modifier",

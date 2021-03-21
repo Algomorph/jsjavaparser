@@ -3,5 +3,5 @@ bower_components/
 .coverage-results/
 .coveralls.yml
 .idea/*
-npm/*
+lib/*
 package-lock.json

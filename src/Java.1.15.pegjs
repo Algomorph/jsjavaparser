@@ -79,19 +79,40 @@
     });
   }
 
-  function buildArrayTree(first, rest) {
-    return buildTree(first, rest,
-      function(result, element) {
+  // function buildArrayTree(first, rest) {
+  //   return buildTree(first, rest,
+  //     function(result, element) {
+  //     return {
+  //       node:         'ArrayType',
+  //       elementType: result,
+  //       dimensions: 
+  //       [{ 
+  //         "annotations": first.annotations,
+  //         "node": "Dimension"
+  //       }]
+  //     };
+  //   });
+  // }
+
+  function buildArrayType(elementType, dims) {
+    const dimensionObjects = []
+    if(dims.length > 0){
+      for (let i = 0; i < dims.length; i++){
+        dimensionObjects.push(
+          {
+            "annotations": [],
+            "node": "Dimension"
+          }
+        );
+      }
       return {
         node:         'ArrayType',
-        elementType: result,
-        dimensions: 
-        [{ 
-          "annotations": first.annotations,
-          "node": "Dimension"
-        }]
-      };
-    });
+        elementType:  elementType,
+        dimensions: dimensionObjects
+      };  
+    } else {
+      return elementType;
+    }
   }
 
   function optionalList(value) {
@@ -128,12 +149,14 @@
       };
   }
 
-  function buildTypeName(qual, args, rest) {
+  function buildTypeName(qual, args, rest, annotations=[]) {
     var first = args === null ? {
       node: 'SimpleType',
+      annotations: annotations,
       name:  qual
     } : {
       node: 'ParameterizedType',
+      annotations: annotations,
       type:  {
           node: 'SimpleType',
           name:  qual
@@ -918,6 +941,9 @@ ConstantExpression
     = Expression
 
 Expression
+    = AssignmentExpression
+
+AssignmentExpression
     = left:ConditionalExpression op:AssignmentOperator right:Expression
     {
       return addLocation({
@@ -1103,7 +1129,7 @@ Primary
     {
       return addLocation({
         node: 'TypeLiteral',
-        type:  buildArrayTree(type, dims)
+        type:  buildArrayType(type, dims)
       }, options);
     }
     / VOID DOT CLASS
@@ -1119,7 +1145,7 @@ QualifiedIdentifierSuffix
     {
       return addLocation({
         node: 'TypeLiteral',
-        type:  buildArrayTree(buildTypeName(qual, null, []), dims)
+        type:  buildArrayType(buildTypeName(qual, null, []), dims)
       }, options);
     }
     / qual:QualifiedIdentifier LBRK expr:Expression RBRK
@@ -1212,8 +1238,7 @@ ArraySelector
 Selector
     = DOT id:Identifier args:Arguments
     { return addLocation({ node: 'MethodInvocation', arguments: args, name: id, typeArguments: [] }, options); }
-    / DOT id:Identifier
-    { return addLocation({ node: 'FieldAccess', name: id }, options); }
+    / FieldSelector
     / DOT ret:ExplicitGenericInvocation
     { return ret; }
     / DOT THIS
@@ -1277,7 +1302,7 @@ Creator
     {
       return addLocation({
         node:       'ArrayCreation',
-        type:        buildArrayTree(type, rest.extraDims),
+        type:        buildArrayType(type, rest.extraDims),
         initializer: rest.init,
         dimensions:  rest.dimms
       }, options);
@@ -1302,10 +1327,10 @@ CreatedName
 InnerCreator
     = id:Identifier args:NonWildcardTypeArgumentsOrDiamond? rest:ClassCreatorRest
     {
-      return addLocation(rest, {
+      return addLocation(mergeProps(rest, {
         node: 'ClassInstanceCreation',
         type:  buildTypeName(id, args, [])
-      }, options);
+      }), options);
     }
 
 ClassCreatorRest
@@ -1368,17 +1393,17 @@ DimExpr
 
 Type
     = type:(BasicType / ClassType) dims:Dim*
-      { return buildArrayTree(type, dims); }
+      { return buildArrayType(type, dims); }
 
 ReferenceType
     = bas:BasicType dims:Dim+
-    { return buildArrayTree(bas, dims); }
+    { return buildArrayType(bas, dims); }
     / cls:ClassType dims:Dim*
-    { return buildArrayTree(cls, dims); }
+    { return buildArrayType(cls, dims); }
 
 ClassType
     = annot:Annotation* qual:QualifiedIdentifier args:TypeArguments? rest:(DOT Identifier TypeArguments?)*
-    { return mergeProps(buildTypeName(qual, args, rest), { annotations: annot }); }
+    { return buildTypeName(qual, args, rest, annot); }
 
 ClassTypeList
     = first:ClassType rest:(COMMA ClassType)*

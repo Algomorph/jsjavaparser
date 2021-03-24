@@ -1,7 +1,7 @@
 const JavaParser = require('../../lib/javaparser15_node');
 const multiline = require('multiline')
 
-test("ExpressionStatement", () => {
+test("${test_name}", () => {
     const src = multiline(() => {/*
 ${java_source}
         */

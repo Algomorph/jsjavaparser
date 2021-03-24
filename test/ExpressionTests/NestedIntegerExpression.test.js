@@ -1,15 +1,14 @@
 const JavaParser = require('../../lib/javaparser15_node');
 const multiline = require('multiline')
 
-test("MapOfCodes", () => {
+test("NestedIntegerExpression", () => {
     const src = multiline(() => {/*
-        public class Test {
-        	public static void test(boolean forward){
-                int x = 1000;
-                int y = (((x - (x % 100)) / 100) + 96);
+        class Test {
+        	public static void test(){
+                int x = 1;
+                int y = (((x + (x + 1)) + 1) + 1);
         	}
         }
-        
         */
     });
       const output = JavaParser.parse(src, {'addLocations': false});
@@ -21,12 +20,7 @@ test("MapOfCodes", () => {
             types: [
                 {
                     node: "TypeDeclaration",
-                    modifiers: [
-                        {
-                            node: "Modifier",
-                            keyword: "public"
-                        }
-                    ],
+                    modifiers: [],
                     interface: false,
                     name: {
                         node: "SimpleName",
@@ -63,26 +57,7 @@ test("MapOfCodes", () => {
                             },
                             receiverType: null,
                             receiverQualifier: null,
-                            parameters: [
-                                {
-                                    node: "SingleVariableDeclaration",
-                                    modifiers: [],
-                                    type: {
-                                        node: "PrimitiveType",
-                                        annotations: [],
-                                        primitiveTypeCode: "boolean"
-                                    },
-                                    varargsAnnotations: [],
-                                    varargs: false,
-                                    name: {
-                                        node: "SimpleName",
-                                        identifier: "forward",
-                                        var: false
-                                    },
-                                    extraDimensions2: [],
-                                    initializer: null
-                                }
-                            ],
+                            parameters: [],
                             extraDimensions2: [],
                             thrownExceptionTypes: [],
                             body: {
@@ -107,7 +82,7 @@ test("MapOfCodes", () => {
                                                 extraDimensions2: [],
                                                 initializer: {
                                                     node: "NumberLiteral",
-                                                    token: "1000"
+                                                    token: "1"
                                                 }
                                             }
                                         ]
@@ -146,7 +121,7 @@ test("MapOfCodes", () => {
                                                                             identifier: "x",
                                                                             var: false
                                                                         },
-                                                                        operator: "-",
+                                                                        operator: "+",
                                                                         rightOperand: {
                                                                             node: "ParenthesizedExpression",
                                                                             expression: {
@@ -156,26 +131,26 @@ test("MapOfCodes", () => {
                                                                                     identifier: "x",
                                                                                     var: false
                                                                                 },
-                                                                                operator: "%",
+                                                                                operator: "+",
                                                                                 rightOperand: {
                                                                                     node: "NumberLiteral",
-                                                                                    token: "100"
+                                                                                    token: "1"
                                                                                 },
                                                                             }
                                                                         },
                                                                     }
                                                                 },
-                                                                operator: "\/",
+                                                                operator: "+",
                                                                 rightOperand: {
                                                                     node: "NumberLiteral",
-                                                                    token: "100"
+                                                                    token: "1"
                                                                 },
                                                             }
                                                         },
                                                         operator: "+",
                                                         rightOperand: {
                                                             node: "NumberLiteral",
-                                                            token: "96"
+                                                            token: "1"
                                                         },
                                                     }
                                                 }

@@ -23,8 +23,21 @@ def main():
     parser = argparse.ArgumentParser("Generate a unit test based on the provided java source file.")
     parser.add_argument("java_source_file", type=str,
                         help="Path to the source java file whose AST the parser should generate correctly in the test.")
+    parser.add_argument("-tf", "--test_framework", type=str, default="jest",
+                        help="Test framework to generate the javascript test for. Can be one of [jest, qunit]")
+
     args = parser.parse_args()
-    test_template = Template(filename=os.path.join(dir_path, "test_template.js"))
+
+    if args.test_framework == "jest":
+        test_template = Template(filename=os.path.join(dir_path, "jest_test_template.js"))
+        test_name_postfix = ".test"
+    elif args.test_framework == "qunit":
+        test_template = Template(filename=os.path.join(dir_path, "qunit_test_template.js"))
+        test_name_postfix = "QUnitTest"
+    else:
+        print("Unrecognized argument for --test_framework: " + args.test_framework)
+        parser.print_help()
+        return
 
     java_source_file_path = args.java_source_file
     test_name = os.path.splitext(os.path.basename(java_source_file_path))[0]
@@ -40,12 +53,13 @@ def main():
 
     stdout, stderr = process.communicate()
     # TODO: javadoc, extendedOperands not implemented - removing from JSON output
-    parsed_ast = re.sub(r'\s*extendedOperands: \[\]', '',
+    parsed_ast = re.sub(r'\s*extendedOperands: \[]', '',
                         re.sub(r'\s*javadoc: null(:?,)?', '', stdout.strip()))
     ast_text = indent_multiline_string(parsed_ast, 8)
 
     test_text = test_template.render(test_name=test_name, java_source=java_source, ast_text=ast_text)
-    output_file_path = os.path.join(os.path.dirname(java_source_file_path), test_name + "Test.js")
+    output_file_path = os.path.join(os.path.dirname(java_source_file_path),
+                                    test_name + test_name_postfix + ".js")
     test_file = open(output_file_path, 'w')
     test_file.write(test_text)
     test_file.close()

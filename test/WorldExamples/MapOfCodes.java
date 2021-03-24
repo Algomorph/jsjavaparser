@@ -27,22 +27,22 @@ public class MapOfCodes {
 // 	}
 //
 //
-// 	public static int getValue(String key)
-// 	{
-//
-// 		String code = key;
-//
-// 		char first = code.charAt(0);
-// 		char second = code.charAt(1);
-//
-// 		int firstValue = first - 96;
-// 		int secondValue = second - 96;
-//
-// 		int value = map[(100*firstValue) + secondValue];
-//
-// 		return value;
-//
-// 	}
+	public static int getValue(String key)
+	{
+
+		String code = key;
+
+		char first = code.charAt(0);
+		char second = code.charAt(1);
+
+		int firstValue = first - 96;
+		int secondValue = second - 96;
+
+		int value = map[(100*firstValue) + secondValue];
+
+		return value;
+
+	}
 //
 //
 // 	public static void resetCount (String key)

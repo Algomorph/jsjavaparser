@@ -1123,7 +1123,7 @@ QualifiedIdentifierSuffix
       }, options);
     }
     / qual:QualifiedIdentifier LBRK expr:Expression RBRK
-    { return { node: 'ArrayAccess',  location: location(), array: qual, index: expr }; }
+    { return addLocation({ node: 'ArrayAccess',  array: qual, index: expr }, options); }
     / qual:QualifiedIdentifier args:Arguments
     {
       return addLocation(mergeProps(popQualified(qual), {

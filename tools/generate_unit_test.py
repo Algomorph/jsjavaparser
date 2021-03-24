@@ -52,9 +52,11 @@ def main():
                                universal_newlines=True)
 
     stdout, stderr = process.communicate()
-    # TODO: javadoc, extendedOperands not implemented - removing from JSON output
-    parsed_ast = re.sub(r'\s*extendedOperands: \[]', '',
-                        re.sub(r'\s*javadoc: null(:?,)?', '', stdout.strip()))
+    # TODO: javadoc, extendedOperands, leading/tralining comments not implemented - removing from JSON output
+    parsed_ast = \
+        re.sub(r'\s*(?:leading|trailing)Comments:\s*\[(?:\s*{\s*node:.*\s*value:.*\s*},?)*\s*],?', '',
+               re.sub(r'\s*extendedOperands: \[]', '',
+                      re.sub(r'\s*javadoc: null(:?,)?', '', stdout.strip())))
     ast_text = indent_multiline_string(parsed_ast, 8)
 
     test_text = test_template.render(test_name=test_name, java_source=java_source, ast_text=ast_text)

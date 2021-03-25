@@ -156,9 +156,9 @@
       name:  qual
     } : {
       node: 'ParameterizedType',
-      annotations: annotations,
       type:  {
           node: 'SimpleType',
+          annotations: annotations,
           name:  qual
       },
       typeArguments: args
@@ -421,7 +421,7 @@ VoidMethodDeclaratorRest
     }
 
 ConstructorDeclaratorRest
-    = params:FormalParameters throws:(THROWS ClassTypeList)? body:MethodBody
+    = receiver:ReceiverParameter ? params:FormalParameters throws:(THROWS ClassTypeList)? body:MethodBody
     {
       return {
         parameters:       params,
@@ -429,7 +429,9 @@ ConstructorDeclaratorRest
         body:             body,
         returnType2:      null,
         constructor:      true,
-        extraDimensions2: []
+        extraDimensions2: [],
+        receiverQualifier: receiver === null ? null : receiver.receiverQualifier,
+        receiverType: receiver === null ? null : receiver.receiverQualifier
       };
     }
 
@@ -1247,8 +1249,7 @@ Selector
     { return suffix; }
     / DOT NEW args:NonWildcardTypeArguments? ret:InnerCreator
     { return mergeProps(ret, { typeArguments: optionalList(args) }); }
-    / expr:DimExpr
-    { return addLocation({ node: 'ArrayAccess', index: expr }, options); }
+    / ArraySelector
 
 SuperSuffix
     = args:Arguments

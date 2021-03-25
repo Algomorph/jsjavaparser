@@ -1,7 +1,7 @@
 const JavaParser = require('../../lib/javaparser15_node');
 const multiline = require('multiline')
 
-test("NestedIntegerExpression", () => {
+test("ParenthesizedExpression", () => {
     const src = multiline(() => {/*
         class Test {
         	public static void test(){

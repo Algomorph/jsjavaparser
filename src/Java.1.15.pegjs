@@ -497,7 +497,7 @@ InterfaceMethodOrFieldRest
     / InterfaceMethodDeclaratorRest
 
 InterfaceMethodDeclaratorRest
-    = params:FormalParameters dims:Dim* throws:(THROWS ClassTypeList)? SEMI
+    = receiver:ReceiverParameter? params:FormalParameters dims:Dim* throws:(THROWS ClassTypeList)? SEMI
     {
       return addLocation({
         node:            'MethodDeclaration',
@@ -505,7 +505,9 @@ InterfaceMethodDeclaratorRest
         thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
         extraDimensions2: [dims],
         body:             null,
-        constructor:      false
+        constructor:      false,
+        receiverQualifier: receiver === null ? null : receiver.receiverQualifier,
+        receiverType: receiver === null ? null : receiver.receiverQualifier
       }, options);
     }
 
@@ -520,7 +522,7 @@ InterfaceGenericMethodDecl
     }
 
 VoidInterfaceMethodDeclaratorRest
-    = params:FormalParameters throws:(THROWS ClassTypeList)? SEMI
+    = receiver:ReceiverParameter? params:FormalParameters throws:(THROWS ClassTypeList)? SEMI
     {
       return addLocation({
         node:            'MethodDeclaration',
@@ -530,7 +532,9 @@ VoidInterfaceMethodDeclaratorRest
         extraDimensions2: [],
         typeParameters:   [],
         body:             null,
-        constructor:      false
+        constructor:      false,
+        receiverQualifier: receiver === null ? null : receiver.receiverQualifier,
+        receiverType: receiver === null ? null : receiver.receiverQualifier
       }, options);
     }
 

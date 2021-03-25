@@ -1,0 +1,3 @@
+class Z {
+    static { ; }
+}

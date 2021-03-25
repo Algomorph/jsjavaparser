@@ -945,8 +945,14 @@ ConstantExpression
 Expression
     = AssignmentExpression
 
+// 15.25 of JLS 15
+// UnaryExpressionNotPlusMinus is still more generous than LeftHandSide, which was restricted to:
+// LeftHandSide:
+//   ExpressionName
+//   FieldAccess
+//   ArrayAccess
 AssignmentExpression
-    = left:ConditionalExpression op:AssignmentOperator right:Expression
+    = left:UnaryExpressionNotPlusMinus op:AssignmentOperator right:Expression
     {
       return addLocation({
         node:         'Assignment',
@@ -1229,6 +1235,10 @@ PostfixOp
     / DEC
     ) { return op[0]; /* remove ending spaces */ }
 
+MethodInvocationSelector
+    = DOT id:Identifier args:Arguments
+    { return addLocation({ node: 'MethodInvocation', arguments: args, name: id, typeArguments: [] }, options); }
+
 FieldSelector
     = DOT id:Identifier
     { return addLocation({ node: 'FieldAccess', name: id }, options); }
@@ -1238,8 +1248,7 @@ ArraySelector
     { return addLocation({ node: 'ArrayAccess', index: expr }, options); }
 
 Selector
-    = DOT id:Identifier args:Arguments
-    { return addLocation({ node: 'MethodInvocation', arguments: args, name: id, typeArguments: [] }, options); }
+    = MethodInvocationSelector
     / FieldSelector
     / DOT ret:ExplicitGenericInvocation
     { return ret; }

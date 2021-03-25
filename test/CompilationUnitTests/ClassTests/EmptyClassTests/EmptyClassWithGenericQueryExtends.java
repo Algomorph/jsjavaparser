@@ -1,0 +1,1 @@
+class Hello<T extends Object & Comparable<? extends T>> {}

@@ -1,0 +1,1 @@
+class Hello<T extends org.Comparable<?>> {}

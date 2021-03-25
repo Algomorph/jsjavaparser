@@ -22,9 +22,9 @@
   }
 
   function buildTree(first, rest, builder) {
-    var result = first, i;
+    let result = first;
 
-    for (i = 0; i < rest.length; i++) {
+    for (let i = 0; i < rest.length; i++) {
       result = builder(result, rest[i]);
     }
 
@@ -87,21 +87,6 @@
     });
   }
 
-  // function buildArrayTree(first, rest) {
-  //   return buildTree(first, rest,
-  //     function(result, element) {
-  //     return {
-  //       node:         'ArrayType',
-  //       elementType: result,
-  //       dimensions: 
-  //       [{ 
-  //         "annotations": first.annotations,
-  //         "node": "Dimension"
-  //       }]
-  //     };
-  //   });
-  // }
-
   function buildArrayType(elementType, dims) {
     const dimensionObjects = []
     if(dims.length > 0){
@@ -109,14 +94,14 @@
         dimensionObjects.push(
           {
             "annotations": [],
-            "node": "Dimension"
+            "node":        "Dimension"
           }
         );
       }
       return {
-        node:         'ArrayType',
-        elementType:  elementType,
-        dimensions: dimensionObjects
+        node:          'ArrayType',
+        elementType:   elementType,
+        dimensions:    dimensionObjects
       };  
     } else {
       return elementType;
@@ -174,18 +159,20 @@
 
     return buildTree(first, rest,
       function(result, element) {
-        var args = element[2];
+        var args = element[3];
         return args === null ? {
-          node:     'QualifiedType',
-          name:      element[1],
-          qualifier: result
+          node:        'QualifiedType',
+          annotations: element[1],
+          name:        element[2],
+          qualifier:   result
         } :
         {
           node: 'ParameterizedType',
           type:  {
-            node:     'QualifiedType',
-            name:      element[1],
-            qualifier: result
+            node:        'QualifiedType',
+            annotations: element[1],
+            name:        element[2],
+            qualifier:   result
           },
           typeArguments: args
         };
@@ -1428,7 +1415,7 @@ ReferenceType
     { return buildArrayType(cls, dims); }
 
 ClassType
-    = annot:Annotation* qual:QualifiedIdentifier args:TypeArguments? rest:(DOT Identifier TypeArguments?)*
+    = annot:Annotation* qual:QualifiedIdentifier args:TypeArguments? rest:(DOT Annotation* Identifier TypeArguments?)*
     { return buildTypeName(qual, args, rest, annot); }
 
 ClassTypeList
@@ -1441,12 +1428,13 @@ TypeArguments
 
 TypeArgument
     = ReferenceType
-    / QUERY rest:((EXTENDS { return true; } / SUPER { return false; }) ReferenceType)?
+    / annot:Annotation ? QUERY rest:((EXTENDS { return true; } / SUPER { return false; }) ReferenceType)?
     {
       return {
         node:      'WildcardType',
         upperBound: extractOptional(rest, 0, true),
-        bound:      extractOptional(rest, 1)
+        bound:      extractOptional(rest, 1),
+        annotations: annot === null ? [] : [annot]
       };
     }
 
@@ -1454,12 +1442,14 @@ TypeParameters
     = LPOINT first:TypeParameter rest:(COMMA TypeParameter)* RPOINT
     { return buildList(first, rest, 1); }
 
+// 4.4 of JLS 15
 TypeParameter
-    = id:Identifier bounds:(EXTENDS Bound)?
+    = modifierList:Annotation* id:Identifier bounds:(EXTENDS Bound)?
     {
       return {
         node:      'TypeParameter',
         name:       id,
+        modifiers:  modifierList,
         typeBounds: extractOptionalList(bounds, 1)
       }
     }

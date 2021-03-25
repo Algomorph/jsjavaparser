@@ -1,0 +1,1 @@
+class Hello<T,T2 extends A<T>.B> {}

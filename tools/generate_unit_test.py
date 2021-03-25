@@ -17,9 +17,6 @@ def indent_multiline_string(string, space_count):
 
 
 def main():
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    parser_jar_path = os.path.join(dir_path, "target/classes/original-eclipse-ast-parser.jar")
-
     parser = argparse.ArgumentParser("Generate a unit test based on the provided java source file.")
     parser.add_argument("java_source_file", type=str,
                         help="Path to the source java file whose AST the parser should generate correctly in the test.")
@@ -27,6 +24,11 @@ def main():
                         help="Test framework to generate the javascript test for. Can be one of [jest, qunit]")
 
     args = parser.parse_args()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    root_path = os.path.dirname(dir_path)
+    java_parser_absolute_path = os.path.join(root_path, "lib/javaparser15_node.js")
+    parser_jar_path = os.path.join(dir_path, "target/classes/original-eclipse-ast-parser.jar")
 
     if args.test_framework == "jest":
         test_template = Template(filename=os.path.join(dir_path, "jest_test_template.js"))
@@ -40,6 +42,7 @@ def main():
         return
 
     java_source_file_path = args.java_source_file
+    java_parser_relative_path = os.path.relpath(java_parser_absolute_path, os.path.dirname(java_source_file_path))
     test_name = os.path.splitext(os.path.basename(java_source_file_path))[0]
 
     java_source_file = open(java_source_file_path, 'r')
@@ -59,7 +62,8 @@ def main():
                       re.sub(r'\s*javadoc: null(:?,)?', '', stdout.strip())))
     ast_text = indent_multiline_string(parsed_ast, 8)
 
-    test_text = test_template.render(test_name=test_name, java_source=java_source, ast_text=ast_text)
+    test_text = test_template.render(test_name=test_name, java_source=java_source, ast_text=ast_text,
+                                     java_parser_path=java_parser_relative_path)
     output_file_path = os.path.join(os.path.dirname(java_source_file_path),
                                     test_name + test_name_postfix + ".js")
     test_file = open(output_file_path, 'w')

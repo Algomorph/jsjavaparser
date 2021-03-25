@@ -38,6 +38,14 @@
     return object;
   }
 
+  function nestParenthesizedExpressions(depth, expr, options){
+    let stack = { node: 'ParenthesizedExpression', expression: expr };
+    for(let level = 1; level < depth; level++){
+      stack = { node: 'ParenthesizedExpression', expression: stack };
+    }
+    return addLocation(stack, options);
+  }
+
   function buildInfixExpr(first, rest, options) {
     return buildTree(first, rest, function(result, element) {
       return addLocation({
@@ -942,10 +950,11 @@ StatementExpression
 ConstantExpression
     = Expression
 
+// 15.2 of JLS 15
 Expression
     = AssignmentExpression
 
-// 15.25 of JLS 15
+// 15.26 of JLS 15
 // UnaryExpressionNotPlusMinus is still more generous than LeftHandSide, which was restricted to:
 // LeftHandSide:
 //   ExpressionName
@@ -1098,6 +1107,7 @@ CastExpression
     = LPAR PrimitiveType RPAR UnaryExpression
     / LPAR ReferenceType RPAR UnaryExpressionNotPlusMinus
 
+// 15.8 of JLS 15
 Primary
     = ParExpression
     / args:NonWildcardTypeArguments
@@ -1382,9 +1392,15 @@ VariableInitializer
     = ArrayInitializer
     / Expression
 
-ParExpression
-    = LPAR expr:Expression RPAR
-    { return addLocation({ node: 'ParenthesizedExpression', expression: expr }, options); }
+// TODO: is there a more elegant way to do this? 
+//       With only 1 level of nesting, we get seemingly an infinite loop on int z = ((((x + ((x + 1) + 1))) + 1));
+ParExpression 
+    = LPAR LPAR LPAR expr:Expression RPAR RPAR RPAR
+    { return nestParenthesizedExpressions(3, expr , options); }
+    / LPAR LPAR expr:Expression RPAR RPAR
+    { return nestParenthesizedExpressions(2, expr , options); }
+    / LPAR expr:Expression RPAR
+    { return nestParenthesizedExpressions(1, expr , options); }
 
 QualifiedIdentifier
     = first:Identifier rest:(DOT Identifier)*

@@ -7,6 +7,7 @@ test("ParenthesizedExpression", () => {
         	public static void test(){
                 int x = 1;
                 int y = (((x + (x + 1)) + 1) + 1);
+                int z = ((((x + ((x + 1) + 1))) + 1));
         	}
         }
         */
@@ -152,6 +153,82 @@ test("ParenthesizedExpression", () => {
                                                             node: "NumberLiteral",
                                                             token: "1"
                                                         },
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        node: "VariableDeclarationStatement",
+                                        modifiers: [],
+                                        type: {
+                                            node: "PrimitiveType",
+                                            annotations: [],
+                                            primitiveTypeCode: "int"
+                                        },
+                                        fragments: [
+                                            {
+                                                node: "VariableDeclarationFragment",
+                                                name: {
+                                                    node: "SimpleName",
+                                                    identifier: "z",
+                                                    var: false
+                                                },
+                                                extraDimensions2: [],
+                                                initializer: {
+                                                    node: "ParenthesizedExpression",
+                                                    expression: {
+                                                        node: "ParenthesizedExpression",
+                                                        expression: {
+                                                            node: "InfixExpression",
+                                                            leftOperand: {
+                                                                node: "ParenthesizedExpression",
+                                                                expression: {
+                                                                    node: "ParenthesizedExpression",
+                                                                    expression: {
+                                                                        node: "InfixExpression",
+                                                                        leftOperand: {
+                                                                            node: "SimpleName",
+                                                                            identifier: "x",
+                                                                            var: false
+                                                                        },
+                                                                        operator: "+",
+                                                                        rightOperand: {
+                                                                            node: "ParenthesizedExpression",
+                                                                            expression: {
+                                                                                node: "InfixExpression",
+                                                                                leftOperand: {
+                                                                                    node: "ParenthesizedExpression",
+                                                                                    expression: {
+                                                                                        node: "InfixExpression",
+                                                                                        leftOperand: {
+                                                                                            node: "SimpleName",
+                                                                                            identifier: "x",
+                                                                                            var: false
+                                                                                        },
+                                                                                        operator: "+",
+                                                                                        rightOperand: {
+                                                                                            node: "NumberLiteral",
+                                                                                            token: "1"
+                                                                                        },
+                                                                                    }
+                                                                                },
+                                                                                operator: "+",
+                                                                                rightOperand: {
+                                                                                    node: "NumberLiteral",
+                                                                                    token: "1"
+                                                                                },
+                                                                            }
+                                                                        },
+                                                                    }
+                                                                }
+                                                            },
+                                                            operator: "+",
+                                                            rightOperand: {
+                                                                node: "NumberLiteral",
+                                                                token: "1"
+                                                            },
+                                                        }
                                                     }
                                                 }
                                             }

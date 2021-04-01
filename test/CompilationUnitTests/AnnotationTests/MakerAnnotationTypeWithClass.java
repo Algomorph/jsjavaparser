@@ -1,0 +1,1 @@
+@interface Preliminary { private class TestClass { final int i = 42; }}

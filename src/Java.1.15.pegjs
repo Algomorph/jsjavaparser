@@ -497,7 +497,7 @@ InterfaceMethodDeclaratorRest
         node:            'MethodDeclaration',
         parameters:       params,
         thrownExceptionTypes: extractOptionalList(throws, 1),
-        extraDimensions2: [dims],
+        extraDimensions2: dims,
         body:             null,
         constructor:      false,
         receiverQualifier: receiver === null ? null : receiver.receiverQualifier,

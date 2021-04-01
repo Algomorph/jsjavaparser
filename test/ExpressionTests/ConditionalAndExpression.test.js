@@ -13,7 +13,7 @@ test("ConditionalAndExpression", () => {
         }
         */
     });
-      const output = JavaParser.parse(src, {'addLocations': false});
+    const output = JavaParser.parse(src, {'addLocations': false});
     const ground_truth =
             {
             node: "CompilationUnit",

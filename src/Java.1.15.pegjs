@@ -75,12 +75,6 @@
       : { name: tree, expression: null };
   }
 
-  function extractThrowsClassType(list) {
-    return list.map(function(node){
-      return node.name;
-    });
-  }
-
   function extractExpressions(list) {
     return list.map(function(node) {
       return node.expression;
@@ -389,7 +383,7 @@ MethodDeclaratorRest
     {
       return {
         parameters:       params,
-        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
+        thrownExceptionTypes: extractOptionalList(throws, 1),
         extraDimensions2: dims,
         body:             body,
         constructor:      false,
@@ -406,7 +400,7 @@ VoidMethodDeclaratorRest
     {
       return {
         parameters:       params,
-        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
+        thrownExceptionTypes: extractOptionalList(throws, 1),
         body:             body,
         extraDimensions2: [],
         typeParameters:   [],
@@ -420,7 +414,7 @@ ConstructorDeclaratorRest
     {
       return {
         parameters:       params,
-        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
+        thrownExceptionTypes: extractOptionalList(throws, 1),
         body:             body,
         returnType2:      null,
         constructor:      true,
@@ -502,7 +496,7 @@ InterfaceMethodDeclaratorRest
       return addLocation({
         node:            'MethodDeclaration',
         parameters:       params,
-        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
+        thrownExceptionTypes: extractOptionalList(throws, 1),
         extraDimensions2: [dims],
         body:             null,
         constructor:      false,
@@ -527,7 +521,7 @@ VoidInterfaceMethodDeclaratorRest
       return addLocation({
         node:            'MethodDeclaration',
         parameters:       params,
-        thrownExceptionTypes: extractThrowsClassType(extractOptionalList(throws, 1)),
+        thrownExceptionTypes: extractOptionalList(throws, 1),
         returnType2:      makePrimitive('void'),
         extraDimensions2: [],
         typeParameters:   [],

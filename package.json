@@ -7,6 +7,12 @@
     "build-min": "npm run build && node_modules/uglify-js/bin/uglifyjs lib/javaparser15.js -o lib/javaparser15.min.js",
     "build-test": "node_modules/pegjs/bin/pegjs -o lib/javaparser15_node.js --format commonjs src/Java.1.15.pegjs"
   },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": ["lib/javaparser15_node.js"],
+    "coverageReporters": ["json", "html"]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/algomorph/jsjavaparser.git"

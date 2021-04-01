@@ -861,6 +861,7 @@ Catch
           modifiers:   modifiers,
           initializer: null,
           varargs:     false,
+          varargsAnnotations: [], //TODO: currently, unclear where in JLS to look for these
           type:        rest.length ? {
             node: 'UnionType',
             types: buildList(first, rest, 1)
@@ -877,17 +878,28 @@ SwitchBlockStatementGroups
     = blocks:SwitchBlockStatementGroup*
     { return [].concat.apply([], blocks); }
 
+SwitchLabelSeparator
+    = COLON 
+    { return false }
+    / ARROW
+    { return true }
+
 SwitchBlockStatementGroup
-    = expr:SwitchLabel blocks:BlockStatements
-    { return [addLocation({ node: 'SwitchCase', expression: expr }, options)].concat(blocks); }
+    = expr:SwitchLabel isArrow:SwitchLabelSeparator blocks:BlockStatements
+    { 
+      if(isArrow && blocks[0].node === "ExpressionStatement"){
+        blocks[0].node = "YieldStatement";
+      }
+      return [addLocation({ node: 'SwitchCase', expression: expr, switchLabeledRule: isArrow }, options)].concat(blocks); 
+    }
 
 SwitchLabel
-    = CASE expr:ConstantExpression COLON
-    { return expr; }
-    / CASE expr:EnumConstantName COLON
-    { return expr; }
-    / DEFAULT COLON
-    { return null; }
+    = CASE first:ConstantExpression rest:(COMMA ConstantExpression)*
+    { return buildList(first, rest, 1); }
+    / CASE first:EnumConstantName COMMA rest:(COMMA EnumConstantName)*
+    { return buildList(first, rest, 1); }
+    / DEFAULT
+    { return []; }
 
 ForInit
     = modifiers:(FINAL { return makeModifier('final'); } / Annotation)* type:Type decls:VariableDeclarators

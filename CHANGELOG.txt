@@ -206,13 +206,17 @@
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
-//    Copyright (C) Gregory Kramida (from this point and below)
+//    Copyright (C) Gregory Kramida
 //    (SE15 Edition of 2012-07-27)
 //---------------------------------------------------------------------------
 //
 // Finished transition to Java 15 on all earlier tests & Eclipse parser from
 // version 3.24.0 of org.eclipse.jdt.core.
 // Some new parser & Java 8-15 features supported (but not all).
+// Testing support restored (transitioned from QUnit to Jest)
+// Now nodes optionally contain location in code (can be disabled via options
+// object such as { addLocations : false } being passed as the second
+// argument to .parse
 //
 // Expression
 //  = ConditionalExpression AssignmentOperator Expression

@@ -5,4 +5,5 @@ bower_components/
 .idea/*
 lib/*
 tools/target/
+test/coverage/
 package-lock.json

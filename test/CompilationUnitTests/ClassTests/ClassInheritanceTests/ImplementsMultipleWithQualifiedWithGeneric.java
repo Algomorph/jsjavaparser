@@ -1,0 +1,1 @@
+class Hello< A, B> implements IList< C > , org.git. IHub <A,B.C<C>> {}

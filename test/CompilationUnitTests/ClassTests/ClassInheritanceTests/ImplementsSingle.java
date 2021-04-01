@@ -1,0 +1,1 @@
+class Hello implements IList {}

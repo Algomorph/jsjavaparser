@@ -1,0 +1,1 @@
+class Hello<C> extends Foo < ? extends T.A<C>> . Bar {}

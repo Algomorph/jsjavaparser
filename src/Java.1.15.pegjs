@@ -1392,7 +1392,13 @@ QualifiedIdentifier
     { return buildQualified(first, rest, 1, options); }
 
 Dim
-    = LBRK RBRK
+    = annot:Annotation* LBRK RBRK
+    { 
+      return {
+        annotations: annot,
+        node:        "Dimension"
+      }
+    }
 
 DimExpr
     = LBRK exp:Expression RBRK

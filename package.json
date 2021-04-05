@@ -10,8 +10,13 @@
   "jest": {
     "verbose": true,
     "collectCoverage": true,
-    "collectCoverageFrom": ["lib/javaparser15_node.js"],
-    "coverageReporters": ["json", "html"]
+    "collectCoverageFrom": [
+      "lib/javaparser15_node.js"
+    ],
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   },
   "repository": {
     "type": "git",

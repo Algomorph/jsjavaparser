@@ -13,7 +13,10 @@ test("LambdaExpression", () => {
                 BiFunction<Integer, Integer, Integer> lambda3 = (x, y) -> x - y;
                 BiFunction<Integer, Integer, Integer> lambda4 = (Integer x, Integer y) -> x - y;
                 Function<Integer[], Integer> lambda5 = (x) -> x[0] - x[1];
-                Function<ArrayList<Integer>, Integer> lambda6 = (x) -> x.get(0) - x.get(1);
+                BiFunction<Integer[], Integer[], Integer> lambda6 = (Integer[] x, Integer[] y) -> x[0] - y[0];
+                Function<ArrayList<Integer>, Integer> lambda7 = (x) -> x.get(0) - x.get(1);
+                BiFunction<ArrayList<Integer>, ArrayList<Integer>, Integer> lambda8 =
+                        (ArrayList<Integer> x, ArrayList<Integer> y) -> x.get(0) - y.get(0);
             }
         }
         */
@@ -695,6 +698,176 @@ test("LambdaExpression", () => {
                                                 annotations: [],
                                                 name: {
                                                     node: "SimpleName",
+                                                    identifier: "BiFunction",
+                                                    var: false
+                                                }
+                                            },
+                                            typeArguments: [
+                                                {
+                                                    node: "ArrayType",
+                                                    elementType: {
+                                                        node: "SimpleType",
+                                                        annotations: [],
+                                                        name: {
+                                                            node: "SimpleName",
+                                                            identifier: "Integer",
+                                                            var: false
+                                                        }
+                                                    },
+                                                    dimensions: [
+                                                        {
+                                                            node: "Dimension",
+                                                            annotations: []
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    node: "ArrayType",
+                                                    elementType: {
+                                                        node: "SimpleType",
+                                                        annotations: [],
+                                                        name: {
+                                                            node: "SimpleName",
+                                                            identifier: "Integer",
+                                                            var: false
+                                                        }
+                                                    },
+                                                    dimensions: [
+                                                        {
+                                                            node: "Dimension",
+                                                            annotations: []
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    node: "SimpleType",
+                                                    annotations: [],
+                                                    name: {
+                                                        node: "SimpleName",
+                                                        identifier: "Integer",
+                                                        var: false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        fragments: [
+                                            {
+                                                node: "VariableDeclarationFragment",
+                                                name: {
+                                                    node: "SimpleName",
+                                                    identifier: "lambda6",
+                                                    var: false
+                                                },
+                                                extraDimensions2: [],
+                                                initializer: {
+                                                    node: "LambdaExpression",
+                                                    parentheses: true,
+                                                    parameters: [
+                                                        {
+                                                            node: "SingleVariableDeclaration",
+                                                            modifiers: [],
+                                                            type: {
+                                                                node: "ArrayType",
+                                                                elementType: {
+                                                                    node: "SimpleType",
+                                                                    annotations: [],
+                                                                    name: {
+                                                                        node: "SimpleName",
+                                                                        identifier: "Integer",
+                                                                        var: false
+                                                                    }
+                                                                },
+                                                                dimensions: [
+                                                                    {
+                                                                        node: "Dimension",
+                                                                        annotations: []
+                                                                    }
+                                                                ]
+                                                            },
+                                                            varargsAnnotations: [],
+                                                            varargs: false,
+                                                            name: {
+                                                                node: "SimpleName",
+                                                                identifier: "x",
+                                                                var: false
+                                                            },
+                                                            extraDimensions2: [],
+                                                            initializer: null
+                                                        },
+                                                        {
+                                                            node: "SingleVariableDeclaration",
+                                                            modifiers: [],
+                                                            type: {
+                                                                node: "ArrayType",
+                                                                elementType: {
+                                                                    node: "SimpleType",
+                                                                    annotations: [],
+                                                                    name: {
+                                                                        node: "SimpleName",
+                                                                        identifier: "Integer",
+                                                                        var: false
+                                                                    }
+                                                                },
+                                                                dimensions: [
+                                                                    {
+                                                                        node: "Dimension",
+                                                                        annotations: []
+                                                                    }
+                                                                ]
+                                                            },
+                                                            varargsAnnotations: [],
+                                                            varargs: false,
+                                                            name: {
+                                                                node: "SimpleName",
+                                                                identifier: "y",
+                                                                var: false
+                                                            },
+                                                            extraDimensions2: [],
+                                                            initializer: null
+                                                        }
+                                                    ],
+                                                    body: {
+                                                        node: "InfixExpression",
+                                                        leftOperand: {
+                                                            node: "ArrayAccess",
+                                                            array: {
+                                                                node: "SimpleName",
+                                                                identifier: "x",
+                                                                var: false
+                                                            },
+                                                            index: {
+                                                                node: "NumberLiteral",
+                                                                token: "0"
+                                                            }
+                                                        },
+                                                        operator: "-",
+                                                        rightOperand: {
+                                                            node: "ArrayAccess",
+                                                            array: {
+                                                                node: "SimpleName",
+                                                                identifier: "y",
+                                                                var: false
+                                                            },
+                                                            index: {
+                                                                node: "NumberLiteral",
+                                                                token: "0"
+                                                            }
+                                                        },
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        node: "VariableDeclarationStatement",
+                                        modifiers: [],
+                                        type: {
+                                            node: "ParameterizedType",
+                                            type: {
+                                                node: "SimpleType",
+                                                annotations: [],
+                                                name: {
+                                                    node: "SimpleName",
                                                     identifier: "Function",
                                                     var: false
                                                 }
@@ -739,7 +912,7 @@ test("LambdaExpression", () => {
                                                 node: "VariableDeclarationFragment",
                                                 name: {
                                                     node: "SimpleName",
-                                                    identifier: "lambda6",
+                                                    identifier: "lambda7",
                                                     var: false
                                                 },
                                                 extraDimensions2: [],
@@ -798,6 +971,212 @@ test("LambdaExpression", () => {
                                                                 {
                                                                     node: "NumberLiteral",
                                                                     token: "1"
+                                                                }
+                                                            ]
+                                                        },
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        node: "VariableDeclarationStatement",
+                                        modifiers: [],
+                                        type: {
+                                            node: "ParameterizedType",
+                                            type: {
+                                                node: "SimpleType",
+                                                annotations: [],
+                                                name: {
+                                                    node: "SimpleName",
+                                                    identifier: "BiFunction",
+                                                    var: false
+                                                }
+                                            },
+                                            typeArguments: [
+                                                {
+                                                    node: "ParameterizedType",
+                                                    type: {
+                                                        node: "SimpleType",
+                                                        annotations: [],
+                                                        name: {
+                                                            node: "SimpleName",
+                                                            identifier: "ArrayList",
+                                                            var: false
+                                                        }
+                                                    },
+                                                    typeArguments: [
+                                                        {
+                                                            node: "SimpleType",
+                                                            annotations: [],
+                                                            name: {
+                                                                node: "SimpleName",
+                                                                identifier: "Integer",
+                                                                var: false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    node: "ParameterizedType",
+                                                    type: {
+                                                        node: "SimpleType",
+                                                        annotations: [],
+                                                        name: {
+                                                            node: "SimpleName",
+                                                            identifier: "ArrayList",
+                                                            var: false
+                                                        }
+                                                    },
+                                                    typeArguments: [
+                                                        {
+                                                            node: "SimpleType",
+                                                            annotations: [],
+                                                            name: {
+                                                                node: "SimpleName",
+                                                                identifier: "Integer",
+                                                                var: false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    node: "SimpleType",
+                                                    annotations: [],
+                                                    name: {
+                                                        node: "SimpleName",
+                                                        identifier: "Integer",
+                                                        var: false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        fragments: [
+                                            {
+                                                node: "VariableDeclarationFragment",
+                                                name: {
+                                                    node: "SimpleName",
+                                                    identifier: "lambda8",
+                                                    var: false
+                                                },
+                                                extraDimensions2: [],
+                                                initializer: {
+                                                    node: "LambdaExpression",
+                                                    parentheses: true,
+                                                    parameters: [
+                                                        {
+                                                            node: "SingleVariableDeclaration",
+                                                            modifiers: [],
+                                                            type: {
+                                                                node: "ParameterizedType",
+                                                                type: {
+                                                                    node: "SimpleType",
+                                                                    annotations: [],
+                                                                    name: {
+                                                                        node: "SimpleName",
+                                                                        identifier: "ArrayList",
+                                                                        var: false
+                                                                    }
+                                                                },
+                                                                typeArguments: [
+                                                                    {
+                                                                        node: "SimpleType",
+                                                                        annotations: [],
+                                                                        name: {
+                                                                            node: "SimpleName",
+                                                                            identifier: "Integer",
+                                                                            var: false
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            varargsAnnotations: [],
+                                                            varargs: false,
+                                                            name: {
+                                                                node: "SimpleName",
+                                                                identifier: "x",
+                                                                var: false
+                                                            },
+                                                            extraDimensions2: [],
+                                                            initializer: null
+                                                        },
+                                                        {
+                                                            node: "SingleVariableDeclaration",
+                                                            modifiers: [],
+                                                            type: {
+                                                                node: "ParameterizedType",
+                                                                type: {
+                                                                    node: "SimpleType",
+                                                                    annotations: [],
+                                                                    name: {
+                                                                        node: "SimpleName",
+                                                                        identifier: "ArrayList",
+                                                                        var: false
+                                                                    }
+                                                                },
+                                                                typeArguments: [
+                                                                    {
+                                                                        node: "SimpleType",
+                                                                        annotations: [],
+                                                                        name: {
+                                                                            node: "SimpleName",
+                                                                            identifier: "Integer",
+                                                                            var: false
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            varargsAnnotations: [],
+                                                            varargs: false,
+                                                            name: {
+                                                                node: "SimpleName",
+                                                                identifier: "y",
+                                                                var: false
+                                                            },
+                                                            extraDimensions2: [],
+                                                            initializer: null
+                                                        }
+                                                    ],
+                                                    body: {
+                                                        node: "InfixExpression",
+                                                        leftOperand: {
+                                                            node: "MethodInvocation",
+                                                            expression: {
+                                                                node: "SimpleName",
+                                                                identifier: "x",
+                                                                var: false
+                                                            },
+                                                            typeArguments: [],
+                                                            name: {
+                                                                node: "SimpleName",
+                                                                identifier: "get",
+                                                                var: false
+                                                            },
+                                                            arguments: [
+                                                                {
+                                                                    node: "NumberLiteral",
+                                                                    token: "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        operator: "-",
+                                                        rightOperand: {
+                                                            node: "MethodInvocation",
+                                                            expression: {
+                                                                node: "SimpleName",
+                                                                identifier: "y",
+                                                                var: false
+                                                            },
+                                                            typeArguments: [],
+                                                            name: {
+                                                                node: "SimpleName",
+                                                                identifier: "get",
+                                                                var: false
+                                                            },
+                                                            arguments: [
+                                                                {
+                                                                    node: "NumberLiteral",
+                                                                    token: "0"
                                                                 }
                                                             ]
                                                         },

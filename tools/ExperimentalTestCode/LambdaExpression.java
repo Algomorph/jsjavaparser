@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.function.Function;
 
 class LambdaExpression{
     public static void main(String[] args){

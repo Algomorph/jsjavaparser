@@ -691,23 +691,45 @@ VariableDeclaratorId
     }
 
 //-------------------------------------------------------------------------
-//  LambdaParameters
+//  Lambda Parameters (15.27.1 in JLS 15)
 //-------------------------------------------------------------------------
 LambdaParameters
-    = LPAR params:FormalParameterList? RPAR
-    { return optionalList(params); }
+    = LPAR params:LambdaParameterList? RPAR
+    { 
+      return {
+        parentheses: true,
+        parameters: optionalList(params)
+      }; 
+    }
+    / identifier:VariableDeclarator
+    { 
+      return {
+        parentheses: false,
+        parameters: [identifier]
+      }; 
+    }
+
+LambdaParameterType
+    = Type / VAR
 
 LambdaParameter
-    = FormalParameter / Identifier
-
-LastLambdaParameter
-    = LastFormalParameter / Identifier
+    = modifiers:(FINAL { return makeModifier('final'); } / Annotation)*
+      type:LambdaParameterType decl:VariableDeclaratorId
+    {
+      return mergeProps(decl, {
+        type:        type,
+        modifiers:   modifiers,
+        varargs:     false,
+        varargsAnnotations: [], //TODO: this is unclear right now
+        initializer: null
+      });
+    }
 
 LambdaParameterList
-    = first:LambdaParameter rest:(COMMA LambdaParameter)* last:(COMMA LastLambdaParameter)?
-    { return buildList(first, rest, 1).concat(extractOptionalList(last, 1)); }
-    / last:LastLambdaParameter
-    { return [last]; }
+    = first:LambdaParameter rest:(COMMA LambdaParameter)*
+    { return buildList(first, rest, 1); }
+    / first:VariableDeclarator rest:(COMMA VariableDeclarator)*
+    { return buildList(first, rest, 1); }
 
 //-------------------------------------------------------------------------
 //  Statements
@@ -949,16 +971,20 @@ ConstantExpression
 
 // 15.2 of JLS 15
 Expression
-    = AssignmentExpression
+    = LambdaExpression
+      / AssignmentExpression
+
 
 // 15.26 of JLS 15
-// UnaryExpressionNotPlusMinus is still more generous than LeftHandSide, which was restricted to:
+// UnaryExpressionNotPlusMinus is still more generous than 
+// the official "LeftHandSide", is restricted by JLS to:
 // LeftHandSide:
 //   ExpressionName
 //   FieldAccess
 //   ArrayAccess
 AssignmentExpression
-    = left:UnaryExpressionNotPlusMinus op:AssignmentOperator right:Expression
+    = 
+    left:UnaryExpressionNotPlusMinus op:AssignmentOperator right:Expression
     {
       return addLocation({
         node:         'Assignment',
@@ -966,15 +992,29 @@ AssignmentExpression
         leftHandSide:  left,
         rightHandSide: right
       }, options);
-    }
+    } 
     / ConditionalExpression
 
-    // This definition is part of the modification in JLS Chapter 18
-    // to minimize look ahead. In JLS Chapter 15.27, Expression is defined
-    // as AssignmentExpression, which is effectively defined as
-    // (LeftHandSide AssignmentOperator)* ConditionalExpression.
-    // The above is obtained by allowing ANY ConditionalExpression
-    // as LeftHandSide, which results in accepting statements like 5 = a.
+LambdaBody
+    = Expression / Block
+
+LambdaExpression
+    = params:LambdaParameters ARROW body:LambdaBody
+    {
+      return addLocation(
+        mergeProps( 
+          {
+            node:         'LambdaExpression',
+            body:          body
+          }, 
+          params
+        ), 
+        options
+      );
+    }
+
+//LambdaExpression
+//    = $ LambdaParameters ARROW LambdaBody
 
 AssignmentOperator
     = EQU
@@ -1745,6 +1785,7 @@ THROW        = "throw"        !LetterOrDigit Spacing
 TRY          = "try"          !LetterOrDigit Spacing
 VOID         = "void"         !LetterOrDigit Spacing
 WHILE        = "while"        !LetterOrDigit Spacing
+VAR          = "var"          !LetterOrDigit Spacing
 
 //-------------------------------------------------------------------------
 //  JLS 3.10  Literals

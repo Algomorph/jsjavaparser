@@ -1679,9 +1679,9 @@ Identifier
     = !Keyword first:Letter rest:$LetterOrDigit* Spacing
     { return addLocation({ identifier: first + rest, node: 'SimpleName', var: (first + rest) === 'var'  }, options); }
 
-Letter = [a-z] / [A-Z] / [_$] ;
+Letter = [a-z] / [A-Z] / [_$\u200B];
 
-LetterOrDigit = [a-z] / [A-Z] / [0-9] / [_$] ;
+LetterOrDigit = [a-z] / [A-Z] / [0-9] / [_$\u200B] ;
 
     // These are traditional definitions of letters and digits.
     // JLS defines letters and digits as Unicode characters recognized
